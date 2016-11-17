@@ -1,0 +1,49 @@
+{
+    "parser": "babel-eslint",
+    "rules": {
+        "space-in-parens": ["error", "never"],
+        "no-useless-constructor": "error",
+        "operator-linebreak": ["error", "after"],
+        "comma-spacing": "error",
+        "object-curly-spacing": ["error", "always"],
+        "space-before-function-paren": ["error", "never"],
+        "eqeqeq": "error",
+        "no-multi-spaces": "error",
+        "prefer-const": "error",
+        "space-infix-ops": "error",
+        "keyword-spacing": "error",
+        "eol-last": "error",
+        "indent": ["error", 4],
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "react/jsx-boolean-value": ["error", "always"],
+        "react/jsx-curly-spacing": ["error", "never"],
+        "react/jsx-no-duplicate-props": "error",
+        "react/jsx-no-undef": "error",
+        "react/jsx-uses-react": 1,
+        "react/jsx-uses-vars": 1,
+        "react/no-unknown-property": "error",
+        "react/react-in-jsx-scope": "error",
+        "react/self-closing-comp": "error",
+        "react/wrap-multilines": "error",
+        "react/jsx-space-before-closing": "error"
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true,
+        "mocha": true
+    },
+    "globals": {
+        "sinon": true,
+        "expect": true
+    },
+    "extends": "eslint:recommended",
+    "ecmaFeatures": {
+        "jsx": true,
+        "experimentalObjectRestSpread": true
+    },
+    "plugins": [
+        "eslint-plugin-react"
+    ]
+}

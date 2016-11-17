@@ -1,0 +1,12 @@
+.cwc-input {
+    border: 1px solid $cwc-input-box-grey;
+    background: $cwc-main-white;
+    box-sizing: border-box;
+    padding: 12px;
+    width: 100%;
+    -webkit-box-shadow: 0 0 0px 1000px $cwc-main-white inset;
+    outline: none;
+    &:focus {
+        border-color: $cwc-input-box-grey-hover;
+    }
+}
