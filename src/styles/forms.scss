@@ -17,4 +17,8 @@
     font-weight: bold;
     color: #000000;
     background-color: #ffffff;
+    border: 1px solid $cwc-input-box-grey;
+    &:focus {
+        border-color: $cwc-input-box-grey-hover;
+    }
 }
