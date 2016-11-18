@@ -24,6 +24,7 @@
   "author": "Gianluca Macciocca",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.7.3",
     "basement-storage": "^0.1.0",
     "dependency-theory": "^0.1.4",
     "es6-promise": "^4.0.5",
