@@ -26,6 +26,7 @@
   "dependencies": {
     "aws-sdk": "^2.7.3",
     "basement-storage": "^0.1.1",
+    "classnames": "^2.2.5",
     "dependency-theory": "^0.1.5",
     "es6-promise": "^4.0.5",
     "history": "^4.3.0",
