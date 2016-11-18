@@ -20,4 +20,13 @@
         background-position: top center;
         text-align: center;
     }
+
+    &__input-address {
+        width: 250px;
+        text-transform: uppercase;
+    }
+
+    &__continue-button {
+        margin-top: 15px;
+    }
 }

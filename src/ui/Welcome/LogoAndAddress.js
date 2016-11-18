@@ -2,6 +2,7 @@ import React from "react";
 import { Title, SubTitle } from "../common/Titles";
 import { Application } from "solo-application";
 import InputAddress from "./InputAddress";
+import ContinueButton from "./ContinueButton";
 
 class LogoAndAddress extends React.Component {
     constructor(...args) {
@@ -16,7 +17,10 @@ class LogoAndAddress extends React.Component {
         ev.preventDefault();
         const elements = ev.target.elements;
         const inputAddress = elements.inputAddress.value;
-        this._addressValidation.stateAndCityFromZip(inputAddress);
+        this._addressValidation.stateAndCityFromZip(inputAddress)
+            .then(({ city, state }) => {
+                alert(`Your City/State/Zip are: ${city}, ${state} ${inputAddress}`);
+            });
     }
 
     render() {
@@ -26,7 +30,7 @@ class LogoAndAddress extends React.Component {
                 <SubTitle text={Application.localize("welcome/welcomeMessage")} />
                 <form onSubmit={this.onSubmit.bind(this)}>
                     <InputAddress name="inputAddress" />
-                    <button /*onClick={onClick}*/ >Continue</button>
+                    <ContinueButton />
                 </form>
             </div>
         );
