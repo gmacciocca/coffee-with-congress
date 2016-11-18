@@ -2,7 +2,7 @@ import { Application, Delegates, UncaughtErrors } from "solo-application";
 import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theory";
 import Events from "life-events";
 import Localize from "lingo-localize";
-import { Storage, storeFactory } from "basement-storage";
+import { Storage } from "basement-storage";
 import LoadResource from "./LoadResource";
 //import AWS from "aws-sdk";
 
@@ -26,7 +26,6 @@ const getComponents = (locResource) => {
     return [
         new ComponentFromValue("storage.sessionStorage", global.sessionStorage),
         new ComponentFromValue("storage.localStorage", global.localStorage),
-        new ComponentFromValue("storage.storeFactory", storeFactory),
 
         new ComponentFromValue("storage.schemas", configuration.storage.schemas),
         new ComponentFromClass("storage", Storage),
