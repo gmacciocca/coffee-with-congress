@@ -19,7 +19,9 @@ class LogoAndAddress extends React.Component {
         const inputAddress = elements.inputAddress.value;
         this._addressValidation.stateAndCityFromZip(inputAddress)
             .then(({ city, state }) => {
-                alert(`Your City/State/Zip are: ${city}, ${state} ${inputAddress}`);
+                alert(`You are in: ${city}, ${state} ${inputAddress}`);
+            }, (err) => {
+                alert("Invalid Zip code");
             });
     }
 
