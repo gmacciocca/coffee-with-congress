@@ -3,7 +3,8 @@ import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theo
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage, storeFactory } from "basement-storage";
-import loadJsonResource from "./loadJsonResource";
+import LoadResource from "./LoadResource";
+//import AWS from "aws-sdk";
 
 const configuration = {
     localize: {
@@ -49,8 +50,18 @@ const getDelegates = () => {
     });
 };
 
+// const testAWS = () => {
+//     let db = new AWS.DynamoDB({ endpoint: "http://localhost:8000" });
+//     db = null;
+// };
+
 const createApp = () => {
-    return loadJsonResource(configuration.localize.resource)
+    //testAWS();
+    const lr = new LoadResource();
+    //const resource = "http://production.shippingapis.com/ShippingAPI.dll?API=CityStateLookup&XML=<CityStateLookupRequest USERID=\"487NONE04270\"><ZipCode ID= \"0\"><Zip5>10044</Zip5></ZipCode></CityStateLookupRequest>";
+    //return lr.loadXmlResource(resource)
+    //.then(() => lr.loadJsonResource(configuration.localize.resource))
+    return lr.loadJsonResource(configuration.localize.resource)
     .then(locResource => {
         const delegates = getDelegates();
         const components = getComponents(locResource);
@@ -58,8 +69,8 @@ const createApp = () => {
         Application.create(delegates, components, configuration);
         return Application.bootstrap()
             .then(() => {
-                Application.stores.user.set("002", { name: "Peter", age: 27 });
-                Application.stores.lastGame.set("002", { name: "Fifteen", date: { when: "now", where: "here", who: "me" } });
+                // Application.stores.user.set("002", { name: "Peter", age: 27 });
+                // Application.stores.lastGame.set("002", { name: "Fifteen", date: { when: "now", where: "here", who: "me" } });
             });
     })
     .catch(err => {
@@ -69,8 +80,8 @@ const createApp = () => {
 };
 
 const destroyApp = () => {
-    Application.stores.user.clear();
-    Application.stores.lastGame.clear();
+    // Application.stores.user.clear();
+    // Application.stores.lastGame.clear();
     return Application.shutdown()
     .then(() => {
         Application.destroy();
