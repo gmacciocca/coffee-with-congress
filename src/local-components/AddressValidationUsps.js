@@ -1,6 +1,6 @@
 const USPS_USERID = "487NONE04270";
 
-export default class AddressValidation {
+export default class AddressValidationUsps {
     constructor({ loadResource }) {
         this._loadResource = loadResource;
     }

@@ -5,6 +5,7 @@ import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
 import LoadResource from "./local-components/LoadResource";
 import AddressValidation from "./local-components/AddressValidation";
+import AddressValidationUsps from "./local-components/AddressValidationUsps";
 
 const configuration = {
     localize: {
@@ -31,7 +32,8 @@ const getComponents = (locResource) => {
         new ComponentFromClass("loadResource", LoadResource),
         new ComponentFromValue("localize.resource", locResource),
         new ComponentFromClass("localize", Localize),
-        new ComponentFromClass("addressValidation", AddressValidation)
+        new ComponentFromClass("addressValidation", AddressValidation),
+        new ComponentFromClass("addressValidationUsps", AddressValidationUsps)
     ];
 };
 

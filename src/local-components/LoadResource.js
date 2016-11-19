@@ -1,34 +1,16 @@
 
 export default class LoadResource {
     jsonResource(resourcePath){
-        return this.loadResource(resourcePath)
-            .then(responseText => {
-                try {
-                    return JSON.parse(responseText);
-                } catch (ex) {
-                    throw new Error(`loadJsonResource: onload error parsing JSON resource ${resourcePath}.`);
-                }
-            });
+        return this._loadResource(resourcePath)
+            .then(this._parseJson);
     }
 
     xmlResource(resourcePath){
-        return this.loadResource(resourcePath)
-            .then(responseText => {
-                let exception;
-                try {
-                    var oParser = new DOMParser();
-                    var oDOM = oParser.parseFromString(responseText, "text/xml");
-                    if (oDOM.documentElement.nodeName !== "parsererror") {
-                        return oDOM.documentElement;
-                    }
-                } catch (ex) {
-                    exception = ex;
-                }
-                throw new Error(`loadJsonResource: onload error parsing JSON resource ${resourcePath} (${exception ? exception.toString() : ""})`);
-            });
+        return this._loadResource(resourcePath)
+            .then(this._parseXml);
     }
 
-    loadResource(resourcePath) {
+    _loadResource(resourcePath) {
         return new Promise((resolve, reject) => {
             const xobj = new XMLHttpRequest();
             xobj.overrideMimeType("application/json");
@@ -45,5 +27,27 @@ export default class LoadResource {
             xobj.open("GET", resourcePath, true);
             xobj.send(null);
         });
+    }
+
+    _parseXml(resource) {
+        let exception;
+        try {
+            var oParser = new DOMParser();
+            var oDOM = oParser.parseFromString(resource, "text/xml");
+            if (oDOM.documentElement.nodeName !== "parsererror") {
+                return oDOM.documentElement;
+            }
+        } catch (ex) {
+            exception = ex;
+        }
+        throw new Error(`loadJsonResource: onload error parsing XML resource (${exception ? exception.toString() : ""})`);
+    }
+
+    _parseJson(resource) {
+        try {
+            return JSON.parse(resource);
+        } catch (ex) {
+            throw new Error(`loadJsonResource: onload error parsing JSON resource (${ex.toString()}).`);
+        }
     }
 }
