@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "../common/Button";
+import { Button } from "../../common";
 import { Application } from "solo-application";
 
-const ContinueButton = ({ name }) => {
+const ContinueButton = () => {
     return <Button clName="welcome__continue-button" name={Application.localize("welcome/continue")} />;
 };
 

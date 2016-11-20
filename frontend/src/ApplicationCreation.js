@@ -3,9 +3,8 @@ import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theo
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import LoadResource from "./local-components/LoadResource";
-import AddressValidation from "./local-components/AddressValidation";
-import AddressValidationUsps from "./local-components/AddressValidationUsps";
+import AddressValidation from "./components/AddressValidation";
+import LoadResource from "./components/LoadResource";
 
 const configuration = {
     localize: {
@@ -32,8 +31,7 @@ const getComponents = (locResource) => {
         new ComponentFromClass("loadResource", LoadResource),
         new ComponentFromValue("localize.resource", locResource),
         new ComponentFromClass("localize", Localize),
-        new ComponentFromClass("addressValidation", AddressValidation),
-        new ComponentFromClass("addressValidationUsps", AddressValidationUsps)
+        new ComponentFromClass("addressValidation", AddressValidation)
     ];
 };
 

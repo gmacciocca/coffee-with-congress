@@ -16,8 +16,8 @@
     "babelify": "babel src --source-maps --out-dir ./lib",
     "browserify": "browserify ./lib/index.js --debug -o ./public/js/bundle.js",
     "sassify": "gulp sassify",
-    "copyImages": "cp ./src/images/*.* ./public/images/",
-    "copyResources": "cp ./src/resources/*.json ./public/resources/",
+    "copyImages":    "cp ./src/ui/*/images/*.* ./public/images/",
+    "copyResources": "cp ./src/ui/*/resources/*.json ./public/resources/",
     "test": "mocha test --recursive",
     "xxxxtest": "mocha --opts test/mocha.all.opts --colors"
   },

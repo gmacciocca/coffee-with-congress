@@ -1,5 +1,5 @@
 import React from "react";
-import { Title, SubTitle } from "../common/Titles";
+import { Title, SubTitle } from "../../common";
 import { Application } from "solo-application";
 import InputAddress from "./InputAddress";
 import ContinueButton from "./ContinueButton";

@@ -2,7 +2,7 @@
     "welcome": {
         "title": "Coffee With Congress" ,
         "welcomeMessage": "Welcome to the Coffee With Congress App!",
-        "address-label": "Enter your Zip Code",
+        "addressPlaceholder": "Enter your address",
         "continue": "Continue"
     }
 }
