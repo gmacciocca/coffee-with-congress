@@ -1,0 +1,24 @@
+.section-slider {
+    border: 1px solid $cwc-charcoal-grey;
+    &__item {
+        &__title {
+            cursor: pointer;
+            color: $cwc-charcoal-grey;
+            border-width: 1px 0 1px 2px;
+            border-style: solid;
+            border-color: $cwc-charcoal-grey;
+            background-color: $cwc-main-white;
+            &:hover {
+                color: $cwc-main-black;
+                xtext-decoration: underline;
+            }
+        }
+        &__contents {
+            &__hidden {
+                transition-property: display;
+                transition-delay: 1s;
+                display: none;
+            }
+        }
+    }
+}

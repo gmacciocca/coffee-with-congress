@@ -5,7 +5,7 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <div className="welcome">
-                <LogoAndAddress />
+                <LogoAndAddress router={this.props.router} />
             </div>
         );
     }

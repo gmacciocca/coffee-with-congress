@@ -8,6 +8,9 @@ class LogoAndAddress extends React.Component {
     constructor(...args) {
         super(...args);
         this._addressValidation = Application.roles.addressValidation;
+        this.state = {
+            disableContinueButton: true
+        };
     }
 
     componentWillMount() {
@@ -16,13 +19,18 @@ class LogoAndAddress extends React.Component {
     onSubmit(ev) {
         ev.preventDefault();
         const elements = ev.target.elements;
-        const inputAddress = elements.inputAddress.value;
-        this._addressValidation.stateAndCityFromZip(inputAddress)
-            .then(({ city, state }) => {
-                alert(`You are in: ${city}, ${state} ${inputAddress}`);
+        const address = elements.address.value;
+        this._addressValidation.validateAddress(address)
+            .then(() => {
+                this.props.router.push("/letters");
             }, (/*err*/) => {
                 alert("Invalid Zip code");
             });
+    }
+
+    addressOnChange(ev) {
+        this.setState({ disableContinueButton: !ev.target.value });
+        ev.preventDefault();
     }
 
     render() {
@@ -31,8 +39,11 @@ class LogoAndAddress extends React.Component {
                 <Title text={Application.localize("welcome/title")} />
                 <SubTitle text={Application.localize("welcome/welcomeMessage")} />
                 <form onSubmit={this.onSubmit.bind(this)}>
-                    <InputAddress name="inputAddress" />
-                    <ContinueButton />
+                    <InputAddress
+                        name="address"
+                        onChange={this.addressOnChange.bind(this)}
+                    />
+                    <ContinueButton disabled={this.state.disableContinueButton} />
                 </form>
             </div>
         );

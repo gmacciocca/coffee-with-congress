@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-const TextInput = ({ clName, name, placeholder }) => {
+const TextInput = ({ clName, name, onKeyDown, onChange, placeholder }) => {
     placeholder = placeholder || "";
     name = name || "";
     return (
@@ -9,6 +9,8 @@ const TextInput = ({ clName, name, placeholder }) => {
             <label className="small strong cwc-charcoal-grey-text user__form__label">
                 <input className={classNames("cwc-input", { [clName]: clName })}
                     name={name}
+                    onKeyDown={onKeyDown}
+                    onChange={onChange}
                     placeholder={placeholder}
                 />
             </label>
@@ -17,5 +19,3 @@ const TextInput = ({ clName, name, placeholder }) => {
 };
 
 export default TextInput;
-
-// <input classNames={classNames("cwc-input", { className: className })}

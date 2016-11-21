@@ -5,7 +5,7 @@ export default class AppShell extends React.Component {
     render() {
         return (
             <div className="appshell">
-                <Welcome />
+                <Welcome router={this.props.router} />
             </div>
         );
     }

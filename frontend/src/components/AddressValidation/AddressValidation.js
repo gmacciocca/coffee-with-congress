@@ -17,4 +17,13 @@ export default class AddressValidation {
                 throw Error("Invalid zip code");
             });
     }
+
+    validateAddress(address) {
+        return new Promise((resolve, reject) => {
+            if (address)
+                resolve();
+            else
+                reject();
+        });
+    }
 }
