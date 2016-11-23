@@ -18,8 +18,8 @@ var paths = {
     scripts: ["src/**/*.js"],
     images: "client/img/**/*",
     scssList: [
-        "./src/ui/common/styles/*.scss",
-        "./src/ui/*/styles/*.scss"
+        "./src/components/CommonUi/styles/*.scss",
+        "./src/components/*/styles/*.scss"
     ],
 };
 

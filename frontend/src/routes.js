@@ -1,8 +1,8 @@
 
 import React from "react";
 import { Router, Route, hashHistory, withRouter } from "react-router";
-import { AppShell } from "./ui/AppShell";
-import { Letters } from "./ui/Letters";
+import { AppShell } from "./components/AppShell";
+import { Letters } from "./components/Letters";
 
 export default (
     <Router history={hashHistory} >

@@ -1,0 +1,28 @@
+.section-slider {
+    h2 {
+        margin: 0;
+    }
+    background-color: $cwc-main-white;
+    border: 1px solid $cwc-charcoal-grey;
+    xposition: relative;
+    overflow: auto;
+    &__item {
+        xmin-height: 30%;
+        &__title {
+            cursor: pointer;
+            color: $cwc-charcoal-grey;
+            border-bottom: 1px solid $cwc-charcoal-grey;
+            &:hover {
+                color: $cwc-main-black;
+            }
+        }
+        &__contents {
+            border-bottom: 1px solid $cwc-charcoal-grey;
+            &__hidden {
+                transition-property: display;
+                transition-delay: 1s;
+                display: none;
+            }
+        }
+    }
+}

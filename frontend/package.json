@@ -6,6 +6,7 @@
   "scripts": {
     "xprebuild": "npm run clean",
     "clean": "gulp clean",
+    "lint": "eslint src",
     "start": "npm run nodemon",
     "nodemon": "nodemon --watch src -e js,scss,json -x npm run reload",
     "reload": "npm run build && npm run server",
@@ -16,8 +17,8 @@
     "babelify": "babel src --source-maps --out-dir ./lib",
     "browserify": "browserify ./lib/index.js --debug -o ./public/js/bundle.js",
     "sassify": "gulp sassify",
-    "copyImages":    "cp ./src/ui/*/images/*.* ./public/images/",
-    "copyResources": "cp ./src/ui/*/resources/*.json ./public/resources/",
+    "copyImages":    "cp ./src/components/*/images/*.* ./public/images/",
+    "copyResources": "cp ./src/components/*/resources/*.json ./public/resources/",
     "test": "mocha test --recursive",
     "xxxxtest": "mocha --opts test/mocha.all.opts --colors"
   },
