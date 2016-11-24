@@ -1,6 +1,6 @@
 $cwc-main-white: #ffffff;
 $cwc-main-blue: #007eb2;
-$cwc-light-blue: #c1efff;
+$cwc-light-blue: #E3F2FD;
 $cwc-charcoal-grey: #607075;
 $cwc-main-black: #102025;
 
@@ -10,6 +10,8 @@ $cwc-input-box-grey-hover: #747c7f;
 // Be sure to update both of these if you change one or the other
 $cwc-page-grey: #e9f1f4;
 $cwc-page-grey-transparent: rgba(233, 241, 244, 0.9);
+
+$cwc-main-background-color: $cwc-light-blue;
 
 .cwc-main-white {
     background-color: $cwc-main-white;

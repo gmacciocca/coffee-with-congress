@@ -1,8 +1,9 @@
 {
     "welcome": {
         "title": "Coffee With Congress" ,
-        "welcomeMessage": "Welcome to the Coffee With Congress App!",
-        "addressPlaceholder": "ENTER YOUR ADDRESS",
+        "welcomeMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "addressHintText": "123 Main Street, Springfield, CA",
+        "addressLabel": "Enter Your Address",
         "continue": "Continue"
     }
 }

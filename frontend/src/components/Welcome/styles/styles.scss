@@ -1,5 +1,4 @@
 .welcome {
-    background-color: $cwc-light-blue;
     position: absolute;
     top: 0;
     left: 0;
@@ -10,22 +9,27 @@
     display: block;
     padding-top: 2%;
 
-    &__logo-and-address {
+    &__logo-and-title {
         background: url(../images/capitol-dome.png) no-repeat;
-        width: 300px;
+        background-position: top center;
         padding-top: 195px;
+        width: 300px;
         margin: auto;
         overflow: auto;
-        padding-top: 195px;
-        background-position: top center;
+        text-align: center;
+    }
+
+    &__description {
+        margin: 0 20px;
+        text-align: center;
+    }
+
+    &__address-form {
+        margin: auto;
         text-align: center;
     }
 
     &__input-address {
         width: 250px;
-    }
-
-    &__continue-button {
-        margin: 10px 0 10px 0;
     }
 }

@@ -18,6 +18,9 @@ var paths = {
     scripts: ["src/**/*.js"],
     images: "client/img/**/*",
     scssList: [
+        "./src/components/materialize-css/sass/materialize.scss",
+        "./src/components/CommonUi/styles/colors.scss",
+        "./src/components/CommonUi/styles/global.scss",
         "./src/components/CommonUi/styles/*.scss",
         "./src/components/*/styles/*.scss"
     ],
@@ -48,7 +51,7 @@ gulp.task("sassify", function() {
         .pipe(sass({
             errLogToConsole: true,
             includePaths: [
-                "./src/styles/"
+                "./src/components/materialize-css/sass/"
             ]
         }))
         .pipe(concat("styles.css"))

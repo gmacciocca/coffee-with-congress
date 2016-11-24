@@ -17,7 +17,7 @@
     "babelify": "babel src --source-maps --out-dir ./lib",
     "browserify": "browserify ./lib/index.js --debug -o ./public/js/bundle.js",
     "sassify": "gulp sassify",
-    "copyImages":    "cp ./src/components/*/images/*.* ./public/images/",
+    "copyImages": "cp ./src/components/*/images/*.* ./public/images/",
     "copyResources": "cp ./src/components/*/resources/*.json ./public/resources/",
     "test": "mocha test --recursive",
     "xxxxtest": "mocha --opts test/mocha.all.opts --colors"
@@ -34,9 +34,11 @@
     "honest-error": "^0.1.0",
     "life-events": "^0.1.0",
     "lingo-localize": "^0.1.0",
+    "material-ui": "^0.16.4",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-router": "^2.8.1",
+    "react-tap-event-plugin": "^2.0.1",
     "solo-application": "^0.1.4"
   },
   "devDependencies": {
