@@ -2,7 +2,7 @@
     "welcome": {
         "title": "Coffee With Congress" ,
         "welcomeMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "addressHintText": "123 Main Street, Springfield, CA",
+        "addressHint": "Street, City, State ZIP",
         "addressLabel": "Enter Your Address",
         "continue": "Continue"
     }

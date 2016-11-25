@@ -3,10 +3,13 @@ import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theo
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import AddressValidation from "./components/AddressValidation";
-import LoadResource from "./components/LoadResource";
+import { AddressValidation, CwcServer, CwcServerMocked } from "./components/Gateways";
+import { LoadResource } from "./components/LoadResource";
 
 const configuration = {
+    origins: {
+        cwcServer: "http://localhost/"
+    },
     localize: {
         resource: "./resources/en-us.json"
     },
@@ -31,7 +34,8 @@ const getComponents = (locResource) => {
         new ComponentFromClass("loadResource", LoadResource),
         new ComponentFromValue("localize.resource", locResource),
         new ComponentFromClass("localize", Localize),
-        new ComponentFromClass("addressValidation", AddressValidation)
+        new ComponentFromClass("addressValidation", AddressValidation),
+        new ComponentFromClass("cwcServer", CwcServerMocked)
     ];
 };
 

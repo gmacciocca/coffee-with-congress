@@ -1,3 +1,3 @@
-import Welcome from "./lib/ui/Welcome";
+import Welcome from "./lib/Welcome";
 
 export { Welcome };

@@ -1,0 +1,28 @@
+.common-ui {
+    &__refresh-progress-overlay {
+        position: fixed;
+        overflow-y: scroll;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $cwc-overlay-main-background-color;
+        align-content: center;
+        z-index: 20;
+        &__hidden {
+            display: none;
+        }
+        &__indicator-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+        }
+        &__indicator {
+            border: 1px solid yellow;
+            display: inline-block;
+            position: relative;
+        }
+    }
+}

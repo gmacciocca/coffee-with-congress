@@ -1,3 +1,3 @@
-import LoadResource from "./LoadResource";
+import LoadResource from "./lib/LoadResource";
 
-export default LoadResource;
+export { LoadResource };

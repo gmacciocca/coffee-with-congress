@@ -1,0 +1,5 @@
+// Media Query Ranges
+$cwc-medium-screen-up: 741px;
+$cwc-medium-screen: 740px;
+
+$cwc-medium-and-up: "screen and (min-width : #{$cwc-medium-screen-up})";

@@ -1,3 +1,5 @@
+$welcome-description-side-margin: 20px;
+
 .welcome {
     position: absolute;
     top: 0;
@@ -20,7 +22,7 @@
     }
 
     &__description {
-        margin: 0 20px;
+        margin: 0 $welcome-description-side-margin;
         text-align: center;
     }
 
@@ -31,5 +33,15 @@
 
     &__input-address {
         width: 250px;
+    }
+}
+
+@media #{$cwc-medium-and-up} {
+    .welcome {
+        &__description {
+            margin: auto;
+            max-width: calc(#{$cwc-medium-screen} - (#{$welcome-description-side-margin} * 2));
+            text-align: center;
+        }
     }
 }
