@@ -15,11 +15,8 @@ const configuration = {
     },
     storage: {
         schemas: {
-            "storage.localStorage" : {
-                "user": ["name", "age"],
-            },
-            "storage.sessionStorage": {
-                "lastGame": ["name", "data" ]
+            "storage.localStorage": {
+                "data": []
             }
         }
     }

@@ -1,4 +1,7 @@
 {
-    "letter": {
+    "letters": {
+        "city": "City",
+        "state": "State",
+        "federal": "Federal"
     }
 }

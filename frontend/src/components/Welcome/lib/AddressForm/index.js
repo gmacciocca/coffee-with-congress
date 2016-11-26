@@ -8,6 +8,8 @@ export default class AddressForm extends React.Component {
     constructor(...args) {
         super(...args);
         this._cwcServer = Application.roles.cwcServer;
+        this._contactsStore = Application.stores.contacts;
+        this._store = Application.stores.data;
         this.state = {
             disableContinueButton: true,
             showProgress: false,
@@ -21,7 +23,9 @@ export default class AddressForm extends React.Component {
         const address = elements.address.value;
         this.setState({ showProgress: true });
         this._cwcServer.fetchContacts(address)
-            .then(() => {
+            .then(contacts => {
+                this._store.set("address", { value: address });
+                this._store.set("contacts", { value: contacts });
                 this.props.router.push("/letters");
             }, (err) => {
                 this.setState({ showProgress: false, errorText: err.toString() });

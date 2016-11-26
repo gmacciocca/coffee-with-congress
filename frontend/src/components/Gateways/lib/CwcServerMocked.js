@@ -1,5 +1,3 @@
-import { Application } from "solo-application";
-
 export default class AddressValidation {
     constructor({ loadResource }) {
         this._loadResource = loadResource;
@@ -27,7 +25,7 @@ export default class AddressValidation {
                             "role": "representative"
                         }
                     ],
-                    "state": [
+                    state: [
                         {
                             "id": 54,
                             "name": "Isamar Boyle",
@@ -50,9 +48,44 @@ export default class AddressValidation {
                             "faxes": [],
                             "emails": ["isamarboyleTaT@teleosaurs.xyz"],
                             "role": "representative"
+                        }, {
+                            "id": 56,
+                            "name": "Francicso de la Fuente Y Mendoza de la Caeza de L'Ocho",
+                            "address1": "1641 120th Drive",
+                            "city": "Junction City",
+                            "state": "GA",
+                            "zip_code": "31812",
+                            "phones": [ "(706) 388-3175" ],
+                            "faxes": [],
+                            "emails": ["isamarboyleTaT@teleosaurs.xyz"],
+                            "role": "representative"
                         }
                     ],
-                    "city": []
+                    city: [
+                        {
+                            "id": 100,
+                            "name": "Peter Smith",
+                            "address1":  "415 Main Streer",
+                            "city": "Campbell",
+                            "state": "CA",
+                            "zip_code": "94110",
+                            "phones": [ "(408) 555-1234" ],
+                            "faxes": ["(408) 555-5678"],
+                            "emails": ["petersmith@teleosaurs.xyz"],
+                            "role": "controller"
+                        }, {
+                            "id": 101,
+                            "name": "Mary White",
+                            "address1": "52 Hamilton Ave",
+                            "city": "Saratoga",
+                            "state": "MO",
+                            "zip_code": "84320",
+                            "phones": [ "(123) 555-4321" ],
+                            "faxes": [],
+                            "emails": ["mwhite@teleosaurs.xyz"],
+                            "role": "representative"
+                        }
+                    ]
                 };
                 resolve(response);
             }, 2000);
