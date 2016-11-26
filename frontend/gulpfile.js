@@ -1,6 +1,7 @@
 var gulp = require("gulp");
 var sass = require("gulp-sass");
 var concat = require("gulp-concat");
+var mergeJson = require("gulp-merge-json");
 
 // var concat = require("gulp-concat");
 // var sourcemaps = require("gulp-sourcemaps");
@@ -59,6 +60,13 @@ gulp.task("sassify", function() {
         //.pipe(postcss([ autoprefixer({ browsers: ["last 2 versions"] }) ]))
         .pipe(gulp.dest("./public/css/"));
 });
+
+gulp.task("buildStringResources", function() {
+    return gulp.src("./src/components/*/resources/en-us.{json,json5}")
+        .pipe(mergeJson({ fileName: "en-us.json" }))
+        .pipe(gulp.dest("./public/resources"));
+});
+
 
 
 //

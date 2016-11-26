@@ -18,9 +18,8 @@
     "browserify": "browserify ./lib/index.js --debug -o ./public/js/bundle.js",
     "sassify": "gulp sassify",
     "copyImages": "cp ./src/components/*/images/*.* ./public/images/",
-    "copyResources": "cp ./src/components/*/resources/*.json ./public/resources/",
-    "test": "mocha test --recursive",
-    "xxxxtest": "mocha --opts test/mocha.all.opts --colors"
+    "copyResources": "gulp buildStringResources",
+    "test": "mocha test --recursive"
   },
   "author": "Gianluca Macciocca",
   "license": "MIT",
@@ -61,6 +60,7 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-json5": "0.0.2",
+    "gulp-merge-json": "^0.6.0",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^2.1.1",
     "http-server": "^0.9.0",
