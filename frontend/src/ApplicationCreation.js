@@ -3,15 +3,17 @@ import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theo
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import { AddressValidation, CwcServer, CwcServerMocked } from "./components/Gateways";
+import { AddressValidation, CwcServerMocked } from "./components/Gateways";
 import { LoadResource } from "./components/LoadResource";
+import { MediaEvents } from "./components/CommonUi";
+
+const LOCALIZE_RESOURCE = "./resources/en-us.json";
+const JSON_COLORS = "./resources/colors.json ";
+const JSON_MEDIA = "./resources/media.json ";
 
 const configuration = {
     origins: {
         cwcServer: "http://localhost/"
-    },
-    localize: {
-        resource: "./resources/en-us.json"
     },
     storage: {
         schemas: {
@@ -19,7 +21,8 @@ const configuration = {
                 "data": []
             }
         }
-    }
+    },
+    colors: {}
 };
 
 const getComponents = (locResource) => {
@@ -32,7 +35,9 @@ const getComponents = (locResource) => {
         new ComponentFromValue("localize.resource", locResource),
         new ComponentFromClass("localize", Localize),
         new ComponentFromClass("addressValidation", AddressValidation),
-        new ComponentFromClass("cwcServer", CwcServerMocked)
+        new ComponentFromClass("cwcServer", CwcServerMocked),
+        new ComponentFromClass("addressValidation", AddressValidation),
+        new ComponentFromClass("mediaEvents", MediaEvents)
     ];
 };
 
@@ -50,12 +55,31 @@ const getDelegates = () => {
     });
 };
 
-const createApp = () => {
+const getAllResources = () => {
     const lr = new LoadResource();
-    return lr.jsonResource(configuration.localize.resource)
-    .then(locResource => {
+    let localize, colors, media;
+    return lr.jsonResource(LOCALIZE_RESOURCE)
+    .then(res => {
+        localize = res;
+        return lr.jsonResource(JSON_COLORS);
+    })
+    .then(res => {
+        colors = res.colors;
+        return lr.jsonResource(JSON_MEDIA);
+    })
+    .then(res => {
+        media = res.media;
+        return { localize, colors, media };
+    });
+};
+
+const createApp = () => {
+    return getAllResources()
+    .then(resources => {
+        configuration.colors = resources.colors;
+        configuration.media = resources.media;
         const delegates = getDelegates();
-        const components = getComponents(locResource);
+        const components = getComponents(resources.localize);
 
         Application.create(delegates, components, configuration);
         return Application.bootstrap();

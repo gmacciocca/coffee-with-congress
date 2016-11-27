@@ -1,20 +1,19 @@
-$cwc-main-white: #ffffff;
-$cwc-main-blue: #007eb2;
-$cwc-light-blue: #E3F2FD;
-$cwc-charcoal-grey: #607075;
-$cwc-main-black: #102025;
+@import "./colors.json";
 
-$cwc-input-box-grey: #d7d7d7;
-$cwc-input-box-grey-hover: #747c7f;
+$cwc-main-white: map-get($colors, main-white);
+$cwc-main-blue: map-get($colors, main-blue);
+$cwc-light-blue: map-get($colors, light-blue);
+$cwc-light-blue-transparent: map-get($colors, light-blue-transparent);
+$cwc-charcoal-grey: map-get($colors, charcoal-grey);
+$cwc-main-black: map-get($colors, main-black);
+$cwc-light-grey: map-get($colors, light-grey);
 
-// Be sure to update both of these if you change one or the other
-$cwc-page-grey: #e9f1f4;
-$cwc-page-grey-transparent: rgba(233, 241, 244, 0.9);
+$cwc-input-box-grey: map-get($colors, input-box-grey);
+$cwc-input-box-grey-hover: map-get($colors, input-box-grey-hover);
+$cwc-page-grey: map-get($colors, page-grey);
 
 $cwc-main-background-color: $cwc-light-blue;
-$cwc-overlay-main-background-color: rgba(227,242,253, .68);
-
-rgba(233,241,244, .68)
+$cwc-overlay-main-background-color: rgba(227,242,253,.68);
 
 .cwc-main-white {
     background-color: $cwc-main-white;

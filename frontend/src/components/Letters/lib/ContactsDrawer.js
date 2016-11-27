@@ -5,10 +5,6 @@ import { Card, CardHeader, CardText } from "material-ui/Card";
 import Checkbox from "material-ui/Checkbox";
 
 class ContactsDrawer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     onContactCheck(contact, isInputChecked) {
         contact._uiIsChecked = isInputChecked;
         if (this.props.onUpdate) {
@@ -22,15 +18,17 @@ class ContactsDrawer extends React.Component {
 
     contact(contact) {
         const isChecked = this.isContactChecked(contact);
-        return (<div>
-            <Checkbox
-                label={`${contact.name} (${contact.role})`}
-                defaultChecked={isChecked}
-                onCheck={(object, isInputChecked) => {
-                    this.onContactCheck(contact, isInputChecked);
-                }}
-            />
-        </div>);
+        return (
+            <div key={contact.id}>
+                <Checkbox
+                    label={`${contact.name} (${contact.role})`}
+                    defaultChecked={isChecked}
+                    onCheck={(object, isInputChecked) => {
+                        this.onContactCheck(contact, isInputChecked);
+                    }}
+                />
+            </div>
+        );
     }
 
     contacts(contacts) {
@@ -49,16 +47,18 @@ class ContactsDrawer extends React.Component {
         if (!contacts || contacts.length === 0){
             return null;
         }
+        const titleColor = Application.configuration.colors["main-blue"];
         return (
             <Card>
                 <CardHeader
                     title={`${levelName}`}
                     actAsExpander={true}
                     showExpandableButton={true}
+                    titleColor={titleColor}
                 />
-                <CardText expandable={true}>
-                    {this.contacts(contacts)}
-                </CardText>
+                <CardText
+                    expandable={true}
+                    children={this.contacts(contacts)} />
             </Card>
         );
     }
@@ -73,7 +73,5 @@ class ContactsDrawer extends React.Component {
         );
     }
 }
-
-// <div className={classnames(this.props.clName, "section-slider")}>
 
 export default ContactsDrawer;

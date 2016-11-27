@@ -1,6 +1,7 @@
 import React from "react";
 import { Application } from "solo-application";
 import ContactsDrawer from "./ContactsDrawer";
+import IconButton from "material-ui/IconButton";
 
 export default class Letters extends React.Component {
     constructor(...args) {
@@ -21,6 +22,26 @@ export default class Letters extends React.Component {
         } else {
             this.props.router.push("/");
         }
+        Application.roles.mediaEvents.onMediumScreen(this.onMediumScreen.bind(this));
+    }
+
+    onMediumScreen({ isLess }) {
+        this.setState({ isContactsDrawerOpen: !isLess });
+    }
+
+    onHamburgerButtonClick() {
+        this.setState({ isContactsDrawerOpen: !this.state.isContactsDrawerOpen });
+    }
+
+    get hamburgerIconButton() {
+        return (
+            <div>
+                <IconButton
+                    onClick={this.onHamburgerButtonClick.bind(this)}
+                    iconClassName="muidocs-icon-navigation-expand-more"
+                />
+            </div>
+        );
     }
 
     onDrawerUpdate(contacts) {
@@ -33,6 +54,7 @@ export default class Letters extends React.Component {
         }
         return (
             <div className="letters">
+                {this.hamburgerIconButton}
                 <ContactsDrawer
                     isOpen={this.state.isContactsDrawerOpen}
                     clName="letters__representatives-by-level"
