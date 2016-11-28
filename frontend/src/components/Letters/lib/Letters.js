@@ -43,7 +43,8 @@ export default class Letters extends React.Component {
         });
     }
 
-    onMenuIconClick() {
+    onMenuIconClick(ev) {
+        ev.preventDefault();
         const isContactsDrawerOpen = !this.state.isContactsDrawerOpen;
         this.setState({
             isContactsDrawerOpen,
@@ -56,10 +57,6 @@ export default class Letters extends React.Component {
             isContactsDrawerOpen: false,
             showOverlay: false
         });
-    }
-
-    clickWasOutsideObject(obj, event) {
-        return Object.keys(obj).every(key => !obj[key].contains(event.target));
     }
 
     onDrawerUpdate(contacts) {
