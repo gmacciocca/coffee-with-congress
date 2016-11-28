@@ -1,7 +1,10 @@
 import React from "react";
+import classnames from "classnames";
 import { Application } from "solo-application";
+import { ScreenOverlay } from "../../CommonUi";
+import Topics from "./Topics";
+import AppBar from "material-ui/AppBar";
 import ContactsDrawer from "./ContactsDrawer";
-import IconButton from "material-ui/IconButton";
 
 export default class Letters extends React.Component {
     constructor(...args) {
@@ -10,8 +13,11 @@ export default class Letters extends React.Component {
         this.state = {
             address: null,
             contacts: null,
-            isContactsDrawerOpen: true
+            isContactsDrawerOpen: true,
+            isSmallScreen: true,
+            showOverlay: false
         };
+        this._offs = [];
     }
 
     componentWillMount() {
@@ -22,30 +28,56 @@ export default class Letters extends React.Component {
         } else {
             this.props.router.push("/");
         }
-        Application.roles.mediaEvents.onMediumScreen(this.onMediumScreen.bind(this));
+        this._offs.push(Application.roles.mediaEvents.onMediumScreen(this.onMediumScreen.bind(this)));
+    }
+
+    componentWillUnmount() {
+        this._offs.forEach(off => off());
     }
 
     onMediumScreen({ isLess }) {
-        this.setState({ isContactsDrawerOpen: !isLess });
+        this.setState({
+            isContactsDrawerOpen: !isLess,
+            isSmallScreen: isLess,
+            showOverlay: this.state.showOverlay && isLess
+        });
     }
 
-    onHamburgerButtonClick() {
-        this.setState({ isContactsDrawerOpen: !this.state.isContactsDrawerOpen });
+    onMenuIconClick() {
+        const isContactsDrawerOpen = !this.state.isContactsDrawerOpen;
+        this.setState({
+            isContactsDrawerOpen,
+            showOverlay: this.state.isSmallScreen && isContactsDrawerOpen
+        });
     }
 
-    get hamburgerIconButton() {
-        return (
-            <div>
-                <IconButton
-                    onClick={this.onHamburgerButtonClick.bind(this)}
-                    iconClassName="muidocs-icon-navigation-expand-more"
-                />
-            </div>
-        );
+    onOverlayClick() {
+        this.setState({
+            isContactsDrawerOpen: false,
+            showOverlay: false
+        });
+    }
+
+    clickWasOutsideObject(obj, event) {
+        return Object.keys(obj).every(key => !obj[key].contains(event.target));
     }
 
     onDrawerUpdate(contacts) {
         this._store.set("contacts", { value: contacts });
+    }
+
+    get isDrawerOpenAndFixed() {
+        return this.state.isContactsDrawerOpen && !this.state.isSmallScreen;
+    }
+
+    get appbarSpacerClass() {
+        return classnames("letters__appbar-left-spacer",
+            { "letters__appbar-left-spacer__showing": this.isDrawerOpenAndFixed });
+    }
+
+    get appbarWrapperClass() {
+        return classnames("letters__appbar-wrapper",
+            { "letters__appbar-wrapper__shifted": this.isDrawerOpenAndFixed });
     }
 
     render() {
@@ -54,13 +86,26 @@ export default class Letters extends React.Component {
         }
         return (
             <div className="letters">
-                {this.hamburgerIconButton}
+                <div className="letters__spacer-and-appbar-wrapper">
+                    <div className={this.appbarSpacerClass} />
+                    <div className={this.appbarWrapperClass}>
+                        <AppBar
+                            title={Application.localize("welcome/title")}
+                            showMenuIconButton={!this.state.isContactsDrawerOpen}
+                            onLeftIconButtonTouchTap={this.onMenuIconClick.bind(this)}
+                        />
+                        <div className="letters__topics-wrapper">
+                            <Topics />
+                        </div>
+                    </div>
+                </div>
                 <ContactsDrawer
                     isOpen={this.state.isContactsDrawerOpen}
                     clName="letters__representatives-by-level"
                     contacts={this.state.contacts}
                     onUpdate={this.onDrawerUpdate.bind(this)}
                 />
+                <ScreenOverlay shouldShow={this.state.showOverlay} onClick={this.onOverlayClick.bind(this)} />
             </div>
         );
     }

@@ -2,7 +2,7 @@ var gulp = require("gulp");
 var sass = require("gulp-sass");
 var concat = require("gulp-concat");
 var mergeJson = require("gulp-merge-json");
-var sassImportJson = require("gulp-sass-import-json");
+var jsonSass = require("gulp-json-sass");
 
 var del = require("del");
 var mkdirp = require("mkdirp");
@@ -14,6 +14,8 @@ var paths = {
     scripts: ["src/**/*.js"],
     images: "client/img/**/*",
     scssList: [
+        "./src/components/CommonUi/styles/colors.json",
+        "./src/components/CommonUi/styles/media.json",
         "./src/third-party/materialize-css/sass/materialize.scss",
         "./src/components/CommonUi/styles/colors.scss",
         "./src/components/CommonUi/styles/global.scss",
@@ -38,8 +40,8 @@ gulp.task("createDirs", function() {
 
 gulp.task("sassify", function() {
     return gulp.src(paths.scssList)
+        .pipe(jsonSass({ sass: false }))
         .pipe(concat("styles.scss"))
-        .pipe(sassImportJson())
         .pipe(sass({
             errLogToConsole: true,
             includePaths: [

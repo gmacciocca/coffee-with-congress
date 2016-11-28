@@ -1,0 +1,21 @@
+.common-ui {
+    &__screen-overlay {
+        transition-property: opacity;
+        transition-timing-function: ease;
+        transition-duration:1s;
+        opacity: 1;
+        position: fixed;
+        overflow-y: scroll;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $cwc-overlay-main-background-color;
+        align-content: center;
+        z-index: 1200;
+        &__hidden {
+            opacity: 0;
+            display: none;
+        }
+    }
+}

@@ -34,6 +34,11 @@ export default class MediaEvents {
                 lastWidth = width;
             }
         });
+        func({
+            width: this.currentWidth,
+            height: this.currentHeight,
+            isLess: this.currentWidth < lessThanWidth
+        });
         this.onResize();
         return off;
     }

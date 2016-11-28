@@ -1,7 +1,5 @@
-@import "./media.json";
-
 // Media Query Ranges
-$cwc-medium-screen-up: map-get($media, medium-screen-up-px);
-$cwc-medium-screen: map-get($media, medium-screen-px);
+$cwc-medium-screen-up: $media-medium-screen-up-px;
+$cwc-medium-screen: $media-medium-screen-px;
 
 $cwc-medium-and-up: "screen and (min-width : #{$cwc-medium-screen-up})";

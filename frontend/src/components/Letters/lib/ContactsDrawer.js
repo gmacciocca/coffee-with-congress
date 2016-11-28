@@ -49,7 +49,7 @@ class ContactsDrawer extends React.Component {
         }
         const titleColor = Application.configuration.colors["main-blue"];
         return (
-            <Card>
+            <Card initiallyExpanded={true}>
                 <CardHeader
                     title={`${levelName}`}
                     actAsExpander={true}
@@ -65,7 +65,7 @@ class ContactsDrawer extends React.Component {
 
     render() {
         return (
-            <Drawer open={this.props.isOpen}>
+            <Drawer open={this.props.isOpen} >
                 {this.level(Application.localize("letters/city"), this.props.contacts.city)}
                 {this.level(Application.localize("letters/state"), this.props.contacts.state)}
                 {this.level(Application.localize("letters/federal"), this.props.contacts.federal)}
