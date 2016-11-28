@@ -12,6 +12,7 @@ export default class AddressForm extends React.Component {
         this._store = Application.stores.data;
         this.state = {
             disableContinueButton: true,
+            disableInputs: false,
             showProgress: false,
             errorText: null
         };
@@ -22,6 +23,7 @@ export default class AddressForm extends React.Component {
         const elements = ev.target.elements;
         const address = elements.address.value;
         this.setState({ showProgress: true });
+        this.disableInputs(true);
         this._cwcServer.fetchContacts(address)
             .then(contacts => {
                 this._store.set("address", { value: address });
@@ -29,12 +31,17 @@ export default class AddressForm extends React.Component {
                 this.props.router.push("/letters");
             }, (err) => {
                 this.setState({ showProgress: false, errorText: err.toString() });
+                this.disableInputs(false);
             });
     }
 
     addressOnChange(ev) {
         this.setState({ disableContinueButton: !ev.target.value, errorText: null });
         ev.preventDefault();
+    }
+
+    disableInputs(disableInputs) {
+        this.setState({ disableInputs });
     }
 
     render() {
@@ -45,8 +52,11 @@ export default class AddressForm extends React.Component {
                         autoFocus={false}
                         name="address"
                         onChange={this.addressOnChange.bind(this)}
-                        errorText={this.state.errorText} />
-                    <ContinueButton disabled={this.state.disableContinueButton} />
+                        errorText={this.state.errorText}
+                        disabled={this.state.disableInputs} />
+                    <ContinueButton
+                        disabled={this.state.disableContinueButton || this.state.disableInputs}
+                    />
                 </form>
                 <RefreshProgress showProgress={this.state.showProgress} />
             </div>
