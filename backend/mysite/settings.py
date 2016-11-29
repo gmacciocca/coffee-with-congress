@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls',
+    'cwc',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,8 +96,8 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/<your-project-id>:<your-cloud-sql-instance>',
-            'NAME': '<your-database-name>',
+            'HOST': '/cloudsql/causal-port-151005:cwc',
+            'NAME': 'cwc',
             'USER': 'root',
         }
     }
@@ -105,10 +105,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': '<your-database-name>',
-            'USER': '<your-database-user>',
-            'PASSWORD': '<your-database-password>',
-            'HOST': '<your-database-host>',
+            'NAME': 'cwc',
+            'USER': 'cwc',
+            'PASSWORD': 'ajme*utikac*zvake*produzni*52',
+            'HOST': '173.194.250.129',
             'PORT': '3306',
         }
     }
