@@ -1,0 +1,52 @@
+$address-from-margin: 2%;
+$address-to-margin: 2%;
+
+$address-to-top-MATH: (10% + #{$address-to-margin});
+$address-to-top: calc(#{$address-to-top-MATH});
+
+$address-width: 50%;
+$address-height: 5em;
+
+$body-top: calc( #{$address-to-top-MATH} + #{$address-height} + 2em );
+$body-margin: 2%;
+$body-bottom-margin: 10%;
+
+.letter {
+    position: absolute;
+    &__address-to {
+        border: 1px solid blue;
+        position: absolute;
+        top: $address-to-top;
+        left: $address-to-margin;
+        width: $address-width;
+        height: $address-height;
+        text-align: left;
+    }
+    &__address-from {
+        border: 1px solid red;
+        position: absolute;
+        top: $address-from-margin;
+        right: $address-from-margin;
+        width: $address-width;
+        height: $address-height;
+        text-align: right;
+    }
+    &__date {
+        border: 1px solid green;
+        position: absolute;
+        top: calc(2% + 6em);
+        right: 2%;
+        width: 50%;
+        height: 1em;
+        text-align: right;
+    }
+    &__body {
+        border: 1px solid black;
+        position: absolute;
+
+        top: $body-top;
+        bottom: $body-bottom-margin;
+        left: $body-margin;
+        right: $body-margin;
+    }
+}

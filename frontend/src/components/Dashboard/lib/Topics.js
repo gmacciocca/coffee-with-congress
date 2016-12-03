@@ -27,7 +27,7 @@ export default class Topic extends React.Component {
             <SelectField
                 value={this.state.value}
                 onChange={this.handleChange.bind(this)}
-                floatingLabelText={Application.localize("letters/topicLabel")}
+                floatingLabelText={Application.localize("dashboard/topicLabel")}
             >
             {items}
             </SelectField>

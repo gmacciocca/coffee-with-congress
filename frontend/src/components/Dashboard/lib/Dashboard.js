@@ -6,8 +6,9 @@ import Topics from "./Topics";
 import AppBar from "material-ui/AppBar";
 import ContactsDrawer from "./ContactsDrawer";
 import Paper from "material-ui/Paper";
+import Letter from "./Letter";
 
-export default class Letters extends React.Component {
+export default class Dashboard extends React.Component {
     constructor(...args) {
         super(...args);
         this._store = Application.stores.data;
@@ -83,13 +84,13 @@ export default class Letters extends React.Component {
     }
 
     get appbarSpacerClass() {
-        return classnames("letters__appbar-left-spacer",
-            { "letters__appbar-left-spacer__showing": this.isDrawerOpenAndFixed });
+        return classnames("dashboard__appbar-left-spacer",
+            { "dashboard__appbar-left-spacer__showing": this.isDrawerOpenAndFixed });
     }
 
     get appbarPaperWrapperClass() {
-        return classnames("letters__appbar-paper-wrapper",
-            { "letters__appbar-paper-wrapper__shifted": this.isDrawerOpenAndFixed });
+        return classnames("dashboard__appbar-paper-wrapper",
+            { "dashboard__appbar-paper-wrapper__shifted": this.isDrawerOpenAndFixed });
     }
 
     paperRef(ref) {
@@ -115,22 +116,18 @@ export default class Letters extends React.Component {
 
         // Letter size = 215.9 by 279.4
         // 215.9 : 279.4 = availableWidth : availableHeight
-
-        const tryWidth = (215.9 * availableHeight) / 279.4;
-        const tryHeight = (279.4 * availableWidth) / 215.9;
-
-        if (tryWidth <= availableWidth) {
+        let paperWidth = 0;
+        let paperHeight = (279.4 * availableWidth) / 215.9;
+        if (paperHeight <= availableHeight) {
+            paperWidth = availableWidth;
+        } else {
+            paperHeight = availableHeight;
+            paperWidth = (215.9 * availableHeight) / 279.4;
         }
-
-        // const ratio = 215.9 / 279.4;
-
-
-        const paperWidth = availableWidth;
-        const paperHeight = availableHeight;
 
         const paperStyle = {
             height: `${paperHeight}px`,
-            width: `${paperWidth}px`,  // `calc(100% - ${margin * 2}px)`,
+            width: `${paperWidth}px`,
             margin: `0 ${margin}px ${margin}px`,
             textAlign: "center",
             display: "inline-block",
@@ -138,13 +135,24 @@ export default class Letters extends React.Component {
         this.setState({ paperStyle });
     }
 
+    get letterProps() {
+        return {
+            addressTo: "TO",
+            addressFrom: "FROM",
+            date: "DATE",
+            body: "BODY",
+            height: this.state.paperStyle.height,
+            width: this.state.paperStyle.width
+        };
+    }
+
     render() {
         if (!this.state.address || !this.state.contacts) {
             return null;
         }
         return (
-            <div className="letters">
-                <div className="letters__spacer-and-appbar-paper-wrapper">
+            <div className="dashboard">
+                <div className="dashboard__spacer-and-appbar-paper-wrapper">
                     <div className={this.appbarSpacerClass} />
                     <div ref={this.appBarPaperWrapperRef.bind(this)} className={this.appbarPaperWrapperClass}>
                         <AppBar
@@ -152,17 +160,19 @@ export default class Letters extends React.Component {
                             showMenuIconButton={!this.state.isContactsDrawerOpen}
                             onLeftIconButtonTouchTap={this.onMenuIconClick.bind(this)}
                         />
-                        <div className="letters__topics-wrapper">
+                        <div className="dashboard__topics-wrapper">
                             <Topics />
                         </div>
-                        <div ref={this.paperRef.bind(this)} className="letters__paper-wrapper">
-                            <Paper style={this.state.paperStyle} zDepth={2} />
+                        <div ref={this.paperRef.bind(this)} className="dashboard__paper-wrapper">
+                            <Paper style={this.state.paperStyle} zDepth={2}>
+                                <Letter {...this.letterProps} />
+                            </Paper>
                         </div>
                     </div>
                 </div>
                 <ContactsDrawer
                     isOpen={this.state.isContactsDrawerOpen}
-                    clName="letters__representatives-by-level"
+                    clName="dashboarddashboard__representatives-by-level"
                     contacts={this.state.contacts}
                     onUpdate={this.onDrawerUpdate.bind(this)}
                 />

@@ -66,9 +66,9 @@ class ContactsDrawer extends React.Component {
     render() {
         return (
             <Drawer open={this.props.isOpen} >
-                {this.level(Application.localize("letters/city"), this.props.contacts.city)}
-                {this.level(Application.localize("letters/state"), this.props.contacts.state)}
-                {this.level(Application.localize("letters/federal"), this.props.contacts.federal)}
+                {this.level(Application.localize("dashboard/city"), this.props.contacts.city)}
+                {this.level(Application.localize("dashboard/state"), this.props.contacts.state)}
+                {this.level(Application.localize("dashboard/federal"), this.props.contacts.federal)}
             </Drawer>
         );
     }

@@ -28,7 +28,7 @@ export default class AddressForm extends React.Component {
             .then(contacts => {
                 this._store.set("address", { value: address });
                 this._store.set("contacts", { value: contacts });
-                this.props.router.push("/letters");
+                this.props.router.push("/dashboard");
             }, (err) => {
                 this.setState({ showProgress: false, errorText: err.toString() });
                 this.disableInputs(false);
