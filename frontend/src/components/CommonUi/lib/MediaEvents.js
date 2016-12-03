@@ -3,8 +3,7 @@ import { Application } from "solo-application";
 export default class MediaEvents {
     constructor({ events }) {
         this._events = events;
-        global.addEventListener("resize", this.onResize.bind(this));
-        // global.removeEventListener("resize", this._calculateVisbleButtonCount);
+        global.addEventListener("resize", this._onResize.bind(this));
     }
 
     get currentWidth() {
@@ -15,7 +14,7 @@ export default class MediaEvents {
         return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     }
 
-    onResize() {
+    _onResize() {
         const width = this.currentWidth;
         const height = this.currentHeight;
         this._events.fireWait("screenResize", { width, height });
@@ -23,6 +22,17 @@ export default class MediaEvents {
 
     onMediumScreen(func) {
         return this.onMediumScreenLessThan(func, Application.configuration.media["medium-screen"]);
+    }
+
+    onScreenResize(func) {
+        const off = this._events.on("screenResize", ({ width, height }) => {
+            func({ width, height });
+        });
+        func({
+            width: this.currentWidth,
+            height: this.currentHeight
+        });
+        return off;
     }
 
     onMediumScreenLessThan(func, lessThanWidth) {
@@ -39,7 +49,6 @@ export default class MediaEvents {
             height: this.currentHeight,
             isLess: this.currentWidth < lessThanWidth
         });
-        this.onResize();
         return off;
     }
 }
