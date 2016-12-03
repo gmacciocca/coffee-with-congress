@@ -17,7 +17,7 @@ const configuration = {
     },
     storage: {
         schemas: {
-            "storage.localStorage": {
+            "storage.sessionStorage": {
                 "data": []
             }
         }
