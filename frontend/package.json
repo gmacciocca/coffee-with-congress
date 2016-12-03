@@ -7,14 +7,18 @@
     "xprebuild": "npm run clean",
     "clean": "gulp clean",
     "lint": "eslint src",
-    "start": "npm run nodemon",
-    "nodemon": "nodemon --watch src -e js,scss,json -x npm run reload",
-    "reload": "npm run build && npm run server",
-    "build": "npm run createDirs && npm run babelify && npm run sassify && npm run browserify && npm run copyResources && npm run copyImages",
+
+    "start": "npm run prepareForReload && nodemon --watch src -e js,scss,json -x npm run reload",
+    "prepareForReload": "npm run createDirs",
+    "reload": "npm run buildFiles && npm run server",
+
+    "build": "npm run createDirs && npm run buildFiles",
+    "buildFiles": "npm run babelify && npm run sassify && npm run browserify && npm run copyResources && npm run copyImages",
+
     "deploy": "gh-pages -d public",
     "server": "node_modules/.bin/http-server -c-1",
     "createDirs": "gulp createDirs",
-    "babelify": "babel src --source-maps --out-dir ./lib",
+    "babelify": "babel src --ignore src/third-party/materialize-css --source-maps --out-dir ./lib",
     "browserify": "browserify ./lib/index.js --debug -o ./public/js/bundle.js",
     "sassify": "gulp sassify",
     "copyImages": "cp ./src/components/*/images/*.* ./public/images/",

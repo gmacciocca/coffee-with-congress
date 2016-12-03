@@ -32,7 +32,7 @@ gulp.task("clean", function() {
     del.sync(paths.clean);
 });
 
-gulp.task("createDirs", function() {
+gulp.task("createDirs", ["clean"], function() {
     paths.clean.forEach(function(dir) {
         mkdirp.sync(dir, "0777");
     });
