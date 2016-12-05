@@ -1,3 +1,4 @@
+import "./polyfills";
 import ReactDOM from "react-dom";
 import routes from "./routes";
 import injectTapEventPlugin from "react-tap-event-plugin";
