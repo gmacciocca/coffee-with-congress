@@ -1,5 +1,5 @@
 .common-ui {
-    &__refresh-progress-overlay {
+    &__overlay-progress {
         position: fixed;
         overflow-y: scroll;
         top: 0;
@@ -8,7 +8,7 @@
         left: 0;
         background: $cwc-progress-overlay-main-background-color;
         align-content: center;
-        z-index: 20;
+        z-index: 9999;
         &__hidden {
             display: none;
         }

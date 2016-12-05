@@ -2,7 +2,7 @@ import React from "react";
 import { Application } from "solo-application";
 import InputAddress from "./InputAddress";
 import ContinueButton from "./ContinueButton";
-import { RefreshProgress } from "../../../CommonUi";
+import { OverlayProgress } from "../../../CommonUi";
 
 export default class AddressForm extends React.Component {
     constructor(...args) {
@@ -49,7 +49,7 @@ export default class AddressForm extends React.Component {
             <div className="welcome__address-form" >
                 <form onSubmit={this.onSubmit.bind(this)}>
                     <InputAddress
-                        autoFocus={false}
+                        autoFocus={true}
                         name="address"
                         onChange={this.addressOnChange.bind(this)}
                         errorText={this.state.errorText}
@@ -58,7 +58,7 @@ export default class AddressForm extends React.Component {
                         disabled={this.state.disableContinueButton || this.state.disableInputs}
                     />
                 </form>
-                <RefreshProgress showProgress={this.state.showProgress} />
+                <OverlayProgress showProgress={this.state.showProgress} />
             </div>
         );
     }

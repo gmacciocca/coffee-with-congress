@@ -22,14 +22,26 @@ export default class Topic extends React.Component {
         this.setState({ value });
     }
 
+    get inlineStyle() {
+        return {
+            width: "100%"
+        };
+    }
+
     render() {
         return (
             <SelectField
+                style={this.inlineStyle}
+                autoWidth={true}
                 value={this.state.value}
                 onChange={this.handleChange.bind(this)}
                 floatingLabelText={Application.localize("dashboard/topicLabel")}
             >
-            {items}
+            {
+                this.props.topics && this.props.topics.map(topic => {
+                    return (<MenuItem key={topic.id} value={topic.id} primaryText={topic.name} />);
+                })
+            }
             </SelectField>
         );
     }

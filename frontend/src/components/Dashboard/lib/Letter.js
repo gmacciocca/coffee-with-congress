@@ -34,7 +34,7 @@ export default class Letter extends React.Component {
         );
     }
 
-    get letterInlineStyle() {
+    get inlineStyle() {
         return (this.props.width && this.props.height) ?
             {
                 width: this.props.width,
@@ -45,7 +45,7 @@ export default class Letter extends React.Component {
 
     render() {
         return (
-            <div className="letter" style={this.letterInlineStyle}>
+            <div className="letter" style={this.inlineStyle}>
                 {this.addressTo}
                 {this.addressFrom}
                 {this.date}

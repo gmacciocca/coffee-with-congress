@@ -5,9 +5,14 @@ export default class AddressValidation {
         this._loadResource = loadResource;
     }
 
-    contacts(address) {
+    fetchContacts(address) {
         address = encodeURIComponent(address);
         const resource = `${Application.configuration.origins.cwcServer}/contacts?address=${address}`;
+        return this._loadResource.jsonResource(resource);
+    }
+
+    fetchTopics() {
+        const resource = `${Application.configuration.origins.cwcServer}/issues`;
         return this._loadResource.jsonResource(resource);
     }
 }

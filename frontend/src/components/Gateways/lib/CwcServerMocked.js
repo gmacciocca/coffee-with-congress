@@ -88,7 +88,43 @@ export default class AddressValidation {
                     ]
                 };
                 resolve(response);
-            }, 2000);
+            }, 1000);
+        });
+    }
+
+    fetchTopics() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const response = [{
+                    id: 1,
+                    name: "Trump Administration / Nominees"
+                }, {
+                    id: 2,
+                    name: "Healthcare"
+                }, {
+                    id: 3,
+                    name: "Immigration"
+                }, {
+                    id: 4,
+                    name: "Reproductive Rights"
+                }, {
+                    id: 5,
+                    name: "Civil Liberties / First Amendment"
+                }, {
+                    id: 6,
+                    name: "Marriage Equality"
+                }, {
+                    id: 7,
+                    name: "Police Brutality / Criminal Justice"
+                }, {
+                    id: 8,
+                    name: "Refugees"
+                }, {
+                    id: 9,
+                    name: "Gun Safety Laws"
+                }];
+                resolve(response);
+            }, 500);
         });
     }
 }

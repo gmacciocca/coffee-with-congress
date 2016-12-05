@@ -7,18 +7,50 @@ import AppBar from "material-ui/AppBar";
 import ContactsDrawer from "./ContactsDrawer";
 import Paper from "material-ui/Paper";
 import Letter from "./Letter";
+import FlatButton from "material-ui/FlatButton";
+import IconMenu from "material-ui/IconMenu";
+import IconButton from "material-ui/IconButton";
+import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
+import MenuItem from "material-ui/MenuItem";
+import { OverlayProgress } from "../../CommonUi";
+
+class Print extends React.Component {
+    static muiName = "FlatButton";
+    render() {
+        return (
+            <FlatButton {...this.props} label={Application.localize("dashboard/print")} />
+        );
+    }
+}
+
+const Logged = (props) => (
+    <IconMenu
+        {...props}
+        iconButtonElement={
+            <IconButton><MoreVertIcon /></IconButton>
+        }
+        targetOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+    >
+        <MenuItem primaryText="Print" />
+    </IconMenu>
+);
 
 export default class Dashboard extends React.Component {
     constructor(...args) {
         super(...args);
         this._store = Application.stores.data;
+        this._cwcServer = Application.roles.cwcServer;
+        this._mediaEvents = Application.roles.mediaEvents;
         this.state = {
             address: null,
             contacts: null,
+            topics: null,
             isContactsDrawerOpen: true,
             isSmallScreen: true,
             showOverlay: false,
-            paperStyle: {}
+            paperStyle: {},
+            showProgress: false
         };
         this._offs = [];
     }
@@ -32,8 +64,19 @@ export default class Dashboard extends React.Component {
         } else {
             this.props.router.push("/");
         }
-        this._offs.push(Application.roles.mediaEvents.onMediumScreen(this.onMediumScreen.bind(this)));
-        this._offs.push(Application.roles.mediaEvents.onScreenResize(this.onScreenResize.bind(this)));
+        this._offs.push(this._mediaEvents.onMediumScreen(this.onMediumScreen.bind(this)));
+        this._offs.push(this._mediaEvents.onScreenResize(this.onScreenResize.bind(this)));
+        this.fetchTopics();
+    }
+
+    fetchTopics() {
+        this.setState({ showProgress: true });
+        this._cwcServer.fetchTopics()
+            .then(topics => {
+                this.setState({ showProgress: false, topics });
+            }, () => {
+                this.setState({ showProgress: false });
+            });
     }
 
     componentDidMount() {
@@ -128,7 +171,7 @@ export default class Dashboard extends React.Component {
         const paperStyle = {
             height: `${paperHeight}px`,
             width: `${paperWidth}px`,
-            margin: `0 ${margin}px ${margin}px`,
+            // margin: `0 ${margin}px ${margin}px`,
             textAlign: "center",
             display: "inline-block",
         };
@@ -157,11 +200,12 @@ export default class Dashboard extends React.Component {
                     <div ref={this.appBarPaperWrapperRef.bind(this)} className={this.appbarPaperWrapperClass}>
                         <AppBar
                             title={Application.localize("welcome/title")}
-                            showMenuIconButton={!this.state.isContactsDrawerOpen}
+                            showMenuIconButton={false}
                             onLeftIconButtonTouchTap={this.onMenuIconClick.bind(this)}
+                            iconElementRight={<Logged />}
                         />
                         <div className="dashboard__topics-wrapper">
-                            <Topics />
+                            <Topics topics={this.state.topics} />
                         </div>
                         <div ref={this.paperRef.bind(this)} className="dashboard__paper-wrapper">
                             <Paper style={this.state.paperStyle} zDepth={2}>
@@ -177,6 +221,7 @@ export default class Dashboard extends React.Component {
                     onUpdate={this.onDrawerUpdate.bind(this)}
                 />
                 <ScreenOverlay shouldShow={this.state.showOverlay} onClick={this.onOverlayClick.bind(this)} />
+                <OverlayProgress showProgress={this.state.showProgress} />
             </div>
         );
     }
