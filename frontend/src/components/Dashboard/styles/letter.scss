@@ -1,52 +1,58 @@
-$address-from-margin: 2%;
-$address-to-margin: 2%;
+$letter-margin-lines-top: 4;
+$letter-margin-lines-sides: 3;
+$letter-margin-lines-bottom: 3;
 
-$address-to-top-MATH: (10% + #{$address-to-margin});
-$address-to-top: calc(#{$address-to-top-MATH});
+$letter-margin-sides: calc(1em * #{$letter-margin-lines-sides});
+$letter-margin-bottom: calc(1em * #{$letter-margin-lines-bottom});
 
-$address-width: 50%;
-$address-height: 5em;
+$address-lines: 5;
+$address-height: calc(1em * #{$address-lines});
 
-$body-top: calc( #{$address-to-top-MATH} + #{$address-height} + 2em );
-$body-margin: 2%;
-$body-bottom-margin: 10%;
+$address-from-top: calc(1em * #{$letter-margin-lines-top});
+$date-top: calc(6em + (1em *  #{$letter-margin-lines-top}));
+$address-to-top: calc(8em + (1em *  #{$letter-margin-lines-top}));
+$body-top: calc(14em + (1em *  #{$letter-margin-lines-top}));
+
+$address-width: 70%;
+
+$editable-field-background: $cwc-light-blue;
 
 .letter {
     position: absolute;
-    &__address-to {
-        border: 1px solid blue;
-        position: absolute;
-        top: $address-to-top;
-        left: $address-to-margin;
-        width: $address-width;
-        height: $address-height;
-        text-align: left;
-    }
     &__address-from {
-        border: 1px solid red;
+        background: linear-gradient(to left, $editable-field-background, $cwc-main-white);
         position: absolute;
-        top: $address-from-margin;
-        right: $address-from-margin;
+        top: $address-from-top;
+        right: $letter-margin-sides;
         width: $address-width;
         height: $address-height;
         text-align: right;
     }
     &__date {
-        border: 1px solid green;
+        background: linear-gradient(to left, $editable-field-background, $cwc-main-white);
         position: absolute;
-        top: calc(2% + 6em);
-        right: 2%;
+        top: $date-top;
+        right: $letter-margin-sides;
         width: 50%;
         height: 1em;
         text-align: right;
     }
-    &__body {
-        border: 1px solid black;
+    &__address-to {
+        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
         position: absolute;
-
+        top: $address-to-top;
+        left: $letter-margin-sides;
+        width: $address-width;
+        height: $address-height;
+        text-align: left;
+    }
+    &__body {
+        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
+        position: absolute;
         top: $body-top;
-        bottom: $body-bottom-margin;
-        left: $body-margin;
-        right: $body-margin;
+        left: $letter-margin-sides;
+        right: $letter-margin-sides;
+        bottom: $letter-margin-bottom;
+        text-align: left;
     }
 }

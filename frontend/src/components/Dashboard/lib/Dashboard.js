@@ -27,7 +27,7 @@ const Logged = (props) => (
     <IconMenu
         {...props}
         iconButtonElement={
-            <IconButton><MoreVertIcon /></IconButton>
+            <IconButton><MoreVertIcon color="#FFFFFF" /></IconButton>
         }
         targetOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
@@ -169,9 +169,8 @@ export default class Dashboard extends React.Component {
         }
 
         const paperStyle = {
-            height: `${paperHeight}px`,
-            width: `${paperWidth}px`,
-            // margin: `0 ${margin}px ${margin}px`,
+            height: paperHeight,
+            width: paperWidth,
             textAlign: "center",
             display: "inline-block",
         };
@@ -180,10 +179,10 @@ export default class Dashboard extends React.Component {
 
     get letterProps() {
         return {
-            addressTo: "TO",
-            addressFrom: "FROM",
-            date: "DATE",
-            body: "BODY",
+            addressTo: (<span>This<br />Is<br />The<br />To<br />Address</span>),
+            addressFrom: (<span>This<br />Is<br />The<br />From<br />Address</span>),
+            date: (<span>This is the date</span>),
+            body: (<span>This is the first paragraph of the template body and it is a beauty<br />This is the second paragraph</span>),
             height: this.state.paperStyle.height,
             width: this.state.paperStyle.width
         };
@@ -200,7 +199,7 @@ export default class Dashboard extends React.Component {
                     <div ref={this.appBarPaperWrapperRef.bind(this)} className={this.appbarPaperWrapperClass}>
                         <AppBar
                             title={Application.localize("welcome/title")}
-                            showMenuIconButton={false}
+                            showMenuIconButton={true}
                             onLeftIconButtonTouchTap={this.onMenuIconClick.bind(this)}
                             iconElementRight={<Logged />}
                         />
