@@ -51,7 +51,8 @@ See the README file for directions. You'll need python 2.7 and [pip 7.0 or later
 1. Clone this repo
 
    ```
-   git clone https://github.com/GoogleCloudPlatform/appengine-django-skeleton.git
+   git clone https://github.com/gmacciocca/coffee-with-congress/
+   cd coffee-with-congress/backend/
    ```
 1. Install dependencies. There are two types of dependencies. requirements-local.txt contains libraries that are already
    expressed in app.yaml, like MySQL. Since app.yaml includes them in the runtime, they don't need to be installed to deploy the app, but they do need to be installed locally to run the app locally. You can use `pip install -r requirements-local.txt' to install them on your system or in a virtualenv, but the libraries should not be included in the project directory or
@@ -84,21 +85,14 @@ Another approach would be to add it to the import path in `manage.py` like this:
     sys.path.append('lib')
 
 
-1. Create a new CloudSQL instance.
+1. Setup CloudSQL instance.
 
-Please note that only 1st generation CloudSQL instance are currently supported for Google App Engine applications.
 
-* From the Google Cloud Console, go to [Storage > CloudSQL> Create Instance](https://console
- .developers.google.com/project/_/sql/create)
-    
-* Under [Access Control > IP Address](https://console.developers.google.com/project/_/sql/instances/polls/access-control/ip),  Request IPv4 Address. This address will be your HOST for remote access to the
-      CloudSQL instance in mysite/settings.py, so replace `<your-database-host>` with this address.
+Replace
 
-* Under [Databases](https://console.developers.google.com/project/_/sql/instances/polls/databases), click New Database and create the name for your database in mysite/settings.py. Replace
-    
-      `<your-database-name>` with this value.
+      `<your-database-name>` with 'cwc'.
 
-At this point, your deployed AppEngine application can access the database, after you replace 
+At this point, your deployed AppEngine application can access the database, after you replace
 `<your-project-id>:<your-cloudsql-instance>` and
 `<your-database-name>` in mysite/settings.py. The following instructions are to connect to the same CloudSQL instance
 locally. Alternatively, you could install a local MySQL instance and use that in development.
@@ -132,7 +126,7 @@ socket as root. When testing locally, use the settings created above to access t
   python manage.py runserver
   ```
 
-Visit the application [http://localhost:8080](http://localhost:8080)
+Visit the application [http://localhost:8000/admin/](http://localhost:8000/admin/)
 
 See [the development server documentation](https://developers.google.com/appengine/docs/python/tools/devserver)
 for options when running dev_appserver.
@@ -157,7 +151,7 @@ To deploy the application:
    gcloud app deploy
    ```
 
-1. Congratulations!  Your application is now live at https://your-app-id.appspot.com
+1. Congratulations!  Your application is now live at https://causal-port-151005.appspot.com/admin/
 
 ### Installing Libraries
 See the [Third party
