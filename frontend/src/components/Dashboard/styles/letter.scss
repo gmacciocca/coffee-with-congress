@@ -20,22 +20,22 @@ $editable-field-background: $cwc-light-blue;
 .letter {
     position: absolute;
     &__address-from {
-        background: linear-gradient(to left, $editable-field-background, $cwc-main-white);
+        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
         position: absolute;
         top: $address-from-top;
-        right: $letter-margin-sides;
+        left: $letter-margin-sides;
         width: $address-width;
         height: $address-height;
-        text-align: right;
+        text-align: left;
     }
     &__date {
-        background: linear-gradient(to left, $editable-field-background, $cwc-main-white);
+        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
         position: absolute;
         top: $date-top;
-        right: $letter-margin-sides;
+        left: $letter-margin-sides;
         width: 50%;
         height: 1em;
-        text-align: right;
+        text-align: left;
     }
     &__address-to {
         background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
@@ -55,4 +55,58 @@ $editable-field-background: $cwc-light-blue;
         bottom: $letter-margin-bottom;
         text-align: left;
     }
+
+    &__cursor {
+        -webkit-animation: 1s blink step-end infinite;
+        -moz-animation: 1s blink step-end infinite;
+        -ms-animation: 1s blink step-end infinite;
+        -o-animation: 1s blink step-end infinite;
+        animation: 1s blink step-end infinite;
+        font-weight: bolder;
+    }
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
 }

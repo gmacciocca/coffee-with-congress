@@ -1,5 +1,5 @@
-import OverlayProgress from "./lib/OverlayProgress";
+import ProgressOverlay from "./lib/ProgressOverlay";
 import MediaEvents from "./lib/MediaEvents";
 import ScreenOverlay from "./lib/ScreenOverlay";
 
-export { OverlayProgress, MediaEvents, ScreenOverlay };
+export { ProgressOverlay, MediaEvents, ScreenOverlay };

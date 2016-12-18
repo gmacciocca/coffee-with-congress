@@ -2,16 +2,9 @@ import React from "react";
 import { Application } from "solo-application";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
+import Select from "./Select";
 
-const items = [
-    <MenuItem key={1} value={1} primaryText="First Topic" />,
-    <MenuItem key={2} value={2} primaryText="Second Topic" />,
-    <MenuItem key={3} value={3} primaryText="Third Topic" />,
-    <MenuItem key={4} value={4} primaryText="Fourth Topic" />,
-    <MenuItem key={5} value={5} primaryText="Fifth Topic" />,
-];
-
-export default class Topic extends React.Component {
+export default class Topic extends Select {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,21 +15,14 @@ export default class Topic extends React.Component {
         this.setState({ value });
     }
 
-    get inlineStyle() {
-        return {
-            width: "100%"
-        };
+    get labelText() {
+        return Application.localize("dashboard/topicLabel");
     }
 
     render() {
+        const selectProps = this.selectProps;
         return (
-            <SelectField
-                style={this.inlineStyle}
-                autoWidth={true}
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-                floatingLabelText={Application.localize("dashboard/topicLabel")}
-            >
+            <SelectField {...selectProps} >
             {
                 this.props.topics && this.props.topics.map(topic => {
                     return (<MenuItem key={topic.id} value={topic.id} primaryText={topic.name} />);

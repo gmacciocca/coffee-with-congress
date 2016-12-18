@@ -2,7 +2,7 @@ import React from "react";
 import { Application } from "solo-application";
 import InputAddress from "./InputAddress";
 import ContinueButton from "./ContinueButton";
-import { OverlayProgress } from "../../../CommonUi";
+import { ProgressOverlay } from "../../../CommonUi";
 
 export default class AddressForm extends React.Component {
     constructor(...args) {
@@ -58,7 +58,7 @@ export default class AddressForm extends React.Component {
                         disabled={this.state.disableContinueButton || this.state.disableInputs}
                     />
                 </form>
-                <OverlayProgress showProgress={this.state.showProgress} />
+                <ProgressOverlay showProgress={this.state.showProgress} />
             </div>
         );
     }

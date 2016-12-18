@@ -2,6 +2,7 @@
     "colors": {
         "main-white": "#FFFFFF",
         "main-blue": "#007eb2",
+        "main-red": "#ce0000",
         "light-blue": "#E3F2FD",
         "light-blue-transparent": "#E3F2FDAD",
         "charcoal-grey": "#607075",

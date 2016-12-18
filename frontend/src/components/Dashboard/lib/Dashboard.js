@@ -1,40 +1,26 @@
 import React from "react";
 import classnames from "classnames";
 import { Application } from "solo-application";
-import { ScreenOverlay } from "../../CommonUi";
 import Topics from "./Topics";
+import Contacts from "./Contacts";
 import AppBar from "material-ui/AppBar";
-import ContactsDrawer from "./ContactsDrawer";
 import Paper from "material-ui/Paper";
 import Letter from "./Letter";
 import FlatButton from "material-ui/FlatButton";
-import IconMenu from "material-ui/IconMenu";
-import IconButton from "material-ui/IconButton";
-import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
-import MenuItem from "material-ui/MenuItem";
-import { OverlayProgress } from "../../CommonUi";
+import { ProgressOverlay } from "../../CommonUi";
+import NumberInCircle from "./NumberInCircle";
 
 class Print extends React.Component {
     static muiName = "FlatButton";
     render() {
         return (
-            <FlatButton {...this.props} label={Application.localize("dashboard/print")} />
+            <FlatButton
+                {...this.props}
+                label={Application.localize("dashboard/print")} 
+            />
         );
     }
 }
-
-const Logged = (props) => (
-    <IconMenu
-        {...props}
-        iconButtonElement={
-            <IconButton><MoreVertIcon color="#FFFFFF" /></IconButton>
-        }
-        targetOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
-    >
-        <MenuItem primaryText="Print" />
-    </IconMenu>
-);
 
 export default class Dashboard extends React.Component {
     constructor(...args) {
@@ -46,9 +32,6 @@ export default class Dashboard extends React.Component {
             address: null,
             contacts: null,
             topics: null,
-            isContactsDrawerOpen: true,
-            isSmallScreen: true,
-            showOverlay: false,
             paperStyle: {},
             showProgress: false
         };
@@ -56,7 +39,6 @@ export default class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        this.updatePaperStyle();
         const address = this._store.get("address");
         const contacts = this._store.get("contacts");
         if (address && contacts) {
@@ -64,7 +46,6 @@ export default class Dashboard extends React.Component {
         } else {
             this.props.router.push("/");
         }
-        this._offs.push(this._mediaEvents.onMediumScreen(this.onMediumScreen.bind(this)));
         this._offs.push(this._mediaEvents.onScreenResize(this.onScreenResize.bind(this)));
         this.fetchTopics();
     }
@@ -89,51 +70,6 @@ export default class Dashboard extends React.Component {
 
     onScreenResize() {
         this.updatePaperStyle();
-    }
-
-    onMediumScreen({ isLess }) {
-        this.setState({
-            isContactsDrawerOpen: !isLess,
-            isSmallScreen: isLess,
-            showOverlay: this.state.showOverlay && isLess
-        });
-    }
-
-    onMenuIconClick(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const isContactsDrawerOpen = !this.state.isContactsDrawerOpen;
-        this.setState({
-            isContactsDrawerOpen,
-            showOverlay: this.state.isSmallScreen && isContactsDrawerOpen
-        });
-    }
-
-    onOverlayClick(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.setState({
-            isContactsDrawerOpen: false,
-            showOverlay: false
-        });
-    }
-
-    onDrawerUpdate(contacts) {
-        this._store.set("contacts", { value: contacts });
-    }
-
-    get isDrawerOpenAndFixed() {
-        return this.state.isContactsDrawerOpen && !this.state.isSmallScreen;
-    }
-
-    get appbarSpacerClass() {
-        return classnames("dashboard__appbar-left-spacer",
-            { "dashboard__appbar-left-spacer__showing": this.isDrawerOpenAndFixed });
-    }
-
-    get appbarPaperWrapperClass() {
-        return classnames("dashboard__appbar-paper-wrapper",
-            { "dashboard__appbar-paper-wrapper__shifted": this.isDrawerOpenAndFixed });
     }
 
     paperRef(ref) {
@@ -174,7 +110,7 @@ export default class Dashboard extends React.Component {
             textAlign: "center",
             display: "inline-block",
         };
-        this.setState({ paperStyle });
+        this.setState({ paperStyle, availableWidth });
     }
 
     get letterProps() {
@@ -188,6 +124,47 @@ export default class Dashboard extends React.Component {
         };
     }
 
+    setComponentParent(ref) {
+        if (ref && this.state.componentParentWidth !== ref.offsetWidth) {
+            this.setState({ componentParentWidth: ref.offsetWidth });
+        }
+    }
+
+    select({ Component, props, number }) {
+        return (
+            <div className="dashboard__select-wrapper">
+                <div className="dashboard__select-wrapper__number">
+                    <NumberInCircle size="20" number={number} />
+                </div>
+                <div ref={this.setComponentParent.bind(this)} className="dashboard__select-wrapper__select">
+                    <Component parendWidth={this.state.componentParentWidth} {...props} />
+                </div>
+            </div>
+        );
+    }
+
+    get topicsSelect() {
+        return this.select({
+            Component: Topics,
+            props: {
+                topics: this.state.topics,
+                maxWidth: this.state.availableWidth
+            },
+            number: 1
+        });
+    }
+
+    get contactsSelect() {
+        return this.select({
+            Component: Contacts,
+            props: {
+                contacts: this.state.contacts,
+                maxWidth: this.state.availableWidth
+            },
+            number: 2
+        });
+    }
+
     render() {
         if (!this.state.address || !this.state.contacts) {
             return null;
@@ -196,16 +173,14 @@ export default class Dashboard extends React.Component {
             <div className="dashboard">
                 <div className="dashboard__spacer-and-appbar-paper-wrapper">
                     <div className={this.appbarSpacerClass} />
-                    <div ref={this.appBarPaperWrapperRef.bind(this)} className={this.appbarPaperWrapperClass}>
+                    <div ref={this.appBarPaperWrapperRef.bind(this)} className="dashboard__appbar-paper-wrapper">
                         <AppBar
+                            showMenuIconButton={false}
                             title={Application.localize("welcome/title")}
-                            showMenuIconButton={true}
-                            onLeftIconButtonTouchTap={this.onMenuIconClick.bind(this)}
-                            iconElementRight={<Logged />}
+                            iconElementRight={<Print />}
                         />
-                        <div className="dashboard__topics-wrapper">
-                            <Topics topics={this.state.topics} />
-                        </div>
+                        {this.topicsSelect}
+                        {this.contactsSelect}
                         <div ref={this.paperRef.bind(this)} className="dashboard__paper-wrapper">
                             <Paper style={this.state.paperStyle} zDepth={2}>
                                 <Letter {...this.letterProps} />
@@ -213,14 +188,7 @@ export default class Dashboard extends React.Component {
                         </div>
                     </div>
                 </div>
-                <ContactsDrawer
-                    isOpen={this.state.isContactsDrawerOpen}
-                    clName="dashboarddashboard__representatives-by-level"
-                    contacts={this.state.contacts}
-                    onUpdate={this.onDrawerUpdate.bind(this)}
-                />
-                <ScreenOverlay shouldShow={this.state.showOverlay} onClick={this.onOverlayClick.bind(this)} />
-                <OverlayProgress showProgress={this.state.showProgress} />
+                <ProgressOverlay showProgress={this.state.showProgress} />
             </div>
         );
     }

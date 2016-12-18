@@ -22,7 +22,7 @@ export default class AddressValidation {
                             "phones": [ "(610) 301-3175" ],
                             "faxes": [],
                             "emails": ["leahwynnYaT@teleosaurs.xyz"],
-                            "role": "representative"
+                            "role": "a great representative of a state that is far away"
                         }
                     ],
                     state: [

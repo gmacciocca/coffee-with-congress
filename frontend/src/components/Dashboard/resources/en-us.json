@@ -3,7 +3,9 @@
         "city": "City",
         "state": "State",
         "federal": "Federal",
-        "topicLabel": "Select a Topic",
+        "topicLabel": "Topic",
+        "contactsLabel": "Representative",
+        "selectHint": "Select one...",
         "print": "Print"
     }
 }

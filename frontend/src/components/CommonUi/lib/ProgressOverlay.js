@@ -2,7 +2,7 @@ import React from "react";
 import RefreshIndicator from "material-ui/RefreshIndicator";
 import classnames from "classnames";
 
-const OverlayProgress = ({ showProgress }) => {
+const ProgressOverlay = ({ showProgress }) => {
     return (
         <div className={classnames("common-ui__overlay-progress", { "common-ui__overlay-progress__hidden": !showProgress })}>
             <div className="common-ui__overlay-progress__indicator-container">
@@ -17,4 +17,4 @@ const OverlayProgress = ({ showProgress }) => {
     );
 };
 
-export default OverlayProgress;
+export default ProgressOverlay;
