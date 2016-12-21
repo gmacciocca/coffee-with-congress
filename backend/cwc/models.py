@@ -70,4 +70,4 @@ class Template(models.Model):
         safe_city = self.city.name if self.city else ""
         safe_state = self.state.name if self.state else ""
         safe_level = self.level
-        return safe_issue + " " + safe_level + " " + safe_city + " " + safe_state
+        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state
