@@ -16,6 +16,12 @@ class Issue(models.Model):
     def __unicode__(self):
         return self.issue_name
 
+    def for_export(self):
+        return {
+          'id': self.id,
+          'name': self.issue_name
+        }
+
 class State(models.Model):
     name = models.CharField(max_length=150)
     code = models.CharField(max_length=3)
@@ -62,8 +68,8 @@ class Template(models.Model):
     content= models.TextField()
     until= models.DateTimeField(default=one_year_from_now)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True)
-    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
+    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True, blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
     def __unicode__(self):
         safe_issue = self.issue.issue_name if self.issue else ""

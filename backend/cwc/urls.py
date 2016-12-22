@@ -15,9 +15,10 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from cwc.views import index
+from cwc import views
 
 urlpatterns = [
-    url(r'^$', index),
+    url(r'^$', views.index),
+    url(r'^issues', views.get_issues),
     url(r'^admin/', include(admin.site.urls)),
 ]

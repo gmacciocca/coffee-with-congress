@@ -1,5 +1,10 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
+from cwc import models
+from django.utils import timezone
 
-# Create your views here.
 def index(request):
-    return HttpResponse("Hello, cofee with congress. You are at index.")
+    return JsonResponse("Hello, cofee with congress. You are at index.")
+
+def get_issues(request):
+    issues = [issue.for_export() for issue in models.Issue.objects.filter(until__gte=timezone.now())]
+    return JsonResponse(issues, safe=False)
