@@ -54,10 +54,20 @@ class Representation(models.Model):
 
 
 class Template(models.Model):
+    LEVEL_CHOICES = (
+        ('federal', 'Federal'),
+        ('state', 'State'),
+        ('city', 'City'),
+    )
     content= models.TextField()
     until= models.DateTimeField(default=one_year_from_now)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True)
     state = models.ForeignKey(State, on_delete=models.CASCADE, null=True)
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
     def __unicode__(self):
-        return self.content[:150]
+        safe_issue = self.issue.issue_name if self.issue else ""
+        safe_city = self.city.name if self.city else ""
+        safe_state = self.state.name if self.state else ""
+        safe_level = self.level
+        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state
