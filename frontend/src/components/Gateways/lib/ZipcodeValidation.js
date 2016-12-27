@@ -1,9 +1,11 @@
-export default class AddressValidation {
+import { Application } from "solo-application";
+
+export default class ZipcodeValidation {
     constructor({ loadResource }) {
         this._loadResource = loadResource;
     }
 
-    stateAndCityFromZip(zipCode) {
+    stateAndCityFromZipcode(zipCode) {
         const resource = `https://api.zippopotam.us/us/${zipCode}`;
         return this._loadResource.jsonResource(resource)
             .then(response => {
@@ -12,18 +14,11 @@ export default class AddressValidation {
                     const place = response.places[0];
                     const city = place["place name"];
                     const state = place["state abbreviation"];
-                    return city && state ? { city, state } : null;
+                    if (city && state) {
+                        return { city, state };
+                    }
                 }
-                throw Error("Invalid zip code");
+                throw Error(Application.localize("gateways/invalidZipCode"));
             });
-    }
-
-    validateAddress(address) {
-        return new Promise((resolve, reject) => {
-            if (address)
-                resolve();
-            else
-                reject();
-        });
     }
 }

@@ -5,57 +5,66 @@ $letter-margin-lines-bottom: 3;
 $letter-margin-sides: calc(1em * #{$letter-margin-lines-sides});
 $letter-margin-bottom: calc(1em * #{$letter-margin-lines-bottom});
 
-$address-lines: 5;
-$address-height: calc(1em * #{$address-lines});
+$address-from-lines: 3;
+$address-from-height: calc(1em * #{$address-from-lines});
+
+$address-to-lines: 5;
+$address-to-height: calc(1em * #{$address-to-lines});
 
 $address-from-top: calc(1em * #{$letter-margin-lines-top});
-$date-top: calc(6em + (1em *  #{$letter-margin-lines-top}));
-$address-to-top: calc(8em + (1em *  #{$letter-margin-lines-top}));
-$body-top: calc(14em + (1em *  #{$letter-margin-lines-top}));
-
-$address-width: 70%;
-
-$editable-field-background: $cwc-light-blue;
+$date-top: calc(4em + (1em *  #{$letter-margin-lines-top}));
+$address-to-top: calc(6em + (1em *  #{$letter-margin-lines-top}));
+$body-top: calc(12em + (1em *  #{$letter-margin-lines-top}));
 
 .letter {
     position: absolute;
+    @media print {
+        transform: scale(0.5) !important;
+        width: 2159px !important;
+        height: 2794px !important;
+        font-size: 62px !important;
+        line-height: 62px !important;
+    }
     &__address-from {
-        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
+        @media not print {
+            background: linear-gradient(to right, $cwc-color-secondary-background, $cwc-color-main-background);
+        }
         position: absolute;
         top: $address-from-top;
         left: $letter-margin-sides;
-        width: $address-width;
-        height: $address-height;
+        right: $letter-margin-sides;
+        height: $address-from-height;
         text-align: left;
+        cursor: pointer;
     }
     &__date {
-        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
         position: absolute;
         top: $date-top;
         left: $letter-margin-sides;
-        width: 50%;
+        right: $letter-margin-sides;
         height: 1em;
         text-align: left;
     }
     &__address-to {
-        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
         position: absolute;
         top: $address-to-top;
         left: $letter-margin-sides;
-        width: $address-width;
-        height: $address-height;
+        right: $letter-margin-sides;
+        height: $address-to-height;
         text-align: left;
     }
     &__body {
-        background: linear-gradient(to right, $editable-field-background, $cwc-main-white);
+        @media not print {
+            background: linear-gradient(to right, $cwc-color-secondary-background, $cwc-color-main-background);
+        }
         position: absolute;
         top: $body-top;
         left: $letter-margin-sides;
         right: $letter-margin-sides;
         bottom: $letter-margin-bottom;
         text-align: left;
+        cursor: pointer;
     }
-
     &__cursor {
         -webkit-animation: 1s blink step-end infinite;
         -moz-animation: 1s blink step-end infinite;
@@ -63,6 +72,11 @@ $editable-field-background: $cwc-light-blue;
         -o-animation: 1s blink step-end infinite;
         animation: 1s blink step-end infinite;
         font-weight: bolder;
+    }
+    &__replace-string {
+        font-style: italic;
+        font-weight: bold;
+        color: $cwc-color-alert-text;
     }
 }
 

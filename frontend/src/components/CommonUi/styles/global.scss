@@ -2,6 +2,7 @@ $cwc-font: 'Roboto', 'Adelle-Sans', 'Helvetica Neue', Arial, sans-serif;
 
 /*Global*/
 html {
-    background-color: $cwc-main-background-color;
+    background-color: $cwc-color-main-background;
+    color: $cwc-color-main-text;
     font-family: $cwc-font
 }

@@ -3,9 +3,21 @@
         "city": "City",
         "state": "State",
         "federal": "Federal",
-        "topicLabel": "Topic",
+        "issueLabel": "Issue",
         "contactsLabel": "Representative",
         "selectHint": "Select one...",
-        "print": "Print"
+        "print": "Print",
+        "pleaseEnterYourNameHere": "PLEASE enter your name here...",
+        "pleaseSelectARepresentative": "PLEASE select a representative above...",
+        "addressEditDialogTitle": "EDIT SENDER INFORMATION",
+        "save": "Save",
+        "cancel": "Cancel",
+        "name": "Name",
+        "address": "Address",
+        "city": "City",
+        "state": "State",
+        "zip": "Zip",
+        "templateEditDialogTitle": "EDIT LETTER TEMPLATE",
+        "template": "Enter letter template here..."
     }
 }

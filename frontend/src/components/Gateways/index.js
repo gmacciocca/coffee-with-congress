@@ -1,5 +1,5 @@
-import AddressValidation from "./lib/AddressValidation";
+import ZipcodeValidation from "./lib/ZipcodeValidation";
 import CwcServer from "./lib/CwcServer";
 import CwcServerMocked from "./lib/CwcServerMocked";
 
-export { AddressValidation, CwcServer, CwcServerMocked };
+export { ZipcodeValidation, CwcServer, CwcServerMocked };

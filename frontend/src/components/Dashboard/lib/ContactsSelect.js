@@ -2,25 +2,12 @@ import React from "react";
 import { Application } from "solo-application";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import Select from "./Select";
+import BaseSelect from "./BaseSelect";
 
-export default class Contacts extends Select {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
-
-    handleChange(event, index, value) {
-        this.setState({ value });
-    }
+export default class ContactsSelect extends BaseSelect {
 
     get labelText() {
         return Application.localize("dashboard/contactsLabel");
-    }
-
-    selectRef(ref) {
-        this._ref = ref;
     }
 
     primaryText(name, role) {
@@ -38,24 +25,6 @@ export default class Contacts extends Select {
             </div>
         );
     }
-
-    /*
-    primaryText(name, role) {
-        const usableParentWidth = this.props.parendWidth - (24 * 2);
-        const nameStyle = {
-            width: usableParentWidth // `${usableParentWidth / 3 * 2}px`
-        };
-        const roleStyle = {
-            width: usableParentWidth // `${usableParentWidth / 3}px`
-        };
-        return (
-            <div className="dashboard__select-wrapper__contact">
-                <div className="dashboard__select-wrapper__contact-name" style={nameStyle}>{name}</div>
-                <div className="dashboard__select-wrapper__contact-role" style={roleStyle}>{role}</div>
-            </div>
-        );
-    }
-    */
 
     contactBreaker(typeName) {
         return (
@@ -80,7 +49,7 @@ export default class Contacts extends Select {
     render() {
         const selectProps = this.selectProps;
         return (
-            <SelectField ref={(ref) => this.selectRef(ref)} {...selectProps} >
+            <SelectField {...selectProps} >
                 {this.contactBreaker(Application.localize("dashboard/city"))}
                 {this.contacts(this.props.contacts.city)}
                 {this.contactBreaker(Application.localize("dashboard/state"))}

@@ -3,7 +3,8 @@ import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theo
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import { AddressValidation, CwcServerMocked } from "./components/Gateways";
+import { CwcServerMocked } from "./components/Gateways";
+import { AddressParser } from "./components/Utils";
 import { LoadResource } from "./components/LoadResource";
 import { MediaEvents } from "./components/CommonUi";
 
@@ -18,7 +19,9 @@ const configuration = {
     storage: {
         schemas: {
             "storage.sessionStorage": {
-                "data": []
+                "user": [],
+                "contacts": [],
+                "templates": []
             }
         }
     },
@@ -34,9 +37,8 @@ const getComponents = (locResource) => {
         new ComponentFromClass("loadResource", LoadResource),
         new ComponentFromValue("localize.resource", locResource),
         new ComponentFromClass("localize", Localize),
-        new ComponentFromClass("addressValidation", AddressValidation),
+        new ComponentFromClass("addressParser", AddressParser),
         new ComponentFromClass("cwcServer", CwcServerMocked),
-        new ComponentFromClass("addressValidation", AddressValidation),
         new ComponentFromClass("mediaEvents", MediaEvents)
     ];
 };

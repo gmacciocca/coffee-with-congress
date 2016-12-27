@@ -36,6 +36,8 @@
     "life-events": "^0.1.0",
     "lingo-localize": "^0.1.0",
     "material-ui": "^0.16.4",
+    "moment": "^2.17.1",
+    "parse-address": "0.0.6",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-router": "^2.8.1",

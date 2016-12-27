@@ -1,0 +1,5 @@
+{
+    "gateways": {
+        "invalidZipCode": "Invalid ZIP code"
+    }
+}

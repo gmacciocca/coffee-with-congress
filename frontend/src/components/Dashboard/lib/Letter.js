@@ -14,7 +14,11 @@ export default class Letter extends React.Component {
 
     get addressFrom() {
         return (
-            <div className="letter__address-from" contentEditable={true}>
+            <div
+                className="letter__address-from"
+                contentEditable={false}
+                onClick={this.props.onEditUser}
+            >
                 {this.props.addressFrom}
                 <span className="letter__cursor">{cursor}</span>
             </div>
@@ -31,7 +35,11 @@ export default class Letter extends React.Component {
 
     get body() {
         return (
-            <div className="letter__body" contentEditable={true}>
+            <div
+                className="letter__body"
+                contentEditable={false}
+                onClick={this.props.onEditBody}
+            >
                 {this.props.body}
                 <span className="letter__cursor">{cursor}</span>
             </div>
@@ -39,20 +47,20 @@ export default class Letter extends React.Component {
     }
 
     get inlineStyle() {
-        const linesPerPage = 45;
-        return (this.props.width && this.props.height) ?
-            {
-                width: this.props.width,
-                height: this.props.height,
-                fontSize: `${this.props.height / linesPerPage}px`,
-                lineHeight: `${this.props.height / linesPerPage}px`
-            } :
-            {};
+        // const linesPerPage = 45;
+        // return (this.props.width && this.props.height) ?
+        // {
+        //     width: this.props.width,
+        //     height: this.props.height
+        //     // fontSize: `${this.props.height / linesPerPage}px`,
+        //     // lineHeight: `${this.props.height / linesPerPage}px`
+        // } :
+        // {};
     }
 
     render() {
         return (
-            <div className="letter" style={this.inlineStyle}>
+            <div className="letter" style={this.props.inlineStyle}>
                 {this.addressFrom}
                 {this.date}
                 {this.addressTo}

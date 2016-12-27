@@ -1,47 +1,21 @@
-$cwc-main-white: $colors-main-white;
-$cwc-main-blue: $colors-main-blue;
-$cwc-main-black: $colors-main-black;
-$cwc-main-red: $colors-main-red;
+$cwc-main-color-white: $colors-main-white;
+$cwc-main-color-blue: $colors-main-blue;
+$cwc-main-color-black: $colors-main-black;
+$cwc-main-color-red: $colors-main-red;
+$cwc-main-color-light-blue: $colors-light-blue;
+$cwc-main-color-light-blue-transparent: $colors-light-blue-transparent;
+$cwc-main-color-charcoal-grey: $colors-charcoal-grey;
 
-$cwc-light-blue: $colors-light-blue;
-$cwc-light-blue-transparent: $colors-light-blue-transparent;
-
-$cwc-light-grey: $colors-light-grey;
-
-$cwc-charcoal-grey: $colors-charcoal-grey;
-
-$cwc-input-box-grey: $colors-input-box-grey;
-$cwc-input-box-grey-hover: $colors-input-box-grey-hover;
-$cwc-page-grey: $colors-page-grey;
-
-$cwc-main-background-color: $cwc-light-blue;
 $cwc-progress-overlay-main-background-color: rgba(227,242,253,.68);
 $cwc-overlay-main-background-color: rgba(0,0,0,.3);
 
-.cwc-main-white {
-    background-color: $cwc-main-white;
-}
-.cwc-main-white-text {
-    color: $cwc-main-white;
-}
+$cwc-color-main-background:         $cwc-main-color-white;
+$cwc-color-secondary-background:    $cwc-main-color-light-blue;
+$cwc-color-contrast-background:     $cwc-main-color-charcoal-grey;
 
-.cwc-main-blue {
-    background-color: $cwc-main-blue;
-}
-.cwc-main-blue-text {
-    color: $cwc-main-blue;
-}
+$cwc-color-main-text:               $cwc-main-color-black;
+$cwc-color-secondary-text:          $cwc-main-color-charcoal-grey;
+$cwc-color-contrast-text:           $cwc-main-color-white;
 
-.cwc-light-blue {
-    background-color: $cwc-light-blue;
-}
-.cwc-light-blue-text {
-    color: $cwc-light-blue;
-}
-
-.cwc-charcoal-grey {
-    background-color: $cwc-charcoal-grey;
-}
-.cwc-charcoal-grey-text {
-    color: $cwc-charcoal-grey;
-}
+$cwc-color-alert-text:              $cwc-main-color-red;
+$cwc-color-alert-underline:         $cwc-main-color-blue;

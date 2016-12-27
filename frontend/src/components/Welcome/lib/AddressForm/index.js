@@ -7,9 +7,10 @@ import { ProgressOverlay } from "../../../CommonUi";
 export default class AddressForm extends React.Component {
     constructor(...args) {
         super(...args);
+        this._addressParser = Application.roles.addressParser;
         this._cwcServer = Application.roles.cwcServer;
+        this._userStore = Application.stores.user;
         this._contactsStore = Application.stores.contacts;
-        this._store = Application.stores.data;
         this.state = {
             disableContinueButton: true,
             disableInputs: false,
@@ -24,10 +25,14 @@ export default class AddressForm extends React.Component {
         const address = elements.address.value;
         this.setState({ showProgress: true });
         this.disableInputs(true);
-        this._cwcServer.fetchContacts(address)
+
+        this._addressParser.parse(address)
+            .then((parsedAddress) => {
+                this._userStore.set("address", { ...parsedAddress });
+                return this._cwcServer.fetchContacts(address);
+            })
             .then(contacts => {
-                this._store.set("address", { value: address });
-                this._store.set("contacts", { value: contacts });
+                this._contactsStore.set("contacts", { ...contacts });
                 this.props.router.push("/dashboard");
             }, (err) => {
                 this.setState({ showProgress: false, errorText: err.toString() });

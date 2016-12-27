@@ -1,7 +1,7 @@
 import React from "react";
 import { Application } from "solo-application";
 
-export default class Select extends React.Component {
+export default class BaseSelect extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,8 +18,8 @@ export default class Select extends React.Component {
                 width: "100%"
             },
             autoWidth: true,
-            value: this.state.value,
-            onChange: this.handleChange.bind(this),
+            value: this.props.selectedId,
+            onChange: this.props.onChange.bind(this),
             floatingLabelStyle: {
                 color: Application.configuration.colors["main-blue"]
             },

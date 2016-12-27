@@ -1,4 +1,17 @@
-export default class AddressValidation {
+
+const ISSUE_NAMES = {
+    1: "Trump Administration / Nominees",
+    2: "Healthcare",
+    3: "Immigration",
+    4: "Reproductive Rights",
+    5: "Civil Liberties / First Amendment",
+    6: "Marriage Equality",
+    7: "Police Brutality / Criminal Justice",
+    8: "Refugees",
+    9: "Gun Safety Laws"
+};
+
+export default class CwcServerMoked {
     constructor({ loadResource }) {
         this._loadResource = loadResource;
     }
@@ -35,7 +48,6 @@ export default class AddressValidation {
                             "zip_code": "31812",
                             "phones": [ "(706) 301-8720" ],
                             "faxes": ["(706) 388-8720"],
-                            "emails": ["isamarboyleTaT@teleosaurs.xyz"],
                             "role": "senator"
                         }, {
                             "id": 55,
@@ -44,13 +56,12 @@ export default class AddressValidation {
                             "city": "Junction City",
                             "state": "GA",
                             "zip_code": "31812",
-                            "phones": [ "(706) 388-3175" ],
                             "faxes": [],
                             "emails": ["isamarboyleTaT@teleosaurs.xyz"],
                             "role": "representative"
                         }, {
                             "id": 56,
-                            "name": "Francicso de la Fuente Y Mendoza de la Caeza de L'Ocho",
+                            "name": "Francicso de la Fuente Y Mendoza de la Caveza de L'Ocho",
                             "address1": "1641 120th Drive",
                             "city": "Junction City",
                             "state": "GA",
@@ -65,7 +76,7 @@ export default class AddressValidation {
                         {
                             "id": 100,
                             "name": "Peter Smith",
-                            "address1":  "415 Main Streer",
+                            "address1":  "415 Main Street",
                             "city": "Campbell",
                             "state": "CA",
                             "zip_code": "94110",
@@ -92,37 +103,49 @@ export default class AddressValidation {
         });
     }
 
-    fetchTopics() {
+    fetchIssues() {
         return new Promise((resolve) => {
             setTimeout(() => {
                 const response = [{
                     id: 1,
-                    name: "Trump Administration / Nominees"
+                    name: ISSUE_NAMES[1]
                 }, {
                     id: 2,
-                    name: "Healthcare"
+                    name: ISSUE_NAMES[2]
                 }, {
                     id: 3,
-                    name: "Immigration"
+                    name: ISSUE_NAMES[3]
                 }, {
                     id: 4,
-                    name: "Reproductive Rights"
+                    name: ISSUE_NAMES[4]
                 }, {
                     id: 5,
-                    name: "Civil Liberties / First Amendment"
+                    name: ISSUE_NAMES[5]
                 }, {
                     id: 6,
-                    name: "Marriage Equality"
+                    name: ISSUE_NAMES[6]
                 }, {
                     id: 7,
-                    name: "Police Brutality / Criminal Justice"
+                    name: ISSUE_NAMES[7]
                 }, {
                     id: 8,
-                    name: "Refugees"
+                    name: ISSUE_NAMES[8]
                 }, {
                     id: 9,
-                    name: "Gun Safety Laws"
+                    name: ISSUE_NAMES[9]
                 }];
+                resolve(response);
+            }, 500);
+        });
+    }
+
+    fetchTemplate(issueId, state, level) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const response = {
+                    id: `${issueId}${state}${level}`,
+                    content: `SUBJECT:  ${ISSUE_NAMES[issueId]}\n\nDear [NAME_OF_REPRESENTATIVE],\nMy name is [NAME_OF_USER] and I want to fix everything about ${ISSUE_NAMES[issueId]}!!\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.\n\nSincerely,\n[NAME_OF_USER]`
+                };
                 resolve(response);
             }, 500);
         });
