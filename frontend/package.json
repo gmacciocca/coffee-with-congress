@@ -1,7 +1,7 @@
 {
-  "name": "coffee-with-congress",
+  "name": "write-to-congress",
   "version": "1.0.0",
-  "description": "Coffee With Congress web app.",
+  "description": "Write to Congress web app.",
   "main": "index.js",
   "scripts": {
     "xprebuild": "npm run clean",

@@ -1,9 +1,9 @@
 {
     "welcome": {
-        "title": "Coffee With Congress" ,
-        "welcomeMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "addressHint": "Street, City, State ZIP",
-        "addressLabel": "Enter Your Address",
+        "title": "Write to Congress" ,
+        "welcomeMessage": "We exercise our right to congress when we write to Congress.  Our mission is to hold elected officials accountable when we sense actions or inactions that threaten our nation’s founding principles of equality and liberty.",
+        "addressHint": "ZIP code",
+        "addressLabel": "Enter Your ZIP code",
         "continue": "Continue"
     }
 }

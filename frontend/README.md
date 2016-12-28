@@ -1,6 +1,6 @@
-# Coffee With Congress
-This is the frontend Single Page App of this projectg
-It is written in Javascrupt (ES6), and it uses
+# Write to Congress
+This is the frontend Single Page App of this project
+It is written in Javascript (ES6), and it uses
 
 - node.js to manage packages and build scripts ***(node v4.4.1 or higher)***
 - gulp to help build scripts
@@ -14,7 +14,7 @@ To clone this repo on your local computer:
 
 ## Install dependencies
 `cd` into the `frontend` folder then run `npm install`. Have some coffee... :)
- 
+
 ## Deployable static resources
 To build the static resources that can be served from the webserver run the build script `npm run build`
 
