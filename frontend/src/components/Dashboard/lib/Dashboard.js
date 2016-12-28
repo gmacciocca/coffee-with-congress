@@ -51,6 +51,13 @@ export default class Dashboard extends React.Component {
         };
         const contacts = this._contactsStore.get("contacts");
         if (address && contacts) {
+            if (!selections.contactIdSelected) {
+                // Select initial default contact
+                selections.contactIdSelected =
+                    (contacts.federal && contacts.federal[0] && contacts.federal[0].id) ||
+                    (contacts.state && contacts.state[0] && contacts.state[0].id) ||
+                    (contacts.city && contacts.city[0] && contacts.city[0].id);
+            }
             this.setState({ address, contacts, ...selections });
             this.fetchIssues();
         } else {
@@ -70,9 +77,11 @@ export default class Dashboard extends React.Component {
         this.setState({ showProgress: true });
         this._cwcServer.fetchIssues()
             .then(issues => {
-                const issueIdSelected = this.state.issueIdSelected ||
-                    (Array.isArray(issues) && issues[0].id) ||
-                    undefined;
+                let issueIdSelected = this.state.issueIdSelected;
+                if (!issueIdSelected) {
+                    // Select initial default issue
+                    issueIdSelected = issues && issues[0] && issues[0].id;
+                }
                 this.setState({ showProgress: false, issues, issueIdSelected });
                 this.fetchTemplatesForIssueIfNeeded(issueIdSelected);
             }, () => {

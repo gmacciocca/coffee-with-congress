@@ -1,7 +1,5 @@
 import React from "react";
 
-const cursor = " |";
-
 export default class Letter extends React.Component {
 
     get addressTo() {
@@ -20,7 +18,6 @@ export default class Letter extends React.Component {
                 onClick={this.props.onEditUser}
             >
                 {this.props.addressFrom}
-                <span className="letter__cursor">{cursor}</span>
             </div>
         );
     }
@@ -41,7 +38,6 @@ export default class Letter extends React.Component {
                 onClick={this.props.onEditBody}
             >
                 {this.props.body}
-                <span className="letter__cursor">{cursor}</span>
             </div>
         );
     }
