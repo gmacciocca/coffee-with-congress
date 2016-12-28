@@ -9,6 +9,7 @@ export default class AddressForm extends React.Component {
         super(...args);
         this._addressParser = Application.roles.addressParser;
         this._cwcServer = Application.roles.cwcServer;
+        this._zipcodeValidation = Application.roles.zipcodeValidation;
         this._userStore = Application.stores.user;
         this._contactsStore = Application.stores.contacts;
         this.state = {
@@ -26,7 +27,8 @@ export default class AddressForm extends React.Component {
         this.setState({ showProgress: true });
         this.disableInputs(true);
 
-        this._addressParser.parse(address)
+        this._zipcodeValidation.addressFromZipcode(address)
+        //this._addressParser.parse(address)
             .then((parsedAddress) => {
                 this._userStore.set("address", { ...parsedAddress });
                 return this._cwcServer.fetchContacts(address);

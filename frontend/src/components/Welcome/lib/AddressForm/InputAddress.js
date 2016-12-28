@@ -3,6 +3,9 @@ import { Application } from "solo-application";
 import TextField from "material-ui/TextField";
 
 const InputAddress = ({ disabled, autoFocus, name, onKeyDown, onChange, errorText }) => {
+    const inlineStyle = {
+        width: "200px"
+    };
     return (
         <div>
             <TextField
@@ -10,7 +13,7 @@ const InputAddress = ({ disabled, autoFocus, name, onKeyDown, onChange, errorTex
                 onKeyDown={onKeyDown}
                 onChange={onChange}
                 autoFocus={autoFocus}
-                className="welcome__input-address"
+                style={inlineStyle}
                 floatingLabelText={Application.localize("welcome/addressLabel")}
                 hintText={Application.localize("welcome/addressHint")}
                 errorText={errorText}

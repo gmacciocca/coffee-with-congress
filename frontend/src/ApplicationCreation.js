@@ -3,7 +3,7 @@ import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theo
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import { CwcServerMocked } from "./components/Gateways";
+import { ZipcodeValidation, CwcServerMocked } from "./components/Gateways";
 import { AddressParser } from "./components/Utils";
 import { LoadResource } from "./components/LoadResource";
 import { MediaEvents } from "./components/CommonUi";
@@ -39,6 +39,7 @@ const getComponents = (locResource) => {
         new ComponentFromClass("localize", Localize),
         new ComponentFromClass("addressParser", AddressParser),
         new ComponentFromClass("cwcServer", CwcServerMocked),
+        new ComponentFromClass("zipcodeValidation", ZipcodeValidation),
         new ComponentFromClass("mediaEvents", MediaEvents)
     ];
 };
