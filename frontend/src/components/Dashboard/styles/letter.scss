@@ -1,8 +1,10 @@
 $letter-margin-lines-top: 4;
 $letter-margin-lines-sides: 3;
+$letter-margin-lines-sides-for-edit-icon: 1.2;
 $letter-margin-lines-bottom: 3;
 
 $letter-margin-sides: calc(1em * #{$letter-margin-lines-sides});
+$letter-margin-sides-for-edit-icon: calc(1em * #{$letter-margin-lines-sides-for-edit-icon});
 $letter-margin-bottom: calc(1em * #{$letter-margin-lines-bottom});
 
 $address-from-lines: 3;
@@ -34,6 +36,14 @@ $body-top: calc(12em + (1em *  #{$letter-margin-lines-top}));
         text-align: left;
         cursor: pointer;
     }
+    &__address-from__edit-icon {
+        position: absolute;
+        top: $address-from-top;
+        left: $letter-margin-sides-for-edit-icon;
+        font-size: 1em !important;
+        cursor: pointer;
+        color: $cwc-color-alert-underline;
+    }
     &__date {
         position: absolute;
         top: $date-top;
@@ -58,6 +68,14 @@ $body-top: calc(12em + (1em *  #{$letter-margin-lines-top}));
         bottom: $letter-margin-bottom;
         text-align: left;
         cursor: pointer;
+    }
+    &__body__edit-icon {
+        position: absolute;
+        top: $body-top;
+        left: $letter-margin-sides-for-edit-icon;
+        font-size: 1em !important;
+        cursor: pointer;
+        color: $cwc-color-alert-underline;
     }
     &__replace-string {
         font-style: italic;

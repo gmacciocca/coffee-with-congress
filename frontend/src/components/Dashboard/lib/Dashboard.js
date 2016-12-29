@@ -180,6 +180,7 @@ export default class Dashboard extends React.Component {
 
         //const scale = 0.3; //0.5; // (wrapperSize.width / contentSize.width);
         const scale = this.state.paperStyle.width / 2159;
+        const oppositeScale = Math.min(2.5, ((1 / scale) / 2));
         return {
             addressFrom: this.letterAddressFrom,
             addressTo: this.letterAddressTo,
@@ -199,6 +200,9 @@ export default class Dashboard extends React.Component {
                 transform: "scale(" + scale + ")",
                 transformOrigin: "0 0 0",
                 fontWeight: "lighter"
+            },
+            editIconStyle: {
+                transform: "scale(" + oppositeScale + ")"
             }
         };
     }
@@ -428,7 +432,7 @@ export default class Dashboard extends React.Component {
                         {this.contactsSelect}
                         <div ref={this.paperRef.bind(this)} className="dashboard__paper-wrapper">
                             <Paper style={this.state.paperStyle} zDepth={2}>
-                                    <Letter {...this.letterProps} />
+                                <Letter {...this.letterProps} />
                             </Paper>
                         </div>
                     </div>

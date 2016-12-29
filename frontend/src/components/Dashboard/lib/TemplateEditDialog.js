@@ -68,7 +68,7 @@ export default class TemplateEditDialog extends React.Component {
                         <TextField
                             name="template"
                             style={{ width: "100%" }}
-                            floatingLabelText={Application.localize("dashboard/template")}
+                            hintText={Application.localize("dashboard/template")}
                             defaultValue={this.props.template}
                             multiLine={true}
                             rows={30}

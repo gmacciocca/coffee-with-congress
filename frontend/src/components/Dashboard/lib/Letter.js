@@ -41,22 +41,21 @@ export default class Letter extends React.Component {
             </div>
         );
     }
-
-    get inlineStyle() {
-        // const linesPerPage = 45;
-        // return (this.props.width && this.props.height) ?
-        // {
-        //     width: this.props.width,
-        //     height: this.props.height
-        //     // fontSize: `${this.props.height / linesPerPage}px`,
-        //     // lineHeight: `${this.props.height / linesPerPage}px`
-        // } :
-        // {};
-    }
-
+    
+    //  border_color  OR  mode_edit
     render() {
         return (
             <div className="letter" style={this.props.inlineStyle}>
+                <i className="dashboard__no-print material-icons letter__address-from__edit-icon"
+                    onClick={this.props.onEditUser}
+                    style={this.props.editIconStyle}>
+                    border_color
+                </i>
+                <i className="dashboard__no-print material-icons letter__body__edit-icon"
+                    onClick={this.props.onEditBody}
+                    style={this.props.editIconStyle}>
+                    border_color
+                </i>
                 {this.addressFrom}
                 {this.date}
                 {this.addressTo}
