@@ -133,3 +133,5 @@ USE_TZ = True
 
 STATIC_ROOT='static'
 STATIC_URL = '/static/'
+
+CIVIC_API_KEY='AIzaSyCXug7gTlDZS9sDlYG06j83qrHZigF8pI0'

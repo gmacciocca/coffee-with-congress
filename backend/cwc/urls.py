@@ -20,5 +20,6 @@ from cwc import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^issues', views.get_issues),
+    url(r'^contacts', views.get_contacts),
     url(r'^admin/', include(admin.site.urls)),
 ]
