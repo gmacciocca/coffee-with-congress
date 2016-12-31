@@ -1,6 +1,7 @@
 # This file is distributed under the same license as the Django package.
 #
 # Translators:
+# Fery Setiawan <gembelweb@gmail.com>, 2015-2016
 # Jannis Leidel <jannis@leidel.info>, 2011
 # rodin <romihardiyanto@gmail.com>, 2011-2012
 # rodin <romihardiyanto@gmail.com>, 2013-2014
@@ -8,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-10 14:49+0200\n"
-"PO-Revision-Date: 2015-10-11 10:05+0000\n"
-"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
+"POT-Creation-Date: 2016-05-17 23:12+0200\n"
+"PO-Revision-Date: 2016-08-23 04:54+0000\n"
+"Last-Translator: Fery Setiawan <gembelweb@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/django/django/language/"
 "id/)\n"
 "MIME-Version: 1.0\n"
@@ -39,6 +40,9 @@ msgid ""
 "click the link and add it to your bookmarks. Now you can select the "
 "bookmarklet from any page in the site."
 msgstr ""
+"Untuk memasang bookmarklet, tarik tautan ke alat batang penunjuk halaman "
+"buku anda, atau klik-kanan tautan dan tambakan itu ke penunjuk halaman buku "
+"anda. Sekarang anda dapat memilih bookmarklet dari tiap halaman di situs."
 
 msgid "Documentation for this page"
 msgstr "Dokumentasi untuk laman ini"
@@ -117,7 +121,7 @@ msgid "Model: %(name)s"
 msgstr "Model: %(name)s"
 
 msgid "Fields"
-msgstr ""
+msgstr "Bidang"
 
 msgid "Field"
 msgstr "Bidang"
@@ -129,16 +133,16 @@ msgid "Description"
 msgstr "Deskripsi"
 
 msgid "Methods with arguments"
-msgstr ""
+msgstr "Cara dengan penjelasan"
 
 msgid "Method"
-msgstr ""
+msgstr "Cara"
 
 msgid "Arguments"
-msgstr ""
+msgstr "Penjelasan"
 
-msgid "Back to Model Documentation"
-msgstr "Kembali ke Dokumentasi Model"
+msgid "Back to Model documentation"
+msgstr "Kembali ke Model Dokumentasi"
 
 msgid "Model documentation"
 msgstr "Dokumentasi model"
@@ -157,6 +161,7 @@ msgstr "Templat: %(name)s"
 msgid "Template: \"%(name)s\""
 msgstr "Templat: \"%(name)s\""
 
+#. Translators: Search is not a verb here, it qualifies path (a search path)
 #, python-format
 msgid "Search path for template \"%(name)s\":"
 msgstr "Cari lokasi untuk templat \"%(name)s\":"
@@ -211,8 +216,8 @@ msgstr "Konteks:"
 msgid "Templates:"
 msgstr "Templat:"
 
-msgid "Back to Views Documentation"
-msgstr "Kembali ke Dokumentasi 'View'"
+msgid "Back to View documentation"
+msgstr "Kembali ke Tampilan dokumentasi"
 
 msgid "View documentation"
 msgstr "Dokumentasi view"
