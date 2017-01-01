@@ -1,85 +1,34 @@
-$letter-margin-lines-top: 4;
-$letter-margin-lines-sides: 3;
-$letter-margin-lines-sides-for-edit-icon: 1.2;
-$letter-margin-lines-bottom: 3;
-
-$letter-margin-sides: calc(1em * #{$letter-margin-lines-sides});
-$letter-margin-sides-for-edit-icon: calc(1em * #{$letter-margin-lines-sides-for-edit-icon});
-$letter-margin-bottom: calc(1em * #{$letter-margin-lines-bottom});
-
-$address-from-lines: 3;
-$address-from-height: calc(1em * #{$address-from-lines});
-
-$address-to-lines: 5;
-$address-to-height: calc(1em * #{$address-to-lines});
-
-$address-from-top: calc(1em * #{$letter-margin-lines-top});
-$date-top: calc(4em + (1em *  #{$letter-margin-lines-top}));
-$address-to-top: calc(6em + (1em *  #{$letter-margin-lines-top}));
-$body-top: calc(12em + (1em *  #{$letter-margin-lines-top}));
-
 .letter {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     @media print {
-        transform: scale(0.5) !important;
-        width: 2159px !important;
-        height: 2794px !important;
-        font-size: 62px !important;
-        line-height: 62px !important;
+        @page { margin: 0in }
     }
-    &__address-from {
-        position: absolute;
-        top: $address-from-top;
-        left: $letter-margin-sides;
-        right: $letter-margin-sides;
-        height: $address-from-height;
+    &__contents {
         text-align: left;
-        cursor: pointer;
-    }
-    &__address-from__edit-icon {
-        position: absolute;
-        top: $address-from-top;
-        left: $letter-margin-sides-for-edit-icon;
-        font-size: 1em !important;
-        cursor: pointer;
-        color: $cwc-color-alert-underline;
-    }
-    &__date {
-        position: absolute;
-        top: $date-top;
-        left: $letter-margin-sides;
-        right: $letter-margin-sides;
-        height: 1em;
-        text-align: left;
-    }
-    &__address-to {
-        position: absolute;
-        top: $address-to-top;
-        left: $letter-margin-sides;
-        right: $letter-margin-sides;
-        height: $address-to-height;
-        text-align: left;
-    }
-    &__body {
-        position: absolute;
-        top: $body-top;
-        left: $letter-margin-sides;
-        right: $letter-margin-sides;
-        bottom: $letter-margin-bottom;
-        text-align: left;
-        cursor: pointer;
-    }
-    &__body__edit-icon {
-        position: absolute;
-        top: $body-top;
-        left: $letter-margin-sides-for-edit-icon;
-        font-size: 1em !important;
-        cursor: pointer;
-        color: $cwc-color-alert-underline;
-    }
-    &__replace-string {
-        font-style: italic;
-        font-weight: bold;
-        color: $cwc-color-alert-text;
+        overflow: hidden;
+        @media not print {
+            &__editable {
+                &::before {
+                    content: "";
+                    background: url(../images/ic_mode_edit_24px.svg) no-repeat;
+                    width: 2em;
+                    height: 2em;
+                    position: absolute;
+                    display: inline-block;
+                    left: 0em;
+                    background-size: 2em;
+                }
+                cursor: pointer;
+                background: linear-gradient(to right, $cwc-color-secondary-background, $cwc-color-main-background);
+            }
+        }
+        &__replace-string {
+            font-style: italic;
+            font-weight: bold;
+            color: $cwc-color-alert-text;
+        }
     }
 }

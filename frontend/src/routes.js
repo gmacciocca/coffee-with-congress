@@ -4,6 +4,9 @@ import { Router, Route, hashHistory, withRouter } from "react-router";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { AppShell } from "./components/AppShell";
 import { Dashboard } from "./components/Dashboard";
+//import { CustomTheme } from "./components/CommonUi";
+
+//<MuiThemeProvider muiTheme={CustomTheme}>
 
 export default (
     <MuiThemeProvider>

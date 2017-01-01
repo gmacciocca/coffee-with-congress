@@ -9,13 +9,11 @@ export default class Welcome extends React.Component {
         super(...args);
         this._userStore = Application.stores.user;
         this._contactsStore = Application.stores.contacts;
-        this._templatesStore = Application.stores.templates;
     }
 
     componentDidMount() {
         this._userStore.clear();
         this._contactsStore.clear();
-        this._templatesStore.clear();
     }
 
     render() {

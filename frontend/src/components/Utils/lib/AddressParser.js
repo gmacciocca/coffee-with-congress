@@ -7,7 +7,6 @@ const spaceBetween = (...args) => {
     return strings.filter(str => !!str).join(" ");
 };
 
-
 export default class AddressParser {
     parse(address) {
         return new Promise((resolve, reject) => {

@@ -7,3 +7,4 @@ import "core-js/fn/array/from";
 import "core-js/fn/object/assign";
 import "core-js/fn/math/trunc";
 import "core-js/fn/weak-map";
+import "core-js/modules/es6.promise";

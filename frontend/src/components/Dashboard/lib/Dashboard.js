@@ -1,6 +1,5 @@
 import React from "react";
 import { Application } from "solo-application";
-import Moment from "moment";
 import IssuesSelect from "./IssuesSelect";
 import ContactsSelect from "./ContactsSelect";
 import AppBar from "material-ui/AppBar";
@@ -11,18 +10,17 @@ import { ProgressOverlay } from "../../CommonUi";
 import NumberInCircle from "./NumberInCircle";
 import AddressEditDialog from "./AddressEditDialog";
 import TemplateEditDialog from "./TemplateEditDialog";
-
-const spaceBetween = (...args) => {
-    const strings = [...args];
-    return strings.filter(str => !!str).join(" ");
-};
+import PrintWarningDialog from "./PrintWarningDialog";
+import letterConstants from "./letterConstants";
 
 export default class Dashboard extends React.Component {
     constructor(...args) {
         super(...args);
+        this._events = Application.roles.events;
         this._userStore = Application.stores.user;
         this._contactsStore = Application.stores.contacts;
         this._cwcServer = Application.roles.cwcServer;
+        this._utils = Application.roles.utils;
         this._mediaEvents = Application.roles.mediaEvents;
         this.state = {
             address: null,
@@ -33,7 +31,10 @@ export default class Dashboard extends React.Component {
             templates: null,
             templateIdSelected: null,
             paperStyle: {},
-            showProgress: false
+            showProgress: false,
+            showAddressEditDialog: false,
+            showTemplateEditDialog: false,
+            showPrintWarningDialog: false
         };
         this._offs = [];
     }
@@ -51,7 +52,7 @@ export default class Dashboard extends React.Component {
         };
         const contacts = this._contactsStore.get("contacts");
         if (address && contacts) {
-            if (!selections.contactIdSelected) {
+            if (this._utils.isNullOrUndefined(selections.contactIdSelected)) {
                 // Select initial default contact
                 selections.contactIdSelected =
                     (contacts.federal && contacts.federal[0] && contacts.federal[0].id) ||
@@ -61,8 +62,12 @@ export default class Dashboard extends React.Component {
             this.setState({ address, contacts, ...selections });
             this.fetchIssues();
         } else {
-            this.props.router.push("/");
+            this.goHome();
         }
+    }
+
+    goHome() {
+        this.props.router.push("/");
     }
 
     setLiteners() {
@@ -73,19 +78,28 @@ export default class Dashboard extends React.Component {
         this._userStore.set("selections", { ...args });
     }
 
+    showProgress(showProgress) {
+        this.setState({ showProgress });
+    }
+
+    get isProgressShowing() {
+        return this.state.showProgress;
+    }
+
     fetchIssues() {
-        this.setState({ showProgress: true });
+        this.showProgress(true);
         this._cwcServer.fetchIssues()
             .then(issues => {
                 let issueIdSelected = this.state.issueIdSelected;
-                if (!issueIdSelected) {
+                if (this._utils.isNullOrUndefined(issueIdSelected)) {
                     // Select initial default issue
                     issueIdSelected = issues && issues[0] && issues[0].id;
                 }
-                this.setState({ showProgress: false, issues, issueIdSelected });
+                this.setState({ issues, issueIdSelected });
+                this.showProgress(false);
                 this.fetchTemplatesForIssueIfNeeded(issueIdSelected);
             }, () => {
-                this.setState({ showProgress: false });
+                this.showProgress(false);
             });
     }
 
@@ -99,8 +113,22 @@ export default class Dashboard extends React.Component {
         }
     }
 
+    waitForAllPromises(promises) {
+        const wrappedPromises = promises.map(promise => {
+            return new Promise((resolve) => {
+                promise
+                .then((...args) => {
+                    resolve(args);
+                }, () => {
+                    resolve();
+                });
+            });
+        });
+        return Promise.all(wrappedPromises);
+    }
+
     fetchTemplatesForIssue(issueId) {
-        this.setState({ showProgress: true });
+        this.showProgress(true);
         const address = this.state.address;
         const templates = {};
         const promises = ["city", "state", "federal"].map(level => {
@@ -109,21 +137,28 @@ export default class Dashboard extends React.Component {
                     templates[level] = templatesForIssueAndState;
                 });
         });
-        return Promise.all(promises)
+        //return Promise.all(promises)
+        return this.waitForAllPromises(promises)
             .then(() => {
-                this.setState({ showProgress: false });
+                this.showProgress(false);
                 return templates;
             }, () => {
-                this.setState({ showProgress: false });
+                this.showProgress(false);
             });
     }
 
     componentDidMount() {
         this.updatePaperStyle();
+        global.document.addEventListener("keydown", this.keypressHandler.bind(this));
     }
 
     componentWillUnmount() {
         this._offs.forEach(off => off());
+        global.document.removeEventListener("keydown", this.keypressHandler.bind(this));
+    }
+
+    keypressHandler(event) {
+        this._events.fire("cwc:keydown", event);
     }
 
     onScreenResize() {
@@ -154,90 +189,54 @@ export default class Dashboard extends React.Component {
         // Letter size = 215.9 by 279.4
         // 215.9 : 279.4 = availableWidth : availableHeight
         let paperWidth = 0;
-        let paperHeight = (279.4 * availableWidth) / 215.9;
+        let paperHeight = (letterConstants.letterHeightPx * availableWidth) / letterConstants.letterWidthPx;
         if (paperHeight <= availableHeight) {
             paperWidth = availableWidth;
         } else {
             paperHeight = availableHeight;
-            paperWidth = (215.9 * availableHeight) / 279.4;
+            paperWidth = (letterConstants.letterWidthPx * availableHeight) / letterConstants.letterHeightPx;
         }
 
         const paperStyle = {
             height: paperHeight,
             width: paperWidth,
             textAlign: "center",
-            display: "inline-block",
+            display: "inline-block"
         };
         this.setState({ paperStyle, availableWidth });
     }
 
-    get letterProps() {
-        const linesPerPage = 45;
-        const width = "2159px";
-        const height = "2794px";
-        const fontSize = `${2794 / linesPerPage}px`;
-        const lineHeight = `${2794 / linesPerPage}px`;
+    get currentProps() {
+        const { state, zip } = this.state && this.state.address;
+        const issue = this.state.issues && this.state.issues.find(issue => issue.id === this.state.issueIdSelected);
+        const contact = this.findSelectedContact();
 
-        //const scale = 0.3; //0.5; // (wrapperSize.width / contentSize.width);
-        const scale = this.state.paperStyle.width / 2159;
-        const oppositeScale = Math.min(2.5, ((1 / scale) / 2));
         return {
-            addressFrom: this.letterAddressFrom,
-            addressTo: this.letterAddressTo,
-            date: this.letterDate,
-            body: this.letterBody,
-            height: this.state.paperStyle.height,
-            width: this.state.paperStyle.width,
-            onEditBody: this.onEditBody.bind(this),
-            onEditUser: this.onEditUser.bind(this),
-            showAddressEditDialog: false,
-            showTemplateEditDialog: false,
-            inlineStyle: {
-                width,
-                height,
-                fontSize,
-                lineHeight,
-                transform: "scale(" + scale + ")",
-                transformOrigin: "0 0 0",
-                fontWeight: "lighter"
-            },
-            editIconStyle: {
-                transform: "scale(" + oppositeScale + ")"
-            }
+            state,
+            zip,
+            level: contact && contact.level,
+            contactId: contact && contact.id,
+            issueId: issue && issue.name,
+            fetchingData: this.isProgressShowing
         };
     }
 
-    userNameForLetter(address) {
-        return address.name ?
-            <span>{address.name}</span> :
-            <span className="letter__replace-string">{Application.localize("dashboard/pleaseEnterYourNameHere")}</span>;
-    }
-
-    get letterAddressFrom() {
-        const { address } = this.state;
-        return address ? (
-            <span>
-                {this.userNameForLetter(address)}<br />
-                {address.address}<br />
-                {`${spaceBetween(address.city, address.state, address.zip)}`}
-            </span>
-        ) :
-        null;
-    }
-
-    get letterDate() {
-        var date = new Date();
-        const momentDate = new Moment(date);
-        return (
-            <time tabIndex="0" dateTime={momentDate.toISOString().substr(0, 10)}>
-                {momentDate.format("LL")}
-            </time>
-        );
+    get letterProps() {
+        return {
+            addressFrom: this.state.address,
+            addressTo: this.findSelectedContact(),
+            templateContent: this.getTempleateContent(true),
+            height: this.state.paperStyle.height,
+            width: this.state.paperStyle.width,
+            onEditTemplate: this.onEditTemplate.bind(this),
+            onEditUser: this.onEditUser.bind(this),
+            ...this.currentProps
+        };
     }
 
     findSelectedContact() {
         const { contacts, contactIdSelected } = this.state;
-        if (contacts && (contactIdSelected !== null)){
+        if (contacts && !this._utils.isNullOrUndefined(contactIdSelected)){
             let contact;
             Object.keys(this.state.contacts).find(level => {
                 contact = this.state.contacts[level].find(contact => contact.id === contactIdSelected);
@@ -250,19 +249,6 @@ export default class Dashboard extends React.Component {
         }
     }
 
-    get letterAddressTo() {
-        const contact = this.findSelectedContact();
-        return contact ? (
-            <span>{contact.name}<br />
-                {`${spaceBetween(contact.address1, contact.address2)}`}<br />
-                {`${spaceBetween(contact.city, contact.state, contact.zip_code)}`}<br />
-                {`${contact.phones}`}<br />
-                {`${contact.emails}`}<br />
-            </span>
-        ) :
-        <span className="letter__replace-string">{Application.localize("dashboard/pleaseSelectARepresentative")}</span>;
-    }
-
     get customTemplateId() {
         return `customTeplate-${this.state.issueIdSelected}-${this.state.address.state}`;
     }
@@ -273,44 +259,40 @@ export default class Dashboard extends React.Component {
     }
 
     set customTemplate(value) {
-        const customTemplate = this._userStore.set(this.customTemplateId, { value });
-        return customTemplate && customTemplate.value;
+        if (value) {
+            this._userStore.set(this.customTemplateId, { value });
+        } else {
+            this._userStore.remove(this.customTemplateId);
+        }
     }
 
     fulFillTemplate(templateContent, contact, address) {
-        templateContent = templateContent.replace(/\n/g, "<br>");
+        //templateContent = templateContent.replace(/\n/g, "<br>");
         templateContent = templateContent.replace(/\[NAME_OF_REPRESENTATIVE\]/g, contact.name || "");
         templateContent = templateContent.replace(/\[NAME_OF_USER\]/g, address.name || "");
+        templateContent = templateContent.replace(/\[STATE\]/g, address.state || "");
         return templateContent;
     }
 
     getTempleateContent(fulfillAndReplace) {
         const contact = this.findSelectedContact();
         const { address } = this.state;
-        if (address && contact && this.state.templates) {
-            let templateContent = this.state.templates[contact.level].content;
+        if (address && contact) {
+            let templateContent =
+                this.customTemplate ||
+                (this.state.templates &&
+                 this.state.templates[contact.level] &&
+                 this.state.templates[contact.level].content);
             if (templateContent) {
-                let originalTemplateContent = templateContent;
-                templateContent = this.customTemplate || templateContent;
                 if (fulfillAndReplace) {
                     templateContent = this.fulFillTemplate(templateContent, contact, address);
-                    originalTemplateContent = this.fulFillTemplate(originalTemplateContent, contact, address);
                 }
-                return { templateContent, originalTemplateContent };
+                return templateContent;
             }
         }
-        return {};
     }
 
-    get letterBody() {
-        const { templateContent } = this.getTempleateContent(true);
-        return templateContent ? (
-            <span dangerouslySetInnerHTML={{ __html: templateContent }} />
-        ) :
-        <span className="letter__replace-string">{Application.localize("dashboard/pleaseSelectARepresentative")}</span>;
-    }
-
-    onEditBody() {
+    onEditTemplate() {
         this.setState({ showTemplateEditDialog: true });
     }
 
@@ -321,6 +303,10 @@ export default class Dashboard extends React.Component {
     onSaveTemplateEditDialog(template) {
         this.customTemplate = template;
         this.setState({ showTemplateEditDialog: false });
+    }
+
+    onRestoreTemplateEditDialog() {
+        this.customTemplate = null;
     }
 
     onEditUser() {
@@ -343,8 +329,10 @@ export default class Dashboard extends React.Component {
     }
 
     onContactChange(event, index, contactIdSelected) {
-        this.persistSelection({ contactIdSelected });
-        this.setState({ contactIdSelected });
+        if (!this._utils.isNullOrUndefined(contactIdSelected)) {
+            this.persistSelection({ contactIdSelected });
+            this.setState({ contactIdSelected });
+        }
     }
 
     setSelectParentWidth(ref) {
@@ -355,11 +343,11 @@ export default class Dashboard extends React.Component {
 
     select({ Component, props, number }) {
         return (
-            <div className="dashboard__select-wrapper">
-                <div className="dashboard__select-wrapper__number">
+            <div className="dashboard__numbered-step-wrapper">
+                <div className="dashboard__numbered-step-wrapper__number">
                     <NumberInCircle size="20" number={number} />
                 </div>
-                <div ref={this.setSelectParentWidth.bind(this)} className="dashboard__select-wrapper__select">
+                <div ref={this.setSelectParentWidth.bind(this)} className="dashboard__numbered-step-wrapper__select">
                     <Component parendWidth={this.state.componentParentWidth} {...props} />
                 </div>
             </div>
@@ -392,13 +380,53 @@ export default class Dashboard extends React.Component {
         });
     }
 
+    get thirdStep() {
+        return (
+            <div className="dashboard__numbered-step-wrapper">
+                <div className="dashboard__numbered-step-wrapper__number">
+                    <NumberInCircle size="20" number={3} />
+                </div>
+                <div className="dashboard__numbered-step-wrapper__select">
+                    <div className="dashboard__numbered-step-wrapper___text-only-step">{Application.localize("dashboard/personalizeLetter")}</div>
+                </div>
+            </div>
+        );
+    }
+
     get printElement() {
         return (
             <FlatButton
-                onTouchTap={() => window.print()}
+                onTouchTap={this.printTemplate.bind(this)}
                 label={Application.localize("dashboard/print")}
             />
         );
+    }
+
+    printTemplate() {
+        const { doNotShowPrintWarning } = this._userStore.get("settings") || {};
+        if (!doNotShowPrintWarning) {
+            this.setState({ showPrintWarningDialog: true });
+        } else {
+            window.print();
+        }
+    }
+
+    onCancelPrintWarningDialog() {
+        this.setState({ showPrintWarningDialog: false });
+    }
+
+    onOkPrintWarningDialog(doNotShowPrintWarning) {
+        this.setState({ showPrintWarningDialog: false });
+        this._userStore.set("settings", { doNotShowPrintWarning });
+        setTimeout(() => {
+            window.print();
+        }, 1000);
+    }
+
+    get appBarTitleStyle() {
+        return {
+            cursor: "pointer"
+        };
     }
 
     render() {
@@ -418,18 +446,28 @@ export default class Dashboard extends React.Component {
                         shouldShow={this.state.showTemplateEditDialog}
                         onCancel={this.onCancelTemplateEditDialog.bind(this)}
                         onSave={this.onSaveTemplateEditDialog.bind(this)}
-                        template={this.getTempleateContent(false).templateContent}
+                        onRestore={this.onRestoreTemplateEditDialog.bind(this)}
+                        templateContent={this.getTempleateContent(true)}
+                    />
+                    <PrintWarningDialog
+                        shouldShow={this.state.showPrintWarningDialog}
+                        onCancel={this.onCancelPrintWarningDialog.bind(this)}
+                        onOk={this.onOkPrintWarningDialog.bind(this)}
                     />
                 </div>
                 <div className="dashboard__spacer-and-appbar-paper-wrapper dashboard__no-print">
                     <div ref={this.appBarPaperWrapperRef.bind(this)} className="dashboard__appbar-paper-wrapper">
                         <AppBar
                             showMenuIconButton={false}
-                            title={Application.localize("welcome/title")}
+                            title={<span style={this.appBarTitleStyle}>{Application.localize("welcome/title")}</span>}
                             iconElementRight={this.printElement}
+                            onTitleTouchTap={this.goHome.bind(this)}
                         />
-                        {this.issuesSelect}
-                        {this.contactsSelect}
+                        <div className="dashboard__numbered-steps">
+                            {this.issuesSelect}
+                            {this.contactsSelect}
+                            {this.thirdStep}
+                        </div>
                         <div ref={this.paperRef.bind(this)} className="dashboard__paper-wrapper">
                             <Paper style={this.state.paperStyle} zDepth={2}>
                                 <Letter {...this.letterProps} />
@@ -439,7 +477,7 @@ export default class Dashboard extends React.Component {
                     <ProgressOverlay showProgress={this.state.showProgress} />
                 </div>
                 <div className="dashboard__print-only">
-                    <Letter {...this.letterProps} />
+                    <Letter {...this.letterProps} forPrint={true} />
                 </div>
             </div>
         );

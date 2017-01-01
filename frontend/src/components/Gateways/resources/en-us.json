@@ -1,5 +1,5 @@
 {
     "gateways": {
-        "invalidZipCode": "Invalid ZIP code"
+        "invalidAddress": "No elected officials were found for this state/zip combination"
     }
 }

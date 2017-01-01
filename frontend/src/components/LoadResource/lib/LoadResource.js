@@ -18,11 +18,11 @@ export default class LoadResource {
                 if (xobj.status >= 200 && xobj.status < 300) {
                     resolve(xobj.responseText);
                 } else {
-                    reject(Error(`loadJsonResource: onload error ${xobj.status} trying to load resource ${resourcePath}.`));
+                    reject(Error(`loadJsonResource: onload error ${xobj.status} loading resource ${resourcePath}.`));
                 }
             };
             xobj.onerror = err => {
-                reject(Error(`loadJsonResource onerror: error ${err.toString()} trying to load resource ${resourcePath}.`));
+                reject(Error(`loadJsonResource onerror: error ${err.toString()} loading resource ${resourcePath}.`));
             };
             xobj.open("GET", resourcePath, true);
             xobj.send(null);

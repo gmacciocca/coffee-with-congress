@@ -32,12 +32,16 @@
         display: inline-block;
         float: right;
     }
-    &__select-wrapper {
+    &__numbered-steps {
+        margin: 10px 0;
+    }
+    &__numbered-step-wrapper {
         display: flex;
         max-width: 600px;
         margin: auto;
         justify-content: center;
         align-items: center;
+        height: 4em;
         &__number {
             margin: 10px;
         }
@@ -72,8 +76,17 @@
             text-align: right;
             color: $cwc-color-secondary-text;
         }
+        &___text-only-step {
+            color: $cwc-color-secondary-alert-text;
+            font-size: 0.9em;
+        }
     }
     &__paper-wrapper {
         text-align: center;
+    }
+    &__dialog-buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
 }

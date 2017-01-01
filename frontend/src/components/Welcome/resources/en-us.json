@@ -1,9 +1,11 @@
 {
     "welcome": {
         "title": "Write to Congress" ,
-        "welcomeMessage": "We exercise our right to congress when we write to Congress.  Our mission is to hold elected officials accountable when we sense actions or inactions that threaten our nation’s founding principles of equality and liberty.",
-        "addressHint": "ZIP code",
-        "addressLabel": "Enter Your ZIP code",
+        "welcomeMessage": "We exercise our right to congress when we write to Congress.",
+        "zipCodeLabel": "ZIP code",
+        "zipCodeHint": "Enter ZIP",
+        "stateLabel": "State",
+        "stateHint": "Select state",
         "continue": "Continue"
     }
 }

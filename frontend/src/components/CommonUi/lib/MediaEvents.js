@@ -37,7 +37,6 @@ export default class MediaEvents {
 
     onMediumScreenLessThan(func, lessThanWidth) {
         var lastWidth = lessThanWidth + 1;
-        Application.configuration.colors["main-blue"];
         const off = this._events.on("screenResize", ({ width, height }) => {
             if (lastWidth > lessThanWidth !== width > lessThanWidth){
                 func({ width, height, isLess: lastWidth > lessThanWidth });

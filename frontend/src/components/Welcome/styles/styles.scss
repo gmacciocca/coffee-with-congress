@@ -30,6 +30,18 @@ $welcome-description-side-margin: 20px;
         margin: auto;
         text-align: center;
     }
+
+    &__state-zip {
+        display: flex;
+        justify-content: space-between;
+        width: 250px;
+        margin: auto;
+    }
+
+    &__error-string {
+        color: $cwc-color-alert-text;
+        margin: 0 20px;
+    }
 }
 
 @media #{$cwc-medium-and-up} {

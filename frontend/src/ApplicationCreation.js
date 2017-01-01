@@ -1,10 +1,11 @@
+var appPackage = require("../package.json");
 import { Application, Delegates, UncaughtErrors } from "solo-application";
 import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theory";
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import { ZipcodeValidation, CwcServerMocked } from "./components/Gateways";
-import { AddressParser } from "./components/Utils";
+import { ZipcodeValidation, CwcServer, CwcServerMocked } from "./components/Gateways";
+import { AddressParser, FormatString, Analytics, Utils } from "./components/Utils";
 import { LoadResource } from "./components/LoadResource";
 import { MediaEvents } from "./components/CommonUi";
 
@@ -14,22 +15,26 @@ const JSON_MEDIA = "./resources/media.json ";
 
 const configuration = {
     origins: {
-        cwcServer: "http://localhost/"
+        cwcServer: "https://causal-port-151005.appspot.com"
     },
     storage: {
         schemas: {
             "storage.sessionStorage": {
                 "user": [],
-                "contacts": [],
-                "templates": []
+                "contacts": []
             }
         }
     },
-    colors: {}
+    colors: {},
+    clientName: appPackage.name,
+    clientVersion: appPackage.version,
+    clientDescription: appPackage.description
 };
 
 const getComponents = (locResource) => {
     return [
+        new ComponentFromClass("analytics", Analytics),
+        new ComponentFromClass("utils", Utils),
         new ComponentFromValue("storage.sessionStorage", global.sessionStorage),
         new ComponentFromValue("storage.localStorage", global.localStorage),
         new ComponentFromValue("storage.schemas", configuration.storage.schemas),
@@ -38,7 +43,9 @@ const getComponents = (locResource) => {
         new ComponentFromValue("localize.resource", locResource),
         new ComponentFromClass("localize", Localize),
         new ComponentFromClass("addressParser", AddressParser),
-        new ComponentFromClass("cwcServer", CwcServerMocked),
+        new ComponentFromClass("formatString", FormatString),
+        new ComponentFromClass("cwcServer", CwcServer),
+        //new ComponentFromClass("cwcServer", CwcServerMocked),
         new ComponentFromClass("zipcodeValidation", ZipcodeValidation),
         new ComponentFromClass("mediaEvents", MediaEvents)
     ];
@@ -85,7 +92,10 @@ const createApp = () => {
         const components = getComponents(resources.localize);
 
         Application.create(delegates, components, configuration);
-        return Application.bootstrap();
+        return Application.bootstrap()
+            .then(()=> {
+                Application.roles.analytics.sendAppLoadedEvent();
+            });
     })
     .catch(err => {
         console.error(err.toString()); // eslint-disable-line no-console

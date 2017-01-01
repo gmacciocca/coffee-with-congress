@@ -1,3 +1,5 @@
+import { Application } from "solo-application";
+import CwcError from "../../CwcError";
 
 const ISSUE_NAMES = {
     1: "Trump Administration / Nominees",
@@ -20,7 +22,11 @@ export default class CwcServerMoked {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (!address || address === "1") {
-                    reject(new Error("Invalid address"));
+                    reject(new CwcError(
+                        "CWC.ERROR_FETCHING_CONTACTS", {
+                            message: Application.localize("gateways/invalidAddress"),
+                            originalError
+                        }));
                     return;
                 }
                 const response = {
@@ -35,7 +41,20 @@ export default class CwcServerMoked {
                             "phones": [ "(610) 301-3175" ],
                             "faxes": [],
                             "emails": ["leahwynnYaT@teleosaurs.xyz"],
-                            "role": "a great representative of a state that is far away"
+                            "role": "a great representative of a state that is far away",
+                            "party": "Republican"
+                        }, {
+                            "id": 32,
+                            "name": "Frank Cooper",
+                            "address1": "8837 Peter Drive",
+                            "city": "Princeville",
+                            "state": "CA",
+                            "zip_code": "94110",
+                            "phones": [ "(610) 301-3175" ],
+                            "faxes": [],
+                            "emails": ["psmith@teleosaurs.xyz"],
+                            "role": "a great representative of a state that is far away",
+                            "party": "Democratic"
                         }
                     ],
                     state: [
@@ -48,7 +67,8 @@ export default class CwcServerMoked {
                             "zip_code": "31812",
                             "phones": [ "(706) 301-8720" ],
                             "faxes": ["(706) 388-8720"],
-                            "role": "senator"
+                            "role": "senator",
+                            "party": "Democratic"
                         }, {
                             "id": 55,
                             "name": "Leah Boyle",
@@ -69,7 +89,8 @@ export default class CwcServerMoked {
                             "phones": [ "(706) 388-3175" ],
                             "faxes": [],
                             "emails": ["isamarboyleTaT@teleosaurs.xyz"],
-                            "role": "representative"
+                            "role": "representative",
+                            "party": "Republican"
                         }
                     ],
                     city: [
@@ -83,7 +104,8 @@ export default class CwcServerMoked {
                             "phones": [ "(408) 555-1234" ],
                             "faxes": ["(408) 555-5678"],
                             "emails": ["petersmith@teleosaurs.xyz"],
-                            "role": "controller"
+                            "role": "controller",
+                            "party": "Republican"
                         }, {
                             "id": 101,
                             "name": "Mary White",
@@ -94,7 +116,16 @@ export default class CwcServerMoked {
                             "phones": [ "(123) 555-4321" ],
                             "faxes": [],
                             "emails": ["mwhite@teleosaurs.xyz"],
-                            "role": "representative"
+                            "role": "representative",
+                            "party": "Democratic"
+                        }, {
+                            "id": 102,
+                            "name": "Brian Anderson",
+                            "address1": "43 Knotts Street",
+                            "city": "Sausalito",
+                            "state": "CA",
+                            "zip_code": "94110",
+                            "party": "Democratic"
                         }
                     ]
                 };
@@ -140,13 +171,17 @@ export default class CwcServerMoked {
     }
 
     fetchTemplate(issueId, state, level) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const response = {
-                    id: `${issueId}${state}${level}`,
-                    content: `SUBJECT:  ${ISSUE_NAMES[issueId]}\n\nDear [NAME_OF_REPRESENTATIVE],\nMy name is [NAME_OF_USER] and I want to fix everything about ${ISSUE_NAMES[issueId]}!!\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.\n\nSincerely,\n[NAME_OF_USER]`
-                };
-                resolve(response);
+                if (level === "city" && state === "OK") {
+                    reject(new Error(Application.localize("gateways/noData")));
+                } else {
+                    const response = {
+                        id: `${issueId}${state}${level}`,
+                        content: `Dear [NAME_OF_REPRESENTATIVE],\nMy name is [NAME_OF_USER] and I live in [STATE]. I would like to fix everything about ${ISSUE_NAMES[issueId]}!!\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.\n\nSincerely,\n[NAME_OF_USER]`
+                    };
+                    resolve(response);
+                }
             }, 500);
         });
     }

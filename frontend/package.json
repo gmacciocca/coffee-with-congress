@@ -1,7 +1,7 @@
 {
   "name": "write-to-congress",
-  "version": "1.0.0",
-  "description": "Write to Congress web app.",
+  "version": "0.9.0",
+  "description": "Write to Congress",
   "main": "index.js",
   "scripts": {
     "xprebuild": "npm run clean",
@@ -33,7 +33,7 @@
     "es6-promise": "^4.0.5",
     "history": "^4.3.0",
     "honest-error": "^0.1.0",
-    "life-events": "^0.1.0",
+    "life-events": "^0.1.1",
     "lingo-localize": "^0.1.0",
     "material-ui": "^0.16.4",
     "moment": "^2.17.1",
@@ -42,7 +42,8 @@
     "react-dom": "^15.3.2",
     "react-router": "^2.8.1",
     "react-tap-event-plugin": "^2.0.1",
-    "solo-application": "^0.1.5"
+    "solo-application": "^0.1.5",
+    "sprintf-js": "^1.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",

@@ -10,7 +10,17 @@ export default class ContactsSelect extends BaseSelect {
         return Application.localize("dashboard/contactsLabel");
     }
 
-    primaryText(name, role) {
+    partyInitial(party) {
+        const partyInitials = {
+            "Republican" : Application.localize("dashboard/republican"),
+            "Democratic" : Application.localize("dashboard/democrat"),
+            "I" : Application.localize("dashboard/indpendent")
+        };
+        const initial = partyInitials[party];
+        return initial ? ` ${initial}` : "";
+    }
+
+    primaryText({ name, party, role }) {
         const usableParentWidth = this.props.parendWidth - (24 * 2);
         const nameStyle = {
             width: `${usableParentWidth / 3 * 2}px`
@@ -19,9 +29,13 @@ export default class ContactsSelect extends BaseSelect {
             width: `${usableParentWidth / 3}px`
         };
         return (
-            <div className="dashboard__select-wrapper__contact">
-                <div className="dashboard__select-wrapper__contact-name" style={nameStyle}>{name}</div>
-                <div className="dashboard__select-wrapper__contact-role" style={roleStyle}>{role}</div>
+            <div className="dashboard__numbered-step-wrapper__contact">
+                <div className="dashboard__numbered-step-wrapper__contact-name" style={nameStyle}>
+                    {`${name}${this.partyInitial(party)}`}
+                </div>
+                <div className="dashboard__numbered-step-wrapper__contact-role" style={roleStyle}>
+                    {role}
+                </div>
             </div>
         );
     }
@@ -29,7 +43,7 @@ export default class ContactsSelect extends BaseSelect {
     contactBreaker(typeName) {
         return (
             <div>
-                <div className="dashboard__select-wrapper__contact-breaker" >{typeName}</div>
+                <div className="dashboard__numbered-step-wrapper__contact-breaker" >{typeName}</div>
             </div>
         );
     }
@@ -40,7 +54,7 @@ export default class ContactsSelect extends BaseSelect {
                 <MenuItem
                     key={contact.id}
                     value={contact.id}
-                    primaryText={this.primaryText(contact.name, contact.role)}
+                    primaryText={this.primaryText(contact)}
                 />
             );
         });
