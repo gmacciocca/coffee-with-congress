@@ -23,6 +23,23 @@ threadsafe: yes
 handlers:
 - url: /static
   static_dir: static/
+
+- url: /$
+  upload: public/index.html
+  static_files: public/index.html
+
+- url: /css
+  static_dir: public/css/
+
+- url: /js
+  static_dir: public/js/
+
+- url: /resources
+  static_dir: public/resources/
+
+- url: /images
+  static_dir: public/images/
+
 - url: .*
   script: cwc.wsgi.application
 

@@ -1,48 +1,5 @@
 
-# Python Django Skeleton for Google App Engine
-
-A skeleton for building Python applications on Google App Engine with the
-[Django Web Framework](https://www.djangoproject.com/) using
-[Cloud SQL](https://cloud.google.com/sql/docs/introduction).
-
-See our other [Google Cloud Platform github
-repos](https://github.com/GoogleCloudPlatform) for sample applications and
-scaffolding for other python frameworks and use cases.
-
-Note that this project no longer uses the the SDK-provided Django 1.5 library but
-uses `pip -t` to vendor Django 1.9 into the lib/ folder.
-
-This project is based on the introductory [Django Tutorial](https://docs.djangoproject.com/en/1.8/intro/tutorial01/)
-polls applications.
-
-## Project Creation
-
-The basic skeleton of this project was created using the standard Django commands:
-
-  *  Use the standard Django command to start the project
-   ```
-   django-admin startproject mysite
-   ```
-  * Edit the DATABASE field in mysite/settings.py to use the CloudSQL instance locally,
-    and use the Unix socket to talk to the same CloudSQL instance through a Unix socket
-    when deployed
-  * Create appengine_config.py to ensure that libraries vendored into lib/ are on Python's
-    sys.path when run.
-  * Create [app.yaml](https://cloud.google.com/appengine/docs/python/config/appconfig?hl=en)
-    and setup a static file handler in the same folder that mysite/settings.py is configured
-    to collect static files. All other routes are directed to Django's WSGI handler.
-
-## Enable Cloud SQL
-
-This project assumes you are using [CloudSQL](https://cloud.google.com/sql/docs/introduction)
-as your database. CloudSQL is a managed MySQL instance hosted by Google Cloud, although you
-could also host a MySQL instance elsewhere and use that. Please see instructions below
-for how to enable create a CloudSQL instance.
-
-For better scalability, consider
-[Cloud Datastore](https://cloud.google.com/datastore/docs/concepts/overview?hl=en), although
-you must use a custom backend such as [Djangae](https://github.com/potatolondon/djangae) for your
-models to work with it.
+# Write To Congress backend
 
 ## Run Locally
 1. Install the [App Engine Python SDK](https://developers.google.com/appengine/downloads).
@@ -54,7 +11,7 @@ See the README file for directions. You'll need python 2.7 and [pip 7.0 or later
    git clone https://github.com/gmacciocca/coffee-with-congress/
    cd coffee-with-congress/backend/
    ```
-1. Install dependencies. There are two types of dependencies. requirements-local.txt contains libraries that are already
+1. Install dependencies. There are two types of dependencies.    requirements-local.txt contains libraries that are already
    expressed in app.yaml, like MySQL. Since app.yaml includes them in the runtime, they don't need to be installed to deploy the app, but they do need to be installed locally to run the app locally. You can use `pip install -r requirements-local.txt' to install them on your system or in a virtualenv, but the libraries should not be included in the project directory or
    uploaded to App Engine, where instead the bundled version is used.
 
@@ -148,10 +105,11 @@ To deploy the application:
 
    ```
    gcloud init # only required once
+   gcloud login # only required once per machine
    gcloud app deploy
    ```
 
-1. Congratulations!  Your application is now live at https://causal-port-151005.appspot.com/admin/
+1. Congratulations!  Your application is now live at https://causal-port-151005.appspot.com/
 
 ### Installing Libraries
 See the [Third party

@@ -1,0 +1,34 @@
+{
+	"dashboard": {
+		"city": "City",
+		"state": "State",
+		"federal": "Federal",
+		"issueLabel": "Issue",
+		"contactsLabel": "Representative",
+		"selectHint": "Select one...",
+		"print": "Print",
+		"pleaseEnterYourNameHere": "PLEASE enter your name here...",
+		"pleaseSelectARepresentative": "PLEASE select a representative above...",
+		"addressEditDialogTitle": "EDIT SENDER INFORMATION",
+		"save": "Save",
+		"cancel": "Cancel",
+		"name": "Name",
+		"address": "Address",
+		"zip": "Zip",
+		"templateEditDialogTitle": "EDIT LETTER TEMPLATE",
+		"template": "Enter letter template here..."
+	},
+	"gateways": {
+		"invalidZipCode": "Invalid ZIP code"
+	},
+	"utils": {
+		"invalidAddressFormat": "Invalid address format"
+	},
+	"welcome": {
+		"title": "Write to Congress",
+		"welcomeMessage": "We exercise our right to congress when we write to Congress.  Our mission is to hold elected officials accountable when we sense actions or inactions that threaten our nation’s founding principles of equality and liberty.",
+		"addressHint": "ZIP code",
+		"addressLabel": "Enter Your ZIP code",
+		"continue": "Continue"
+	}
+}
