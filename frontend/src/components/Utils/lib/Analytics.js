@@ -10,7 +10,6 @@ export default class Analytics {
         ga("send", "event", {
             eventCategory: "application",
             eventAction: "loaded",
-            eventLabel: event.target.href,
             transport: "beacon"
         });
     }
