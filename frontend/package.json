@@ -1,6 +1,6 @@
 {
   "name": "write-to-congress",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Write to Congress",
   "main": "index.js",
   "scripts": {
