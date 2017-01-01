@@ -20,5 +20,7 @@ from cwc import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^issues', views.get_issues),
+    url(r'^contacts', views.get_contacts),
+    url(r'^template/issue/(?P<issue_id>\d+)/state/(?P<state>[A-Za-z]{0,3})/level/(?P<level>(federal|state|city))$', views.get_template),
     url(r'^admin/', include(admin.site.urls)),
 ]
