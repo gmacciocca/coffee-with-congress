@@ -31,10 +31,6 @@ export default class MessageDialog extends React.Component {
         }
     }
 
-    handleOpen(){
-        this.setState({ open: true });
-    }
-
     handleCancel(){
         this.setState({ open: false });
         this.props.onCancel && this.props.onCancel();
@@ -68,7 +64,6 @@ export default class MessageDialog extends React.Component {
 
         return (
             <div style={style} >
-                <RaisedButton label="Dialog" onTouchTap={this.handleOpen} />
                 <Dialog
                     title={this.props.title}
                     actions={actions}
