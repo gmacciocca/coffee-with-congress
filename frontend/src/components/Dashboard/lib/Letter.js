@@ -45,8 +45,8 @@ export default class Letter extends React.Component {
             <div>{addressTo.name}<br />
                 {`${this._utils.spaceBetween(addressTo.address1, addressTo.address2)}`}<br />
                 {`${this._utils.spaceBetween(addressTo.city, addressTo.state, addressTo.zip_code)}`}<br />
-                {`${addressTo.phones}`}<br />
-                {`${addressTo.emails}`}<br />
+                {addressTo.phones ? (<span>{addressTo.phones}<br /></span>) : null}
+                {addressTo.emails ? (<span>{addressTo.emails}<br /></span>) : null}
             </div>
         ) :
         <div className="letter__contents__replace-string">{Application.localize("dashboard/pleaseSelectARepresentative")}</div>;
