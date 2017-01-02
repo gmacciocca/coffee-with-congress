@@ -11,14 +11,14 @@ $welcome-description-side-margin: 20px;
     display: block;
     padding-top: 2%;
 
-    &__logo-and-title {
-        background: url(../images/capitol-dome.png) no-repeat;
-        background-position: top center;
-        padding-top: 195px;
-        width: 300px;
-        margin: auto;
+    &__logo {
+        max-width: 60%;
+        margin: 10% auto 0;
         overflow: auto;
         text-align: center;
+        &__img {
+            width: 100%;
+        }
     }
 
     &__description {
@@ -28,7 +28,6 @@ $welcome-description-side-margin: 20px;
 
     &__address-form {
         margin: auto;
-        text-align: center;
     }
 
     &__state-zip {
@@ -38,14 +37,21 @@ $welcome-description-side-margin: 20px;
         margin: auto;
     }
 
+    &__error-button {
+        text-align: center;
+    }
+
     &__error-string {
-        color: $cwc-color-alert-text;
+        color: $cwcColorAlertText;
         margin: 0 20px;
     }
 }
 
 @media #{$cwc-medium-and-up} {
     .welcome {
+        &__logo {
+            max-width: 450px;
+        }
         &__description {
             margin: auto;
             max-width: calc(#{$cwc-medium-screen} - (#{$welcome-description-side-margin} * 2));

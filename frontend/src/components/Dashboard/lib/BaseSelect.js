@@ -20,9 +20,9 @@ export default class BaseSelect extends React.Component {
             autoWidth: true,
             value: this.props.selectedId,
             onChange: this.props.onChange.bind(this),
-            floatingLabelStyle: {
-                color: Application.configuration.colors["main-blue"]
-            },
+            // floatingLabelStyle: {
+            //     color: Application.configuration.colors["main-blue"]
+            // },
             floatingLabelFixed: true,
             floatingLabelText: this.labelText,
             hintText: this.selectHintText

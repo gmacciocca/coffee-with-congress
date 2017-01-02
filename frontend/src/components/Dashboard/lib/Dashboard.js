@@ -44,6 +44,16 @@ export default class Dashboard extends React.Component {
         this.setLiteners();
     }
 
+    selectDefaultContact(selections, contacts){
+        if (this._utils.isNullOrUndefined(selections.contactIdSelected)) {
+            // Select initial default contact
+            const defaultContact = (contacts.federal && contacts.federal[0]) ||
+                (contacts.state && contacts.state[0]) ||
+                (contacts.city && contacts.city[0]);
+            selections.contactIdSelected = defaultContact && defaultContact.id;
+        }
+    }
+
     loadData() {
         const address = this._userStore.get("address");
         const selections = this._userStore.get("selections") || {
@@ -52,13 +62,7 @@ export default class Dashboard extends React.Component {
         };
         const contacts = this._contactsStore.get("contacts");
         if (address && contacts) {
-            if (this._utils.isNullOrUndefined(selections.contactIdSelected)) {
-                // Select initial default contact
-                selections.contactIdSelected =
-                    (contacts.federal && contacts.federal[0] && contacts.federal[0].id) ||
-                    (contacts.state && contacts.state[0] && contacts.state[0].id) ||
-                    (contacts.city && contacts.city[0] && contacts.city[0].id);
-            }
+            this.selectDefaultContact(selections, contacts);
             this.setState({ address, contacts, ...selections });
             this.fetchIssues();
         } else {
@@ -131,7 +135,7 @@ export default class Dashboard extends React.Component {
         this.showProgress(true);
         const address = this.state.address;
         const templates = {};
-        const promises = ["city", "state", "federal"].map(level => {
+        const promises = Application.configuration.officialLevels.map(level => {
             return this._cwcServer.fetchTemplate(issueId, address.state, level)
                 .then(templatesForIssueAndState => {
                     templates[level] = templatesForIssueAndState;
@@ -387,7 +391,12 @@ export default class Dashboard extends React.Component {
                     <NumberInCircle size="20" number={3} />
                 </div>
                 <div className="dashboard__numbered-step-wrapper__select">
-                    <div className="dashboard__numbered-step-wrapper___text-only-step">{Application.localize("dashboard/personalizeLetter")}</div>
+                    <div className="dashboard__numbered-step-wrapper___text-only-step">
+                        {Application.localize("dashboard/personalizeLetter")}
+                        <i className="dashboard__numbered-step-wrapper___text-only-step__icon material-icons"
+                            onClick={this.printTemplate.bind(this)}
+                        >print</i>
+                    </div>
                 </div>
             </div>
         );
@@ -429,6 +438,15 @@ export default class Dashboard extends React.Component {
         };
     }
 
+    get clickableLogo() {
+        return (
+            <div className="dashboard__logo" >
+                <img onClick={this.goHome.bind(this)}
+                    className="dashboard__logo__img" src="../images/congress-white.svg" />
+            </div>
+        );
+    }
+
     render() {
         if (!this.state.address || !this.state.contacts) {
             return null;
@@ -458,10 +476,8 @@ export default class Dashboard extends React.Component {
                 <div className="dashboard__spacer-and-appbar-paper-wrapper dashboard__no-print">
                     <div ref={this.appBarPaperWrapperRef.bind(this)} className="dashboard__appbar-paper-wrapper">
                         <AppBar
-                            showMenuIconButton={false}
-                            title={<span style={this.appBarTitleStyle}>{Application.localize("welcome/title")}</span>}
+                            iconElementLeft={this.clickableLogo}
                             iconElementRight={this.printElement}
-                            onTitleTouchTap={this.goHome.bind(this)}
                         />
                         <div className="dashboard__numbered-steps">
                             {this.issuesSelect}
@@ -483,3 +499,6 @@ export default class Dashboard extends React.Component {
         );
     }
 }
+
+// showMenuIconButton={false}
+// title={<span style={this.appBarTitleStyle}>{Application.localize("welcome/title")}</span>}

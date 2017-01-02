@@ -1,6 +1,6 @@
 import React from "react";
 import { Application } from "solo-application";
-import LogoAndTitle from "./LogoAndTitle";
+import Logo from "./Logo";
 import Description from "./Description";
 import AddressForm from "./AddressForm";
 
@@ -19,7 +19,7 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <div className="welcome">
-                <LogoAndTitle />
+                <Logo />
                 <Description />
                 <AddressForm router={this.props.router} />
             </div>

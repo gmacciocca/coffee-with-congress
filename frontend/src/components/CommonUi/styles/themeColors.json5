@@ -1,0 +1,30 @@
+{
+    themeColors: {
+        /*"main-white": "#FFFFFF",
+        "main-blue": "#007eb2",
+        "main-red": "#ce0000",
+        "light-blue": "#E3F2FD",
+        "light-blue-transparent": "#E3F2FDAD",
+        "charcoal-grey": "#607075",
+        "main-black": "#102025",
+        "light-grey": "#E3F2FD",
+        "input-box-grey": "#d7d7d7",
+        "input-box-grey-hover": "#747c7f",
+        "page-grey": "#e9f1f4",
+
+        //cwc-progress-overlay-main-background-color: rgba(227,242,253,.68);
+        //cwc-overlay-main-background-color: rgba(0,0,0,.3);*/
+
+        mainBackground:         "#FFFFFF", // "main-white"
+        headerAndLogo:          "#007eb2", // "main-blue
+        secondaryBackground:    "#E3F2FD", // "light-grey"
+        contrastBackground:     "#607075", // "charcoal-grey"
+        mainText:               "#102025", // "main-black": "#102025",
+        secondaryText:          "#607075", // "charcoal-grey":
+        contrastText:           "#FFFFFF", // "main-white":
+        alertText:              "#ce0000", // "main-red"
+        secondaryAlertText:     "#007eb2", // cwc-main-color-blue
+        alertUnderline:         "#007eb2", // cwc-main-color-blue
+        hintColor:              "#007eb2", // "main-blue
+    }
+}

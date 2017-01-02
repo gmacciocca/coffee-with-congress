@@ -5,6 +5,14 @@ import MenuItem from "material-ui/MenuItem";
 import BaseSelect from "./BaseSelect";
 
 export default class ContactsSelect extends BaseSelect {
+    constructor(...args) {
+        super(...args);
+        this._utils = Application.roles.utils;
+    }
+
+    roleString(role) {
+        return this._utils.camelCaseToWords(role);
+    }
 
     get labelText() {
         return Application.localize("dashboard/contactsLabel");
@@ -21,6 +29,8 @@ export default class ContactsSelect extends BaseSelect {
     }
 
     primaryText({ name, party, role }) {
+        console.log("name - role", name, role);
+
         const usableParentWidth = this.props.parendWidth - (24 * 2);
         const nameStyle = {
             width: `${usableParentWidth / 3 * 2}px`
@@ -34,7 +44,7 @@ export default class ContactsSelect extends BaseSelect {
                     {`${name}${this.partyInitial(party)}`}
                 </div>
                 <div className="dashboard__numbered-step-wrapper__contact-role" style={roleStyle}>
-                    {role}
+                    {this.roleString(role)}
                 </div>
             </div>
         );
@@ -60,16 +70,20 @@ export default class ContactsSelect extends BaseSelect {
         });
     }
 
+    hasLevel(level) {
+        return Array.isArray(this.props.contacts[level]) && this.props.contacts[level].length;
+    }
+
     render() {
         const selectProps = this.selectProps;
         return (
             <SelectField {...selectProps} >
-                {this.contactBreaker(Application.localize("dashboard/city"))}
-                {this.contacts(this.props.contacts.city)}
-                {this.contactBreaker(Application.localize("dashboard/state"))}
-                {this.contacts(this.props.contacts.state)}
-                {this.contactBreaker(Application.localize("dashboard/federal"))}
-                {this.contacts(this.props.contacts.federal)}
+                {this.hasLevel("city") && this.contactBreaker(Application.localize("dashboard/city"))}
+                {this.hasLevel("city") && this.contacts(this.props.contacts.city)}
+                {this.hasLevel("state") && this.contactBreaker(Application.localize("dashboard/state"))}
+                {this.hasLevel("state") && this.contacts(this.props.contacts.state)}
+                {this.hasLevel("federal") && this.contactBreaker(Application.localize("dashboard/federal"))}
+                {this.hasLevel("federal") && this.contacts(this.props.contacts.federal)}
             </SelectField>
         );
     }

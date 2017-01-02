@@ -33,6 +33,16 @@ export default class AddressForm extends React.Component {
         };
     }
 
+    filterContacts(contacts) {
+        const filtered = {};
+        Object.keys(contacts).map(level => {
+            if (Application.configuration.officialLevels.find(officialLevel => officialLevel === level)) {
+                filtered[level] = contacts[level];
+            }
+        });
+        return filtered;
+    }
+
     onSubmit(ev) {
         ev.preventDefault();
         this.setState({ showProgress: true });
@@ -43,6 +53,7 @@ export default class AddressForm extends React.Component {
 
         this._cwcServer.fetchContacts(addressString)
         .then(contacts => {
+            contacts = this.filterContacts(contacts);
             this._userStore.set("address", { ...address });
             this._contactsStore.set("contacts", { ...contacts });
             this.props.router.push("/dashboard");
@@ -75,6 +86,12 @@ export default class AddressForm extends React.Component {
 
     get inputZip() {
         const props = {
+            onChange: this.onZipChange.bind(this),
+            floatingLabelFixed: true,
+            floatingLabelText: Application.localize("welcome/zipCodeLabel"),
+            hintText: Application.localize("welcome/zipCodeHint"),
+            disabled: this.state.disableInputs,
+            value: this.state.zipCode,
             style: {
                 width: "110px"
             },
@@ -89,25 +106,6 @@ export default class AddressForm extends React.Component {
                 <TextField
                     ref={ref => this._zip = ref}
                     {...props}
-                    onChange={this.onZipChange.bind(this)}
-                    autoFocus={true}
-                    floatingLabelText={Application.localize("welcome/zipCodeLabel")}
-                    hintText={Application.localize("welcome/zipCodeHint")}
-                    disabled={this.state.disableInputs}
-                    value={this.state.zipCode}
-                />
-            </div>
-        );
-    }
-
-    get continueButton(){
-        return (
-            <div>
-                <FlatButton
-                    type="submit"
-                    disabled={this.state.disableContinueButton || this.state.disableInputs}
-                    label={Application.localize("welcome/continue")}
-                    primary={true}
                 />
             </div>
         );
@@ -116,15 +114,14 @@ export default class AddressForm extends React.Component {
     get stateSelect(){
         const props = {
             style: {
+                tabIndex: "0",
                 width: "110px"
             },
+            autoFocus: true,
             autoWidth: true,
             onChange: this.onStateChange.bind(this),
             floatingLabelFixed: true,
             floatingLabelText: Application.localize("welcome/stateLabel"),
-            floatingLabelStyle: {
-                color: Application.configuration.colors["main-blue"]
-            },
             hintText: Application.localize("welcome/stateHint"),
             value: this.state.stateCode
         };
@@ -146,6 +143,18 @@ export default class AddressForm extends React.Component {
         );
     }
 
+    get continueButton(){
+        const props = {
+            type: "submit",
+            disabled: this.state.disableContinueButton || this.state.disableInputs,
+            label: Application.localize("welcome/continue"),
+            primary: true
+        };
+        return (
+            <FlatButton {...props} />
+        );
+    }
+
     get errorString() {
         return this.state.errorText ? (
             <div className="welcome__error-string">{this.state.errorText}</div>
@@ -160,8 +169,10 @@ export default class AddressForm extends React.Component {
                         {this.stateSelect}
                         {this.inputZip}
                     </div>
-                    {this.errorString}
-                    {this.continueButton}
+                    <div className="welcome__error-button">
+                        {this.errorString}
+                        {this.continueButton}
+                    </div>
                 </form>
                 <ProgressOverlay showProgress={this.state.showProgress} />
             </div>

@@ -10,8 +10,8 @@ import { LoadResource } from "./components/LoadResource";
 import { MediaEvents } from "./components/CommonUi";
 
 const LOCALIZE_RESOURCE = "./resources/en-us.json";
-const JSON_COLORS = "./resources/colors.json ";
-const JSON_MEDIA = "./resources/media.json ";
+const JSON_THEME_COLORS = "./resources/themeColors.json";
+const JSON_MEDIA = "./resources/media.json";
 
 const configuration = {
     origins: {
@@ -25,10 +25,13 @@ const configuration = {
             }
         }
     },
-    colors: {},
+    themeColors: {},
     clientName: appPackage.name,
     clientVersion: appPackage.version,
-    clientDescription: appPackage.description
+    clientDescription: appPackage.description,
+
+    //officialLevels: ["city", "state", "federal"]
+    officialLevels: ["federal"]
 };
 
 const getComponents = (locResource) => {
@@ -67,26 +70,26 @@ const getDelegates = () => {
 
 const getAllResources = () => {
     const lr = new LoadResource();
-    let localize, colors, media;
+    let localize, themeColors, media;
     return lr.jsonResource(LOCALIZE_RESOURCE)
     .then(res => {
         localize = res;
-        return lr.jsonResource(JSON_COLORS);
+        return lr.jsonResource(JSON_THEME_COLORS);
     })
     .then(res => {
-        colors = res.colors;
+        themeColors = res.themeColors;
         return lr.jsonResource(JSON_MEDIA);
     })
     .then(res => {
         media = res.media;
-        return { localize, colors, media };
+        return { localize, themeColors, media };
     });
 };
 
 const createApp = () => {
     return getAllResources()
     .then(resources => {
-        configuration.colors = resources.colors;
+        configuration.themeColors = resources.themeColors;
         configuration.media = resources.media;
         const delegates = getDelegates();
         const components = getComponents(resources.localize);
