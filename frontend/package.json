@@ -1,13 +1,13 @@
 {
   "name": "write-to-congress",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "description": "Write to Congress",
   "main": "index.js",
   "scripts": {
     "xprebuild": "npm run clean",
     "clean": "gulp clean",
     "lint": "eslint src",
-    "start": "npm run prepareForReload && nodemon --watch src -e js,scss,json -x npm run reload",
+    "start": "npm run prepareForReload && nodemon --watch src -e js,scss,json,json5 -x npm run reload",
     "prepareForReload": "npm run createDirs",
     "reload": "npm run buildFiles && npm run server",
     "build": "npm run createDirs && npm run buildFiles",
