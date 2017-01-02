@@ -1,4 +1,5 @@
 import { Application } from "solo-application";
+import levelIds from "./levelIds";
 
 export default class Analytics {
     constructor() {
@@ -14,12 +15,13 @@ export default class Analytics {
         });
     }
 
-    sendPrintEvent(issue, state, contact) {
-        // Number of letters printed, broken down by official, location, issue
+    sendPrintEvent({ issueId, state, level }) {
+        const levelId = levelIds[level];
         ga("send", "event", {
-            eventCategory: "letter",
+            eventCategory: issueId,
             eventAction: "print",
-            eventLabel: event.target.href,
+            eventLabel: state,
+            eventValue: levelId,
             transport: "beacon"
         });
     }

@@ -29,8 +29,6 @@ export default class ContactsSelect extends BaseSelect {
     }
 
     primaryText({ name, party, role }) {
-        console.log("name - role", name, role);
-
         const usableParentWidth = this.props.parendWidth - (24 * 2);
         const nameStyle = {
             width: `${usableParentWidth / 3 * 2}px`

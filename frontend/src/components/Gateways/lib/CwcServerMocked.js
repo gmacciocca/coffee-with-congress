@@ -14,10 +14,6 @@ const ISSUE_NAMES = {
 };
 
 export default class CwcServerMoked {
-    constructor({ loadResource }) {
-        this._loadResource = loadResource;
-    }
-
     fetchContacts(address) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {

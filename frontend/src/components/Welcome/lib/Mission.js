@@ -1,33 +1,25 @@
 import React from "react";
 import { Application } from "solo-application";
 import Footer from "./Footer";
+import MissionText from "./missionText";
 
 export default class Mission extends React.Component {
+    constructor(...args) {
+        super(...args);
+        this.appHeader = Application.roles.uiAppHeader;
+    }
 
     render() {
+        const AppHeader = this.appHeader;
+
         return (
             <div className="mission">
+                <AppHeader
+                    router={this.props.router}
+                />
                 <div className="mission__wrapper" >
                     <h3>{Application.localize("footer/missionStatement")}</h3>
-                    <br />
-                    <div>{Application.localize("mission/part1")}</div>
-                    <br />
-                    <div>{Application.localize("mission/part2")}</div>
-                    <br />
-                    <div className="mission__amendment">
-                        <span>{Application.localize("mission/part3FirstAmendment")}</span>
-                        <span className="mission__amendment__last-part">
-                            {Application.localize("mission/part3FirstAmendmentLastPart")}
-                        </span>
-                    </div>
-                    <br />
-                    <div>{Application.localize("mission/part4")}</div>
-                    <br />
-                    <div>{Application.localize("mission/part5")}</div>
-                    <br />
-                    <div>{Application.localize("mission/part6")}</div>
-                    <br />
-                    <div>{Application.localize("mission/part7")}</div>
+                    <MissionText />
                 </div>
                 <Footer />
             </div>

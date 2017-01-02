@@ -2,14 +2,14 @@ import { Application } from "solo-application";
 import CwcError from "../../CwcError";
 
 export default class CwcServer {
-    constructor({ loadResource }) {
-        this._loadResource = loadResource;
+    constructor({ networkTransport }) {
+        this._networkTransport = networkTransport;
     }
 
     fetchContacts(address) {
         address = encodeURIComponent(address);
-        const resource = `${Application.configuration.origins.cwcServer}/contacts?address=${address}`;
-        return this._loadResource.jsonResource(resource)
+        const path = `${Application.configuration.origins.cwcServer}/contacts?address=${address}`;
+        return this._networkTransport.get(path)
             .catch(originalError => {
                 throw new CwcError(
                     "CWC.ERROR_FETCHING_CONTACTS", {
@@ -20,8 +20,8 @@ export default class CwcServer {
     }
 
     fetchIssues() {
-        const resource = `${Application.configuration.origins.cwcServer}/issues`;
-        return this._loadResource.jsonResource(resource)
+        const path = `${Application.configuration.origins.cwcServer}/issues`;
+        return this._networkTransport.get(path)
             .catch(originalError => {
                 throw new CwcError(
                     "CWC.ERROR_FETCHING_ISSUES", {
@@ -32,11 +32,29 @@ export default class CwcServer {
     }
 
     fetchTemplate(issueId, state, level) {
-        const resource = `${Application.configuration.origins.cwcServer}/template/issue/${issueId}/state/${state}/level/${level}`;
-        return this._loadResource.jsonResource(resource)
+        const path = `${Application.configuration.origins.cwcServer}/template/issue/${issueId}/state/${state}/level/${level}`;
+        return this._networkTransport.get(path)
             .catch(originalError => {
                 throw new CwcError(
                     "CWC.ERROR_FETCHING_TEMPLATES", {
+                        message: originalError.toString(),
+                        originalError
+                    });
+            });
+    }
+
+    sendPrintStatistics({ issueId, state, levelId }) {
+        const path = `${Application.configuration.origins.cwcServer}/stats`;
+        const json = { issue: issueId, state, level: levelId };
+        return this._networkTransport.send(path, json);
+    }
+
+    fetchPrintStatistics() {
+        const path = `${Application.configuration.origins.cwcServer}/stats`;
+        return this._networkTransport.get(path)
+            .catch(originalError => {
+                throw new CwcError(
+                    "CWC.ERROR_FETCHING_PRINT_STATS", {
                         message: originalError.toString(),
                         originalError
                     });

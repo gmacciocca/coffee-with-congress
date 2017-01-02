@@ -1,4 +1,4 @@
-import { sprintf } from "sprintf-js";
+import { sprintf, vsprintf } from "sprintf-js";
 import { Application } from "solo-application";
 
 export default class FormatString {
@@ -23,5 +23,10 @@ export default class FormatString {
         const onClickCode = `var e=arguments[0];e.preventDefault();e.stopPropagation();var a=document.createElement('a');a.href ='${href}';a.click();`;
         const aTag = `<a href="#" onClick="${onClickCode}" target='_top'>${email}</a>`;
         return sprintf(Application.localize(stringKey), aTag);
+    }
+
+    format(stringKey, ...args) {
+        const message = Application.localize(stringKey);
+        return vsprintf(message, args);
     }
 }

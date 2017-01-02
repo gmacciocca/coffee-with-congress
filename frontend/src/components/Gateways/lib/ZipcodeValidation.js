@@ -3,13 +3,13 @@ import { Application } from "solo-application";
 const uppercase = (string) => string ? string.toUpperCase() : "";
 
 export default class ZipcodeValidation {
-    constructor({ loadResource }) {
-        this._loadResource = loadResource;
+    constructor({ networkTransport }) {
+        this._networkTransport = networkTransport;
     }
 
     addressFromZipcode(zipCode) {
         const resource = `https://api.zippopotam.us/us/${zipCode}`;
-        return this._loadResource.jsonResource(resource)
+        return this._networkTransport.getJson(resource)
             .then(response => {
                 if (response && Array.isArray(response.places) &&
                     response.places.length){

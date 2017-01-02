@@ -6,8 +6,9 @@ import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
 import { ZipcodeValidation, CwcServer, CwcServerMocked } from "./components/Gateways";
 import { AddressParser, FormatString, Analytics, Utils } from "./components/Utils";
-import { LoadResource } from "./components/LoadResource";
+import { NetworkTransport } from "./components/NetworkTransport";
 import { MediaEvents } from "./components/CommonUi";
+import { AppHeader } from "./components/Dashboard";
 
 const LOCALIZE_RESOURCE = "./resources/en-us.json";
 const JSON_THEME_COLORS = "./resources/themeColors.json";
@@ -42,7 +43,7 @@ const getComponents = (locResource) => {
         new ComponentFromValue("storage.localStorage", global.localStorage),
         new ComponentFromValue("storage.schemas", configuration.storage.schemas),
         new ComponentFromClass("storage", Storage),
-        new ComponentFromClass("loadResource", LoadResource),
+        new ComponentFromClass("networkTransport", NetworkTransport),
         new ComponentFromValue("localize.resource", locResource),
         new ComponentFromClass("localize", Localize),
         new ComponentFromClass("addressParser", AddressParser),
@@ -50,7 +51,8 @@ const getComponents = (locResource) => {
         new ComponentFromClass("cwcServer", CwcServer),
         //new ComponentFromClass("cwcServer", CwcServerMocked),
         new ComponentFromClass("zipcodeValidation", ZipcodeValidation),
-        new ComponentFromClass("mediaEvents", MediaEvents)
+        new ComponentFromClass("mediaEvents", MediaEvents),
+        new ComponentFromValue("uiAppHeader", AppHeader)        
     ];
 };
 
@@ -69,16 +71,16 @@ const getDelegates = () => {
 };
 
 const getAllResources = () => {
-    const lr = new LoadResource();
+    const nt = new NetworkTransport();
     let localize, themeColors, media;
-    return lr.jsonResource(LOCALIZE_RESOURCE)
+    return nt.get(LOCALIZE_RESOURCE)
     .then(res => {
         localize = res;
-        return lr.jsonResource(JSON_THEME_COLORS);
+        return nt.get(JSON_THEME_COLORS);
     })
     .then(res => {
         themeColors = res.themeColors;
-        return lr.jsonResource(JSON_MEDIA);
+        return nt.get(JSON_MEDIA);
     })
     .then(res => {
         media = res.media;

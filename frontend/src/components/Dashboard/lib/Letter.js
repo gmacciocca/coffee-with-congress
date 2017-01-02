@@ -58,7 +58,7 @@ export default class Letter extends React.Component {
         }
         const subject = sprintf(
             Application.localize("dashboard/noTemplageEmailSubject"),
-            this.props.issueId,
+            this.props.issueName,
             this.props.state,
             this.props.level
         );

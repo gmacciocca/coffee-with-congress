@@ -12,6 +12,7 @@ import AddressEditDialog from "./AddressEditDialog";
 import TemplateEditDialog from "./TemplateEditDialog";
 import PrintWarningDialog from "./PrintWarningDialog";
 import letterConstants from "./letterConstants";
+import AppHeader from "./AppHeader";
 
 export default class Dashboard extends React.Component {
     constructor(...args) {
@@ -22,6 +23,8 @@ export default class Dashboard extends React.Component {
         this._cwcServer = Application.roles.cwcServer;
         this._utils = Application.roles.utils;
         this._mediaEvents = Application.roles.mediaEvents;
+        this._analytics = Application.roles.analytics;
+
         this.state = {
             address: null,
             issues: null,
@@ -220,7 +223,8 @@ export default class Dashboard extends React.Component {
             zip,
             level: contact && contact.level,
             contactId: contact && contact.id,
-            issueId: issue && issue.name,
+            issueId: issue && issue.id,
+            issueName: issue && issue.name,
             fetchingData: this.isProgressShowing
         };
     }
@@ -402,21 +406,12 @@ export default class Dashboard extends React.Component {
         );
     }
 
-    get printElement() {
-        return (
-            <FlatButton
-                onTouchTap={this.printTemplate.bind(this)}
-                label={Application.localize("dashboard/print")}
-            />
-        );
-    }
-
     printTemplate() {
         const { doNotShowPrintWarning } = this._userStore.get("settings") || {};
         if (!doNotShowPrintWarning) {
             this.setState({ showPrintWarningDialog: true });
         } else {
-            window.print();
+            this.sendStatisticAndBrowserPrint();
         }
     }
 
@@ -428,23 +423,15 @@ export default class Dashboard extends React.Component {
         this.setState({ showPrintWarningDialog: false });
         this._userStore.set("settings", { doNotShowPrintWarning });
         setTimeout(() => {
-            window.print();
+            this.sendStatisticAndBrowserPrint();
         }, 1000);
     }
 
-    get appBarTitleStyle() {
-        return {
-            cursor: "pointer"
-        };
-    }
-
-    get clickableLogo() {
-        return (
-            <div className="dashboard__logo" >
-                <img onClick={this.goHome.bind(this)}
-                    className="dashboard__logo__img" src="../images/congress-white.svg" />
-            </div>
-        );
+    sendStatisticAndBrowserPrint() {
+        const { issueId, state, level } = this.currentProps;
+        this._cwcServer.sendPrintStatistics({ issueId, state, level });
+        this._analytics.sendPrintEvent({ issueId, state, level });
+        window.print();
     }
 
     render() {
@@ -475,9 +462,9 @@ export default class Dashboard extends React.Component {
                 </div>
                 <div className="dashboard__spacer-and-appbar-paper-wrapper dashboard__no-print">
                     <div ref={this.appBarPaperWrapperRef.bind(this)} className="dashboard__appbar-paper-wrapper">
-                        <AppBar
-                            iconElementLeft={this.clickableLogo}
-                            iconElementRight={this.printElement}
+                        <AppHeader
+                            router={this.props.router}
+                            onPrint={this.printTemplate.bind(this)}
                         />
                         <div className="dashboard__numbered-steps">
                             {this.issuesSelect}
@@ -499,6 +486,3 @@ export default class Dashboard extends React.Component {
         );
     }
 }
-
-// showMenuIconButton={false}
-// title={<span style={this.appBarTitleStyle}>{Application.localize("welcome/title")}</span>}
