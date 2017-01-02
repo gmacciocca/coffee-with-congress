@@ -12,7 +12,7 @@ class CivicApi:
         self.representatives = self.service.representatives()
 
     def contactsForAddress(self, address):
-        response = self.representatives.representativeInfoByAddress(levels=None, roles=["headOfState","headOfGovernment","deputyHeadOfGovernment","governmentOfficer","legislatorUpperBody"], address=address).execute()
+        response = self.representatives.representativeInfoByAddress(levels=None, roles=["headOfState","headOfGovernment","deputyHeadOfGovernment","governmentOfficer","legislatorUpperBody","legislatorLowerBody"], address=address).execute()
 
 
         federal_contact_indices = sum([office['officialIndices'] for office in response['offices'] if ('country' in office['levels'])], [])
