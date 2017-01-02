@@ -37,8 +37,8 @@ const configuration = {
 
 const getComponents = (locResource) => {
     return [
-        new ComponentFromClass("analytics", Analytics),
         new ComponentFromClass("utils", Utils),
+        new ComponentFromClass("analytics", Analytics),
         new ComponentFromValue("storage.sessionStorage", global.sessionStorage),
         new ComponentFromValue("storage.localStorage", global.localStorage),
         new ComponentFromValue("storage.schemas", configuration.storage.schemas),
@@ -52,7 +52,7 @@ const getComponents = (locResource) => {
         //new ComponentFromClass("cwcServer", CwcServerMocked),
         new ComponentFromClass("zipcodeValidation", ZipcodeValidation),
         new ComponentFromClass("mediaEvents", MediaEvents),
-        new ComponentFromValue("uiAppHeader", AppHeader)        
+        new ComponentFromValue("uiAppHeader", AppHeader)
     ];
 };
 

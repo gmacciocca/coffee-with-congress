@@ -2,7 +2,8 @@ import { Application } from "solo-application";
 import levelIds from "./levelIds";
 
 export default class Analytics {
-    constructor() {
+    constructor({ utils }) {
+        this._utils = utils;
         ga("set", "appName", Application.configuration.clientName);
         ga("set", "appVersion", Application.configuration.clientVersion);
     }
@@ -16,12 +17,16 @@ export default class Analytics {
     }
 
     sendPrintEvent({ issueId, state, level }) {
-        const levelId = levelIds[level];
+        debugger;
+        const eventCategory = this._utils.isNullOrUndefined(issueId) ? "no-issue-id" : issueId.toString();
+        const eventAction = "print";
+        const eventLabel = state;
+        const eventValue = levelIds[level];
         ga("send", "event", {
-            eventCategory: issueId,
-            eventAction: "print",
-            eventLabel: state,
-            eventValue: levelId,
+            eventCategory,
+            eventAction,
+            eventLabel,
+            eventValue,
             transport: "beacon"
         });
     }

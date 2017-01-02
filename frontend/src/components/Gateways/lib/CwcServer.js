@@ -43,9 +43,10 @@ export default class CwcServer {
             });
     }
 
-    sendPrintStatistics({ issueId, state, levelId }) {
+    sendPrintStatistics({ issueId, state, level }) {
+        debugger;
         const path = `${Application.configuration.origins.cwcServer}/stats`;
-        const json = { issue: issueId, state, level: levelId };
+        const json = { issue: issueId, state, level };
         return this._networkTransport.send(path, json);
     }
 
