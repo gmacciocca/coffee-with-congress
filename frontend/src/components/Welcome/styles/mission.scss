@@ -1,0 +1,15 @@
+.mission {
+    margin: 30px;
+    &__wrapper {
+        height: 100%;
+        margin-bottom: 4em;
+    }
+    &__amendment {
+        font-size: 1.2em;
+        font-style: italic;
+        &__last-part {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    }
+}

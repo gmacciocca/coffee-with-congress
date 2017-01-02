@@ -4,5 +4,30 @@ $cwcFont: 'Roboto', 'Adelle-Sans', 'Helvetica Neue', Arial, sans-serif;
 html {
     background-color: $cwcColorMainBackground;
     color: $cwcColorMainText;
-    font-family: $cwcFont
+    font-family: $cwcFont;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 4em;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 2rem;
+  text-align: center;
 }

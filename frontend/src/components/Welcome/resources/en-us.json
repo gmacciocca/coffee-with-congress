@@ -12,5 +12,15 @@
         "missionStatement": "Mission Statement",
         "aboutUs": "About Us",
         "termsAndConditions": "Terms & Conditions"
+    },
+    "mission": {
+        "part1": "We exercise our right to congress when we write to Congress.  Our mission is to hold elected officials accountable when we sense actions or inactions that threaten our nation’s founding principles of equality and liberty. ",
+        "part2": "The systematic weakening of our democratic institutions started long before the 2016 elections, and will continue if we don’t exercise every Constitutional muscle in our bodies.  Write to Congress was born out of exercising our First Amendment:",
+        "part3FirstAmendment": "Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, ",
+        "part3FirstAmendmentLastPart": "and to petition the Government for a redress of grievances.",
+        "part4": "But after countless petitions, phone calls and letters, we realized that was the problem - no one was counting.  We had no idea how many people were calling in with the same grievances.  No elected official is incentivized to disclose that data either.  Offices have internal call log reports that rarely get published.  So how can we ensure an elected official is truly reflecting the will of his / her constituents if we have no visibility into what constituents want?  For true accountability, we need transparency about our civic participation.  Write to Congress commits to sharing our numbers while protecting our users’ privacy.",
+        "part5": "The other practical reason we started Write to Congress came from just how busy we were as human beings.  We have to make a living and care for our families.  Calling members of Congress, staying on hold and leaving well-informed messages about different pieces of legislation does not always fit into the day.  But we can fill up rooms with mountains of letters.  And maybe make the United States Postal Service profitable again.",
+        "part6": "Write to Congress has three founders:  a first-generation Indian American, an Italian immigrant who got his citizenship the same year as Trump’s election and a freelance developer in Sarajevo.  Our letter templates come from writers around the country who believe freedom won’t stay free unless we fight for it.",
+        "part7": "Join the fight."
     }
 }

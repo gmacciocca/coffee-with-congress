@@ -4,19 +4,23 @@
     align-items: center;
     max-width: 500px;
     margin: auto;
-    color: $cwcColorSecondaryText;
 
     &__wrapper {
-        width: 100%;
-        position: absolute;
-        bottom: 10%;
-        display: flex;
-        justify-content: center;
+        // width: 100%;
+        // position: absolute;
+        // bottom: 1em;
+        // display: flex;
+        // justify-content: center;
+        // height: 3em;
     }
 
     &__link {
         margin: 10px;
         text-align: center;
+        font-weight: bold;
+        a {
+            color: $cwcColorSecondaryText;
+        }
         &__separator {
             width: 2px;
             margin: 10px;
