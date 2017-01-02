@@ -1,0 +1,15 @@
+{
+    "themeColors": {
+        "mainBackground": "#FFFFFF",
+        "headerAndLogo": "#007eb2",
+        "secondaryBackground": "#E3F2FD",
+        "contrastBackground": "#607075",
+        "mainText": "#102025",
+        "secondaryText": "#607075",
+        "contrastText": "#FFFFFF",
+        "alertText": "#ce0000",
+        "secondaryAlertText": "#007eb2",
+        "alertUnderline": "#007eb2",
+        "hintColor": "#007eb2"
+    }
+}

@@ -3,12 +3,12 @@
 		"city": "City",
 		"state": "State",
 		"federal": "Federal",
-		"issueLabel": "Issue",
-		"contactsLabel": "Representative",
+		"issueLabel": "Pick an issue",
+		"contactsLabel": "Pick an elected official",
 		"selectHint": "Select one...",
 		"print": "Print",
 		"pleaseEnterYourNameHere": "PLEASE enter your name here...",
-		"pleaseSelectARepresentative": "PLEASE select a representative above...",
+		"pleaseSelectARepresentative": "PLEASE pick an elected official above...",
 		"addressEditDialogTitle": "EDIT SENDER INFORMATION",
 		"save": "Save",
 		"cancel": "Cancel",
@@ -16,19 +16,61 @@
 		"address": "Address",
 		"zip": "Zip",
 		"templateEditDialogTitle": "EDIT LETTER TEMPLATE",
-		"template": "Enter letter template here..."
+		"template": "Enter letter template here...",
+		"republican": "(R)",
+		"democrat": "(D)",
+		"indpendent": "(I)",
+		"restoreTemplate": "Restore to original template",
+		"ok": "OK",
+		"restoreConfirmationTitle": "Restore to original template",
+		"restoreConfirmationText": "Are you sure you want to do this?  You will lose any changes you have made.",
+		"personalizeLetter": "Click the edit icons below to personalize your letter, then print",
+		"printWarningDialogTitle": "BEFORE YOU PRINT...",
+		"gotStamps": "Got a stamp?",
+		"stampsInstructions": "If not head over to %s to print one now.",
+		"stampsLink": "http://www.stamps.com",
+		"stampsLinkName": "www.stamps.com",
+		"needEnvelope": "Need an envelope?",
+		"envelopeInstructions": "Order a pack at %s to arrive quickly.",
+		"envelopeLink": "https://www.amazon.com/Mead-Envelopes-Security-Press-75026/dp/B000T9MP5U/ref=sr_1_3?th=1",
+		"envelopeLinkName": "www.amazon.com",
+		"checkPrinter": "Check your printer settings",
+		"printerInstructions": "You may have to disable the Header and Footer in 'More Settings'",
+		"grabAPen": "Grab a pen to sign your letter!",
+		"doNotShowAgain": "Do not show again",
+		"noTemplageMessage": "Unfortunately we do not have a template on this issue for this elected official at this time.\nHowever, we encourage you to write your own letter about the issue.\n\nIf you want to submit a template to us, drop us a line at %s",
+		"noTemplageEmailAddress": "writers@writetocongress.org",
+		"noTemplageEmailSubject": "Missing template for issue '%s', %s state, %s level",
+		"noTemplageEmailBody": "Please write your template proposal below:"
 	},
 	"gateways": {
-		"invalidZipCode": "Invalid ZIP code"
+		"invalidAddress": "No elected officials were found for this state/zip combination"
 	},
 	"utils": {
 		"invalidAddressFormat": "Invalid address format"
 	},
 	"welcome": {
 		"title": "Write to Congress",
-		"welcomeMessage": "We exercise our right to congress when we write to Congress.  Our mission is to hold elected officials accountable when we sense actions or inactions that threaten our nation’s founding principles of equality and liberty.",
-		"addressHint": "ZIP code",
-		"addressLabel": "Enter Your ZIP code",
+		"welcomeMessage": "We exercise our right to congress when we write to Congress.",
+		"zipCodeLabel": "ZIP code",
+		"zipCodeHint": "Enter ZIP",
+		"stateLabel": "State",
+		"stateHint": "Select state",
 		"continue": "Continue"
+	},
+	"footer": {
+		"missionStatement": "Mission Statement",
+		"aboutUs": "About Us",
+		"termsAndConditions": "Terms & Conditions"
+	},
+	"mission": {
+		"part1": "We exercise our right to congress when we write to Congress.  Our mission is to hold elected officials accountable when we sense actions or inactions that threaten our nation’s founding principles of equality and liberty. ",
+		"part2": "The systematic weakening of our democratic institutions started long before the 2016 elections, and will continue if we don’t exercise every Constitutional muscle in our bodies.  Write to Congress was born out of exercising our First Amendment:",
+		"part3FirstAmendment": "Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, ",
+		"part3FirstAmendmentLastPart": "and to petition the Government for a redress of grievances.",
+		"part4": "But after countless petitions, phone calls and letters, we realized that was the problem - no one was counting.  We had no idea how many people were calling in with the same grievances.  No elected official is incentivized to disclose that data either.  Offices have internal call log reports that rarely get published.  So how can we ensure an elected official is truly reflecting the will of his / her constituents if we have no visibility into what constituents want?  For true accountability, we need transparency about our civic participation.  Write to Congress commits to sharing our numbers while protecting our users’ privacy.",
+		"part5": "The other practical reason we started Write to Congress came from just how busy we were as human beings.  We have to make a living and care for our families.  Calling members of Congress, staying on hold and leaving well-informed messages about different pieces of legislation does not always fit into the day.  But we can fill up rooms with mountains of letters.  And maybe make the United States Postal Service profitable again.",
+		"part6": "Write to Congress has three founders:  a first-generation Indian American, an Italian immigrant who got his citizenship the same year as Trump’s election and a freelance developer in Sarajevo.  Our letter templates come from writers around the country who believe freedom won’t stay free unless we fight for it.",
+		"part7": "Join the fight."
 	}
 }
