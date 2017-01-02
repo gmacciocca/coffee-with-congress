@@ -3,6 +3,7 @@ import { Application } from "solo-application";
 import Logo from "./Logo";
 import Description from "./Description";
 import AddressForm from "./AddressForm";
+import Footer from "./Footer";
 
 export default class Welcome extends React.Component {
     constructor(...args) {
@@ -22,6 +23,7 @@ export default class Welcome extends React.Component {
                 <Logo />
                 <Description />
                 <AddressForm router={this.props.router} />
+                <Footer />
             </div>
         );
     }

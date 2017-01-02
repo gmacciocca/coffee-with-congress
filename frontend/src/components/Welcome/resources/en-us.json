@@ -7,5 +7,10 @@
         "stateLabel": "State",
         "stateHint": "Select state",
         "continue": "Continue"
+    },
+    "footer": {
+        "missionStatement": "Mission Statement",
+        "aboutUs": "About Us",
+        "termsAndConditions": "Terms & Conditions"
     }
 }
