@@ -1,10 +1,12 @@
 from django.http import JsonResponse
 from django.http import HttpResponseNotFound
+from django.http import HttpResponseBadRequest
 from cwc import models
 from django.utils import timezone
 from apiclient.discovery import build
 from cwc import settings
 from cwc.clients import CivicApi
+import json
 
 def index(request):
     return JsonResponse("Hello, cofee with congress. You are at index.")
@@ -28,3 +30,21 @@ def get_template(request, issue_id, state, level):
         return JsonResponse(template.for_export(),safe=False)
     except (models.Template.DoesNotExist, models.Issue.DoesNotExist, models.State.DoesNotExist):
         return HttpResponseNotFound('<h1>Template not found</h1>')
+
+def stats(request):
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        try:
+            issue_id = json_data['issue']
+            state_code = json_data['state']
+            level = json_data['level']
+            printed_letter = models.PrintedLetter(issue_id = issue_id, state_code= state_code, level=level)
+            printed_letter.save()
+        except KeyError:
+            return HttpResponseBadRequest("Malformed data!")
+    else:
+        count = models.PrintedLetter.objects.count()
+        return JsonResponse({
+          "letter_count": count
+        })
+    return JsonResponse("OK", safe=False, status=201)
