@@ -12,7 +12,7 @@ class CivicApi:
         self.representatives = self.service.representatives()
 
     def contactsForAddress(self, address):
-        response = self.representatives.representativeInfoByAddress(levels=None, roles=["headOfState","headOfGovernment","deputyHeadOfGovernment","governmentOfficer"], address=address).execute()
+        response = self.representatives.representativeInfoByAddress(levels=None, roles=["headOfState","headOfGovernment","deputyHeadOfGovernment","governmentOfficer","legislatorUpperBody"], address=address).execute()
 
 
         federal_contact_indices = sum([office['officialIndices'] for office in response['offices'] if ('country' in office['levels'])], [])
@@ -61,7 +61,7 @@ class CivicApi:
     """
     def normalized_contact(self,response, index):
         office = next(office for office in response['offices'] if index in office['officialIndices'])
-        role = office['roles'][0] if office else ''
+        role = office['name'] if office else ''
         contact = response['officials'][index]
         return {
             "id": index,

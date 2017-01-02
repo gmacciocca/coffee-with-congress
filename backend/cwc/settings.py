@@ -39,7 +39,7 @@ SECRET_KEY = '-c&qt=71oi^e5s8(ene*$b89^#%*0xeve$x_trs91veok9#0h0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ 'causal-port-151005.appspot.com', 'writetocongress.com', 'www.writetocongress.com']
+ALLOWED_HOSTS = [ 'causal-port-151005.appspot.com', 'writetocongress.org', 'www.writetocongress.org', 'localhost']
 
 
 # Application definition
