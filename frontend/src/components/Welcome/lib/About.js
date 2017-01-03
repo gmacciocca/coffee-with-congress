@@ -38,7 +38,7 @@ import { AboutText, aboutPeople } from "./aboutPeople";
 //     }
 // }
 
-export default class Terms extends React.Component {
+export default class About extends React.Component {
     constructor(...args) {
         super(...args);
         this.appHeader = Application.roles.uiAppHeader;
@@ -57,14 +57,15 @@ export default class Terms extends React.Component {
                     <AboutText />
                     <List>
                         {aboutPeople.map(person => {
+                            //const BioComponent = person.bioComponent;
                             return (
                                 <ListItem
                                     key={person.name}
                                     disabled={true}
                                     leftAvatar={<Avatar src={person.photoUrl} />}
                                 >
-                                    <div>{person.name}</div>
-                                    <div>{person.bio}</div>
+                                    <div className="welcome__about-person-name">{person.name}</div>
+                                    {person.bioComponent}
                                 </ListItem>
                             );
                         })}
