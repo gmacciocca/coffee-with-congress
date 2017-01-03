@@ -8,6 +8,8 @@ const MissionText = () => (
     <br />
     <div>
         The systematic weakening of our democratic institutions started long before the 2016 elections, and will continue if we don&rsquo;t exercise every Constitutional muscle in our bodies.  Write to Congress was born out of exercising our First Amendment:
+        <br />
+        <br />
         <div className="mission__amendment">
             <span>
                 Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble,

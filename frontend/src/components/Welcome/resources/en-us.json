@@ -2,6 +2,10 @@
     "welcome": {
         "title": "Write to Congress" ,
         "welcomeMessage": "We exercise our right to congress when we write to Congress.",
+        "streetAddressLabel": "Street address",
+        "streetAddressHint": "Enter number and street",
+        "cityLabel": "City",
+        "cityHint": "Enter city",
         "zipCodeLabel": "ZIP code",
         "zipCodeHint": "Enter ZIP",
         "stateLabel": "State",
@@ -12,6 +16,7 @@
     "footer": {
         "missionStatement": "Mission Statement",
         "aboutUs": "About Us",
-        "termsAndConditions": "Terms & Conditions"
+        "termsAndConditions": "Terms & Conditions",
+        "faq": "FAQ"
     }
  }

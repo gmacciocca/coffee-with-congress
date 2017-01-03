@@ -4,8 +4,8 @@ import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theo
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import { ZipcodeValidation, CwcServer, CwcServerMocked } from "./components/Gateways";
-import { AddressParser, FormatString, Analytics, Utils } from "./components/Utils";
+import { ZipcodeValidation, CwcServer } from "./components/Gateways";
+import { AddressParser, FormatString, Analytics, Utils, Gravatar } from "./components/Utils";
 import { NetworkTransport } from "./components/NetworkTransport";
 import { MediaEvents } from "./components/CommonUi";
 import { AppHeader } from "./components/Dashboard";
@@ -32,7 +32,7 @@ const configuration = {
     clientDescription: appPackage.description,
 
     //officialLevels: ["city", "state", "federal"]
-    officialLevels: ["federal"]
+    officialLevels: ["state", "federal"]
 };
 
 const getComponents = (locResource) => {
@@ -52,7 +52,8 @@ const getComponents = (locResource) => {
         //new ComponentFromClass("cwcServer", CwcServerMocked),
         new ComponentFromClass("zipcodeValidation", ZipcodeValidation),
         new ComponentFromClass("mediaEvents", MediaEvents),
-        new ComponentFromValue("uiAppHeader", AppHeader)
+        new ComponentFromValue("uiAppHeader", AppHeader),
+        new ComponentFromClass("gravatar", Gravatar)
     ];
 };
 

@@ -1,5 +1,5 @@
 export default {
-    "federal": 0,
-    "state": 1,
-    "city": 2,
+    "federal": 1,
+    "state": 2,
+    "city": 3
 };

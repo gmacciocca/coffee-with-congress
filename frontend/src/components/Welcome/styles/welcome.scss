@@ -24,10 +24,10 @@ $welcome-description-side-margin: 20px;
         margin: auto auto 2em;
     }
 
-    &__state-zip {
+    &__adress-fields {
         display: flex;
         justify-content: space-between;
-        width: 250px;
+        width: 450px;
         margin: auto;
     }
 
@@ -52,5 +52,10 @@ $welcome-description-side-margin: 20px;
             max-width: calc(#{$cwc-medium-screen} - (#{$welcome-description-side-margin} * 2));
             text-align: center;
         }
+    }
+}
+
+@media #{$cwc-small-and-down} {
+    .welcome {
     }
 }

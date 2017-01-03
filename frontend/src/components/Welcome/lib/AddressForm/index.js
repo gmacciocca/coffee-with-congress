@@ -29,7 +29,9 @@ export default class AddressForm extends React.Component {
             showProgress: false,
             errorText: null,
             stateCode: "",
-            zipCode: ""
+            zipCode: "",
+            streetAddress: "",
+            city: ""
         };
     }
 
@@ -48,8 +50,14 @@ export default class AddressForm extends React.Component {
         this.setState({ showProgress: true });
         this.disableInputs(true);
 
-        const address = { state: this.state.stateCode, zip: this.state.zipCode };
-        const addressString = `${this.state.stateCode} ${this.state.zipCode}`;
+        const address = {
+            address: this.state.streetAddress,
+            city: this.state.city,
+            state: this.state.stateCode,
+            zip: this.state.zipCode
+        };
+
+        const addressString = `${this.state.streetAddress} ${this.state.city} ${this.state.stateCode} ${this.state.zipCode}`;
 
         this._cwcServer.fetchContacts(addressString)
         .then(contacts => {
@@ -60,6 +68,22 @@ export default class AddressForm extends React.Component {
         }, (err) => {
             this.setState({ showProgress: false, errorText: err.message });
             this.disableInputs(false);
+        });
+    }
+
+    onStreetAddressChange(event, streetAddress) {
+        this.setState({
+            streetAddress,
+            disableContinueButton: (!streetAddress),
+            errorText: null
+        });
+    }
+
+    onCityChange(event, city) {
+        this.setState({
+            city,
+            disableContinueButton: (!city),
+            errorText: null
         });
     }
 
@@ -84,27 +108,46 @@ export default class AddressForm extends React.Component {
         this.setState({ disableInputs });
     }
 
-    get inputZip() {
+    get streetAddress() {
         const props = {
-            onChange: this.onZipChange.bind(this),
-            floatingLabelFixed: true,
-            floatingLabelText: Application.localize("welcome/zipCodeLabel"),
-            hintText: Application.localize("welcome/zipCodeHint"),
+            onChange: this.onStreetAddressChange.bind(this),
+            //floatingLabelFixed: true,
+            floatingLabelText: Application.localize("welcome/streetAddressLabel"),
+            //hintText: Application.localize("welcome/streetAddressHint"),
             disabled: this.state.disableInputs,
-            value: this.state.zipCode,
+            value: this.state.streetAddress,
             style: {
-                width: "110px"
-            },
-            inputStyle: {
-                type: "number",
-                maxlength: 5
+                width: "200px"
             }
         };
 
         return (
             <div>
                 <TextField
-                    ref={ref => this._zip = ref}
+                    ref={ref => this._streetAddress = ref}
+                    {...props}
+                />
+            </div>
+        );
+    }
+
+    get city() {
+        const props = {
+            onChange: this.onCityChange.bind(this),
+            //floatingLabelFixed: true,
+            floatingLabelText: Application.localize("welcome/cityLabel"),
+            //hintText: Application.localize("welcome/cityHint"),
+            disabled: this.state.disableInputs,
+            value: this.state.city,
+            style: {
+                width: "100px"
+            }
+        };
+
+        return (
+            <div>
+                <TextField
+                    ref={ref => this._streetAddress = ref}
                     {...props}
                 />
             </div>
@@ -115,14 +158,14 @@ export default class AddressForm extends React.Component {
         const props = {
             style: {
                 tabIndex: "0",
-                width: "110px"
+                width: "60px"
             },
             autoFocus: true,
             autoWidth: true,
             onChange: this.onStateChange.bind(this),
-            floatingLabelFixed: true,
+            //floatingLabelFixed: true,
             floatingLabelText: Application.localize("welcome/stateLabel"),
-            hintText: Application.localize("welcome/stateHint"),
+            //hintText: Application.localize("welcome/stateHint"),
             value: this.state.stateCode
         };
 
@@ -140,6 +183,33 @@ export default class AddressForm extends React.Component {
                     })
                 }
             </SelectField>
+        );
+    }
+
+    get inputZip() {
+        const props = {
+            onChange: this.onZipChange.bind(this),
+            //floatingLabelFixed: true,
+            floatingLabelText: Application.localize("welcome/zipCodeLabel"),
+            //hintText: Application.localize("welcome/zipCodeHint"),
+            disabled: this.state.disableInputs,
+            value: this.state.zipCode,
+            style: {
+                width: "80px"
+            },
+            inputStyle: {
+                type: "number",
+                maxlength: 5
+            }
+        };
+
+        return (
+            <div>
+                <TextField
+                    ref={ref => this._zip = ref}
+                    {...props}
+                />
+            </div>
         );
     }
 
@@ -165,7 +235,9 @@ export default class AddressForm extends React.Component {
         return (
             <div className="welcome__address-form" >
                 <form onSubmit={this.onSubmit.bind(this)}>
-                    <div className="welcome__state-zip">
+                    <div className="welcome__adress-fields">
+                        {this.streetAddress}
+                        {this.city}
                         {this.stateSelect}
                         {this.inputZip}
                     </div>

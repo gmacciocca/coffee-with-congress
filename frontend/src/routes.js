@@ -8,9 +8,7 @@ import { Dashboard } from "./components/Dashboard";
 import { Mission } from "./components/Welcome";
 import { About } from "./components/Welcome";
 import { Terms } from "./components/Welcome";
-
-//<MuiThemeProvider muiTheme={CustomTheme}>
-//<MuiThemeProvider>
+import { Faq } from "./components/Welcome";
 
 export default (
     <MuiThemeProvider muiTheme={CustomTheme}>
@@ -20,6 +18,7 @@ export default (
             <Route path="/mission" component={withRouter(Mission)} />
             <Route path="/about" component={withRouter(About)} />
             <Route path="/terms" component={withRouter(Terms)} />
+            <Route path="/faq" component={withRouter(Faq)} />
         </Router>
     </MuiThemeProvider>
 );
