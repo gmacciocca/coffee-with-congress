@@ -40,9 +40,20 @@ $welcome-description-side-margin: 20px;
         margin: 0 20px;
     }
 
-    &__about-person-name {
-        font-weight: bold;
-        margin-bottom: 10px;
+    &__about {
+        &__person {
+            &__name {
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            &__bio {
+                font-size: 0.9em;
+                a {
+                    color: $cwcColorSecondaryText;
+                    font-weight: bold;
+                }
+            }
+        }
     }
 }
 

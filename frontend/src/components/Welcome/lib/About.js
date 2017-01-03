@@ -64,8 +64,10 @@ export default class About extends React.Component {
                                     disabled={true}
                                     leftAvatar={<Avatar src={person.photoUrl} />}
                                 >
-                                    <div className="welcome__about-person-name">{person.name}</div>
-                                    {person.bioComponent}
+                                    <div className="welcome__about__person__name">{person.name}</div>
+                                    <div className="welcome__about__person__bio">
+                                        {person.bioComponent}
+                                    </div>
                                 </ListItem>
                             );
                         })}

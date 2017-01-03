@@ -2,7 +2,7 @@ import React from "react";
 
 const LinkTo = ({ url, urlName }) => {
     return (
-        <a href={"url"} target="_blank">{urlName}</a>
+        <a href={url} target="_blank">{urlName}</a>
     );
 };
 
@@ -33,13 +33,23 @@ const TanujaBio = () => (
 
 const aboutPeople = [{
     name: "Tanuja Gupta",
-    photoUrl: "./images/sil.png",
-    emailHash: "2499f1791bc78152e6c09586255ba8bd",
+    photoUrl: "./images/tanuja.jpg",
     bioComponent: <TanujaBio />
 }, {
     name: "Gianluca Macciocca",
     photoUrl: "http://gravatar.com/avatar/e4e39436859e90abb970ef9e8eff28fe",
-    emailHash: "e4e39436859e90abb970ef9e8eff28fe"
+}, {
+    name: "Yashoda Sampath",
+    photoUrl: "./images/sil.png",
+}, {
+    name: "Chad Walters",
+    photoUrl: "./images/chad.jpg"
+}, {
+    name: "Julia Ipsa",
+    photoUrl: "./images/sil.png",
+}, {
+    name: "Kavita Jain-Cocks",
+    photoUrl: "./images/kavita.jpg"
 }];
 
 export { AboutText, aboutPeople };
