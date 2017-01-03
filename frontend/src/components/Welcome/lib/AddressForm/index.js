@@ -117,7 +117,7 @@ export default class AddressForm extends React.Component {
             disabled: this.state.disableInputs,
             value: this.state.streetAddress,
             style: {
-                width: "200px"
+                width: "190px"
             }
         };
 
@@ -158,7 +158,7 @@ export default class AddressForm extends React.Component {
         const props = {
             style: {
                 tabIndex: "0",
-                width: "60px"
+                width: "70px"
             },
             autoFocus: true,
             autoWidth: true,
