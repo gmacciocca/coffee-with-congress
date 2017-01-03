@@ -82,13 +82,11 @@ export default class TemplateEditDialog extends React.Component {
         const actions = [
             <FlatButton
                 label={Application.localize("dashboard/restoreTemplate")}
-                primary={false}
                 onTouchTap={this.handleRestoreTemplate.bind(this)}
                 type="button"
             />,
             <FlatButton
                 label={Application.localize("dashboard/cancel")}
-                primary={false}
                 onTouchTap={this.handleCancel.bind(this)}
                 type="button"
             />,

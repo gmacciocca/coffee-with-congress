@@ -50,7 +50,6 @@ export default class AddressEditDialog extends React.Component {
         const actions = [
             <FlatButton
                 label={Application.localize("dashboard/cancel")}
-                primary={true}
                 onTouchTap={this.handleSave.bind(this)}
                 type="button"
             />,
