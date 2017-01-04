@@ -11,7 +11,7 @@
         "stateLabel": "State",
         "stateHint": "Select state",
         "continue": "Continue",
-        "printStatsMessage": "letters sent."
+        "printStatsMessage": "letters written."
     },
     "footer": {
         "missionStatement": "Mission Statement",

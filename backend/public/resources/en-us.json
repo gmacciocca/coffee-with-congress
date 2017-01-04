@@ -46,9 +46,6 @@
 	"gateways": {
 		"invalidAddress": "No elected officials were found for this state/zip combination"
 	},
-	"utils": {
-		"invalidAddressFormat": "Invalid address format"
-	},
 	"welcome": {
 		"title": "Write to Congress",
 		"welcomeMessage": "We exercise our right to congress when we write to Congress.",
@@ -61,12 +58,15 @@
 		"stateLabel": "State",
 		"stateHint": "Select state",
 		"continue": "Continue",
-		"printStatsMessage": "letters sent."
+		"printStatsMessage": "letters written."
 	},
 	"footer": {
 		"missionStatement": "Mission Statement",
 		"aboutUs": "About Us",
 		"termsAndConditions": "Terms & Conditions",
 		"faq": "FAQ"
+	},
+	"utils": {
+		"invalidAddressFormat": "Invalid address format"
 	}
 }

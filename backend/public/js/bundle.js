@@ -4481,7 +4481,7 @@ var AboutText = function AboutText() {
     return _react2.default.createElement(
         "div",
         null,
-        "We are not a business, nonprofit or school.  We are simply of a group of people who want to help American citizens protect freedom, so we started this project.  We are scattered across the globe and have full-time jobs.  But we believe we are citizens of the world who must help one another.  (Our project nor its views do not represent our employers.)  Some writers and developers did not feel comfortable being publicly listed for fear of retaliation."
+        "We are not a business, nonprofit or school.  We are simply of a group of people who want to help American citizens protect freedom, so we started this project.  We are scattered across the globe and have full-time jobs.  But we believe we are citizens of the world who must help one another.  (Our project and its views do not represent our employers.)  Some writers and developers did not feel comfortable being publicly listed for fear of retaliation."
     );
 };
 
@@ -4608,7 +4608,7 @@ var FaqText = function FaqText() {
             _react2.default.createElement(
                 "h5",
                 null,
-                "Why can\u2019t a write a letter longer than one page?"
+                "Why can\u2019t I write a letter longer than one page?"
             ),
             "Because the letter loses its effectiveness. Elected officials are busy and we have to get straight to the point.",
             _react2.default.createElement(
@@ -4618,11 +4618,19 @@ var FaqText = function FaqText() {
             ),
             "We\u2019d love it - drop us a line at ",
             _react2.default.createElement(EmailTo, { email: "media@writetocongress.org" }),
+            ".",
+            _react2.default.createElement(
+                "h5",
+                null,
+                "Why do I have to enter my full address?  And what do you do with it?"
+            ),
+            "Cities are broken down into multiple districts, which have different representatives in the House.  To give you the right list of people to contact, we need your address.  You also need to list your address on your letter to prove you are really a constituent in that official's jurisdiction.  Write to Congress does not record your address, or the letter you customize, in any way, shape or form.",
             _react2.default.createElement(
                 "h5",
                 null,
                 "I have another question that\u2019s not answered here - how do I reach you?"
             ),
+            "E-mail us at ",
             _react2.default.createElement(EmailTo, { email: "info@writetocongress.org" })
         )
     );
@@ -4718,7 +4726,7 @@ var TermsText = function TermsText() {
     return _react2.default.createElement(
         "div",
         null,
-        "Please read these Terms and Conditions (\"Terms\", \"Terms and Conditions\") carefully before using the http:\\/\\/www.writetocongress.org website (the \"Service\") operated by Write to Congress (\"us\", \"we\", or \"our\"). Your access to and use of the Service is conditioned upon your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who wish to access or use the Service. By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you do not have permission to access the Service.",
+        "Please read these Terms and Conditions (\"Terms\", \"Terms and Conditions\") carefully before using the https://writetocongress.org website (the \"Service\") operated by Write to Congress (\"us\", \"we\", or \"our\"). Your access to and use of the Service is conditioned upon your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who wish to access or use the Service. By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you do not have permission to access the Service.",
         _react2.default.createElement(
             "h5",
             null,
@@ -4754,7 +4762,7 @@ var TermsText = function TermsText() {
             null,
             "Disclaimer"
         ),
-        "Your use of the Service is at your sole risk. The Service is provided on an \"AS IS\" and \"AS AVAILABLE\" basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance. Write to Congress its subsidiaries, affiliates, and its licensors do not warrant that a) the Service will function uninterrupted, secure or available at any particular time or location; b) any errors or defects will be corrected; c) the Service is free of viruses or other harmful components; or d) the results of using the Service will meet your requirements.",
+        "Your use of the Service is at your sole risk. The Service is provided on an \"AS IS\" and \"AS AVAILABLE\" basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance. Write to Congress, its subsidiaries, affiliates, and its licensors do not warrant that a) the Service will function uninterrupted, secure or available at any particular time or location; b) any errors or defects will be corrected; c) the Service is free of viruses or other harmful components; or d) the results of using the Service will meet your requirements.",
         _react2.default.createElement(
             "h5",
             null,
@@ -63605,7 +63613,7 @@ module.exports = XRegExp;
 },{}],683:[function(require,module,exports){
 module.exports={
   "name": "write-to-congress",
-  "version": "0.9.5",
+  "version": "1.0.0",
   "description": "Write to Congress",
   "main": "index.js",
   "scripts": {
