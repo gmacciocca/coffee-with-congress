@@ -1937,9 +1937,8 @@ footer {
   max-width: 500px;
   margin: auto; }
   .footer__link {
-    margin: 10px;
-    text-align: center;
-    font-weight: bold; }
+    margin: 5px;
+    text-align: center; }
     .footer__link a {
       color: #607075; }
     .footer__link__separator {
@@ -1948,17 +1947,24 @@ footer {
       height: 2em;
       background-color: #607075; }
 
-.mission {
-  margin: 30px; }
-  .mission__wrapper {
-    height: 100%;
-    margin-bottom: 4em; }
-  .mission__amendment {
-    font-size: 1.2em;
-    font-style: italic; }
-    .mission__amendment__last-part {
-      font-weight: bold;
-      font-size: 1.1em; }
+.mission__wrapper {
+  height: 100%;
+  margin: 30px 30px 4em 30px; }
+
+.mission__amendment {
+  font-size: 1.2em;
+  font-style: italic; }
+  .mission__amendment__last-part {
+    font-weight: bold;
+    font-size: 1.1em; }
+
+.print-stats {
+  text-align: center;
+  max-width: 100%;
+  margin: auto; }
+  .print-stats__number {
+    font-size: 1.5em;
+    font-weight: bold; }
 
 .welcome {
   display: flex;
@@ -1966,7 +1972,7 @@ footer {
   padding-top: 2%; }
   .welcome__logo {
     max-width: 60%;
-    margin: 25% auto 0;
+    margin: 19% auto 0;
     overflow: auto;
     text-align: center; }
     .welcome__logo__img {
@@ -1975,22 +1981,30 @@ footer {
     margin: 0 20px;
     text-align: center; }
   .welcome__address-form {
-    margin: auto auto 4em; }
-  .welcome__state-zip {
+    margin: auto auto 2em; }
+  .welcome__adress-fields {
     display: flex;
     justify-content: space-between;
-    width: 250px;
+    width: 450px;
     margin: auto; }
   .welcome__error-button {
     text-align: center; }
   .welcome__error-string {
     color: #ce0000;
     margin: 0 20px; }
+  .welcome__about__person__name {
+    font-weight: bold;
+    margin-bottom: 10px; }
+  .welcome__about__person__bio {
+    font-size: 0.9em; }
+    .welcome__about__person__bio a {
+      color: #607075;
+      font-weight: bold; }
 
 @media screen and (min-width: 741px) {
   .welcome__logo {
     max-width: 450px;
-    margin: 12em auto 0; }
+    margin: 9em auto 0; }
   .welcome__description {
     margin: auto;
     max-width: calc(740px - (20px * 2));
