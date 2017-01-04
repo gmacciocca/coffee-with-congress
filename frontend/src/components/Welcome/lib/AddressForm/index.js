@@ -122,7 +122,7 @@ export default class AddressForm extends React.Component {
         };
 
         return (
-            <div>
+            <div className="welcome__address__field">
                 <TextField
                     ref={ref => this._streetAddress = ref}
                     {...props}
@@ -145,7 +145,7 @@ export default class AddressForm extends React.Component {
         };
 
         return (
-            <div>
+            <div className="welcome__address__field">
                 <TextField
                     ref={ref => this._streetAddress = ref}
                     {...props}
@@ -170,19 +170,21 @@ export default class AddressForm extends React.Component {
         };
 
         return (
-            <SelectField ref={ref => this._state = ref} {...props} >
-                {
-                    STATE_INITIALS.map(state => {
-                        return (
-                            <MenuItem
-                                key={state}
-                                value={state}
-                                primaryText={state}
-                            />
-                        );
-                    })
-                }
-            </SelectField>
+            <div className="welcome__address__field">
+                <SelectField ref={ref => this._state = ref} {...props} >
+                    {
+                        STATE_INITIALS.map(state => {
+                            return (
+                                <MenuItem
+                                    key={state}
+                                    value={state}
+                                    primaryText={state}
+                                />
+                            );
+                        })
+                    }
+                </SelectField>
+            </div>
         );
     }
 
@@ -204,7 +206,7 @@ export default class AddressForm extends React.Component {
         };
 
         return (
-            <div>
+            <div className="welcome__address__field">
                 <TextField
                     ref={ref => this._zip = ref}
                     {...props}
@@ -235,11 +237,23 @@ export default class AddressForm extends React.Component {
         return (
             <div className="welcome__address-form" >
                 <form onSubmit={this.onSubmit.bind(this)}>
-                    <div className="welcome__adress-fields">
-                        {this.streetAddress}
-                        {this.city}
-                        {this.stateSelect}
-                        {this.inputZip}
+                    <div className="cwc-screen-medium-and-up">
+                        <div className="welcome__address">
+                            {this.streetAddress}
+                            {this.city}
+                            {this.stateSelect}
+                            {this.inputZip}
+                        </div>
+                    </div>
+                    <div className="cwc-screen-small-and-down">
+                        <div className="welcome__address">
+                            {this.streetAddress}
+                        </div>
+                        <div className="welcome__address">
+                            {this.city}
+                            {this.stateSelect}
+                            {this.inputZip}
+                        </div>
                     </div>
                     <div className="welcome__error-button">
                         {this.errorString}

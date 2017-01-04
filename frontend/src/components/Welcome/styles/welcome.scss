@@ -24,11 +24,14 @@ $welcome-description-side-margin: 20px;
         margin: auto auto 2em;
     }
 
-    &__adress-fields {
+    &__address {
         display: flex;
-        justify-content: space-between;
-        width: 450px;
+        justify-content: center;
         margin: auto;
+        &__field {
+            margin: 0 2px;
+            display: flex;
+        }
     }
 
     &__error-button {
@@ -68,10 +71,5 @@ $welcome-description-side-margin: 20px;
             max-width: calc(#{$cwc-medium-screen} - (#{$welcome-description-side-margin} * 2));
             text-align: center;
         }
-    }
-}
-
-@media #{$cwc-small-and-down} {
-    .welcome {
     }
 }
