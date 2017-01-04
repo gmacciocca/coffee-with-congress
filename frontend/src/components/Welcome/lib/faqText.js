@@ -11,7 +11,7 @@ const FaqText = () => (
     <div>
         <h5>How can I help write a template?</h5>
         Drop us a line at <EmailTo email="writers@writetocongress.org" /> with your information and a writing sample (no more than 1 page).
-        <h5>Why can&rsquo;t a write a letter longer than one page?</h5>
+        <h5>Why can&rsquo;t I write a letter longer than one page?</h5>
         Because the letter loses its effectiveness. Elected officials are busy and we have to get straight to the point.
         <h5>I run a media / news site - can I feature Write to Congress to my readers?</h5>
         We&rsquo;d love it - drop us a line at <EmailTo email="media@writetocongress.org" />
