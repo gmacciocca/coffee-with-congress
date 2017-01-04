@@ -14,9 +14,9 @@ const FaqText = () => (
         <h5>Why can&rsquo;t I write a letter longer than one page?</h5>
         Because the letter loses its effectiveness. Elected officials are busy and we have to get straight to the point.
         <h5>I run a media / news site - can I feature Write to Congress to my readers?</h5>
-        We&rsquo;d love it - drop us a line at <EmailTo email="media@writetocongress.org" />
+        We&rsquo;d love it - drop us a line at <EmailTo email="media@writetocongress.org" />.
         <h5>I have another question that&rsquo;s not answered here - how do I reach you?</h5>
-        <EmailTo email="info@writetocongress.org" />
+        E-mail us at <EmailTo email="info@writetocongress.org" />
     </div>
 </div>);
 

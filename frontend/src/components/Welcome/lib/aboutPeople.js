@@ -8,7 +8,7 @@ const LinkTo = ({ url, urlName }) => {
 
 const AboutText = () => (
 <div>
-    We are not a business, nonprofit or school.  We are simply of a group of people who want to help American citizens protect freedom, so we started this project.  We are scattered across the globe and have full-time jobs.  But we believe we are citizens of the world who must help one another.  (Our project nor its views do not represent our employers.)  Some writers and developers did not feel comfortable being publicly listed for fear of retaliation.
+    We are not a business, nonprofit or school.  We are simply of a group of people who want to help American citizens protect freedom, so we started this project.  We are scattered across the globe and have full-time jobs.  But we believe we are citizens of the world who must help one another.  (Our project and its views do not represent our employers.)  Some writers and developers did not feel comfortable being publicly listed for fear of retaliation.
 </div>);
 
 const TanujaBio = () => (
