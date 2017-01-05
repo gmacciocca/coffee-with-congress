@@ -46,6 +46,9 @@
 	"gateways": {
 		"invalidAddress": "No elected officials were found for this state/zip combination"
 	},
+	"utils": {
+		"invalidAddressFormat": "Invalid address format"
+	},
 	"welcome": {
 		"title": "Write to Congress",
 		"welcomeMessage": "We exercise our right to congress when we write to Congress.",
@@ -65,8 +68,5 @@
 		"aboutUs": "About Us",
 		"termsAndConditions": "Terms & Conditions",
 		"faq": "FAQ"
-	},
-	"utils": {
-		"invalidAddressFormat": "Invalid address format"
 	}
 }
