@@ -17,6 +17,10 @@ const FaqText = () => (
         We&rsquo;d love it - drop us a line at <EmailTo email="media@writetocongress.org" />.
         <h5>Why do I have to enter my full address?  And what do you do with it?</h5>
         Cities are broken down into multiple districts, which have different representatives in the House.  To give you the right list of people to contact, we need your address.  You also need to list your address on your letter to prove you are really a constituent in that official's jurisdiction.  Write to Congress does not record your address, or the letter you customize, in any way, shape or form.
+
+        <h5>I am getting 'no officials found' when I type in my address - why?</h5>
+Please send us your info <a href="https://docs.google.com/a/writetocongress.org/forms/d/e/1FAIpQLSc7N9tYMmg5rP0MRCvHu-z9w_7jyCqN7gB4tkjB4Xj3NUpoWw/viewform" target="_blank">here</a> and we'll get back to you as soon as possible.
+
         <h5>I have another question that&rsquo;s not answered here - how do I reach you?</h5>
         E-mail us at <EmailTo email="info@writetocongress.org" />
     </div>

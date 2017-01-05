@@ -3744,11 +3744,31 @@ var AddressForm = function (_React$Component) {
                     { onSubmit: this.onSubmit.bind(this) },
                     _react2.default.createElement(
                         "div",
-                        { className: "welcome__adress-fields" },
-                        this.streetAddress,
-                        this.city,
-                        this.stateSelect,
-                        this.inputZip
+                        { className: "cwc-screen-medium-and-up" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "welcome__address" },
+                            this.streetAddress,
+                            this.city,
+                            this.stateSelect,
+                            this.inputZip
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "cwc-screen-small-and-down" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "welcome__address" },
+                            this.streetAddress
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "welcome__address" },
+                            this.city,
+                            this.stateSelect,
+                            this.inputZip
+                        )
                     ),
                     _react2.default.createElement(
                         "div",
@@ -3779,7 +3799,7 @@ var AddressForm = function (_React$Component) {
 
             return _react2.default.createElement(
                 "div",
-                null,
+                { className: "welcome__address__field" },
                 _react2.default.createElement(_TextField2.default, _extends({
                     ref: function ref(_ref2) {
                         return _this3._streetAddress = _ref2;
@@ -3806,7 +3826,7 @@ var AddressForm = function (_React$Component) {
 
             return _react2.default.createElement(
                 "div",
-                null,
+                { className: "welcome__address__field" },
                 _react2.default.createElement(_TextField2.default, _extends({
                     ref: function ref(_ref3) {
                         return _this4._streetAddress = _ref3;
@@ -3834,17 +3854,21 @@ var AddressForm = function (_React$Component) {
             };
 
             return _react2.default.createElement(
-                _SelectField2.default,
-                _extends({ ref: function ref(_ref4) {
-                        return _this5._state = _ref4;
-                    } }, props),
-                STATE_INITIALS.map(function (state) {
-                    return _react2.default.createElement(_MenuItem2.default, {
-                        key: state,
-                        value: state,
-                        primaryText: state
-                    });
-                })
+                "div",
+                { className: "welcome__address__field" },
+                _react2.default.createElement(
+                    _SelectField2.default,
+                    _extends({ ref: function ref(_ref4) {
+                            return _this5._state = _ref4;
+                        } }, props),
+                    STATE_INITIALS.map(function (state) {
+                        return _react2.default.createElement(_MenuItem2.default, {
+                            key: state,
+                            value: state,
+                            primaryText: state
+                        });
+                    })
+                )
             );
         }
     }, {
@@ -3870,7 +3894,7 @@ var AddressForm = function (_React$Component) {
 
             return _react2.default.createElement(
                 "div",
-                null,
+                { className: "welcome__address__field" },
                 _react2.default.createElement(_TextField2.default, _extends({
                     ref: function ref(_ref5) {
                         return _this6._zip = _ref5;
@@ -4625,6 +4649,18 @@ var FaqText = function FaqText() {
                 "Why do I have to enter my full address?  And what do you do with it?"
             ),
             "Cities are broken down into multiple districts, which have different representatives in the House.  To give you the right list of people to contact, we need your address.  You also need to list your address on your letter to prove you are really a constituent in that official's jurisdiction.  Write to Congress does not record your address, or the letter you customize, in any way, shape or form.",
+            _react2.default.createElement(
+                "h5",
+                null,
+                "I am getting 'no officials found' when I type in my address - why?"
+            ),
+            "Please send us your info ",
+            _react2.default.createElement(
+                "a",
+                { href: "https://docs.google.com/a/writetocongress.org/forms/d/e/1FAIpQLSc7N9tYMmg5rP0MRCvHu-z9w_7jyCqN7gB4tkjB4Xj3NUpoWw/viewform", target: "_blank" },
+                "here"
+            ),
+            " and we'll get back to you as soon as possible.",
             _react2.default.createElement(
                 "h5",
                 null,

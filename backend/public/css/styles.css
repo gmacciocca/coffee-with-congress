@@ -1767,6 +1767,14 @@ footer {
   padding-bottom: 2rem;
   text-align: center; }
 
+@media only screen and (max-width: 740px) {
+  .cwc-screen-medium-and-up {
+    display: none; } }
+
+@media screen and (min-width: 741px) {
+  .cwc-screen-small-and-down {
+    display: none; } }
+
 .common-ui__overlay-progress {
   position: fixed;
   overflow-y: scroll;
@@ -1982,11 +1990,13 @@ footer {
     text-align: center; }
   .welcome__address-form {
     margin: auto auto 2em; }
-  .welcome__adress-fields {
+  .welcome__address {
     display: flex;
-    justify-content: space-between;
-    width: 450px;
+    justify-content: center;
     margin: auto; }
+    .welcome__address__field {
+      margin: 0 2px;
+      display: flex; }
   .welcome__error-button {
     text-align: center; }
   .welcome__error-string {
