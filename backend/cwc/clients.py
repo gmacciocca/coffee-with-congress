@@ -63,17 +63,24 @@ class CivicApi:
         office = next(office for office in response['offices'] if index in office['officialIndices'])
         role = office['name'] if office else ''
         contact = response['officials'][index]
+        default_address = [{
+            'line1': '',
+            'line2': '',
+            'city': '',
+            'state': '',
+            'zip': '',
+        }]
         return {
             "id": index,
-            "name": contact['name'],
-            "address1": contact['address'][0]['line1'],
-            "address2": contact['address'][0].get('line2'),
-            "city": contact['address'][0]['city'],
-            "state": contact['address'][0]['state'],
-            "zip_code": contact['address'][0]['zip'],
-            "phones": contact['phones'],
+            "name": contact.get('name', 'No Name'),
+            "address1": contact.get('address', default_address)[0]['line1'],
+            "address2": contact.get('address', default_address)[0].get('line2'),
+            "city": contact.get('address', default_address)[0]['city'],
+            "state": contact.get('address', default_address)[0]['state'],
+            "zip_code": contact.get('address', default_address)[0]['zip'],
+            "phones": contact.get('phones',[]),
             "faxes": [], # no data from civic api
             "emails": [], # no data from civic api
             "role": role,
-            "party": contact['party']
+            "party": contact.get('party',[])
         }

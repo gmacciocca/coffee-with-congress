@@ -4646,9 +4646,9 @@ var FaqText = function FaqText() {
             _react2.default.createElement(
                 "h5",
                 null,
-                "Why do I have to enter my full address?  And what do you do with it?"
+                "Why do I have to enter my full address? And what do you do with it?"
             ),
-            "Cities are broken down into multiple districts, which have different representatives in the House.  To give you the right list of people to contact, we need your address.  You also need to list your address on your letter to prove you are really a constituent in that official's jurisdiction.  Write to Congress does not record your address, or the letter you customize, in any way, shape or form.",
+            "Cities are broken down into multiple districts, which have different representatives in the House. To give you the right list of people to contact, we need your address. You also need to list your address on your letter to prove you are really a constituent in that official's jurisdiction. Write to Congress does not record your address, or the letter you customize, in any way, shape or form.",
             _react2.default.createElement(
                 "h5",
                 null,
@@ -4661,6 +4661,12 @@ var FaqText = function FaqText() {
                 "here"
             ),
             " and we'll get back to you as soon as possible.",
+            _react2.default.createElement(
+                "h5",
+                null,
+                "The elected official I chose has no address - why?"
+            ),
+            "This means address is not available through the Google Civics API. We encourage you to still try calling the office or writing other officials.",
             _react2.default.createElement(
                 "h5",
                 null,
