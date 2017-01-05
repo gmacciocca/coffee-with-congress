@@ -110,7 +110,7 @@ export default class AddressEditDialog extends React.Component {
                         <span>
                             <TextField
                                 name="zip"
-                                style={{ width: "25%" }}
+                                style={{ width: "30%" }}
                                 disabled={true}
                                 floatingLabelText={Application.localize("dashboard/zip")}
                                 defaultValue={this.props.address.zip}

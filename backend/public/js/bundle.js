@@ -685,7 +685,7 @@ var AddressEditDialog = function (_React$Component) {
                             null,
                             _react2.default.createElement(_TextField2.default, {
                                 name: "state",
-                                style: { width: "20%" },
+                                style: { width: "25%" },
                                 disabled: true,
                                 floatingLabelText: _soloApplication.Application.localize("dashboard/state"),
                                 defaultValue: this.props.address.state
@@ -3822,7 +3822,7 @@ var AddressForm = function (_React$Component) {
             var props = {
                 style: {
                     tabIndex: "0",
-                    width: "70px"
+                    width: "75px"
                 },
                 autoFocus: true,
                 autoWidth: true,
@@ -4535,7 +4535,7 @@ var GianlucaBio = function GianlucaBio() {
         null,
         "Developer, activist and philanthropist.",
         _react2.default.createElement("br", null),
-        "Gianluca is a C++/Javascript programmer who has worked at many startups, and corporates in both the Bay Area and New York. He currently works at Barnes & Noble.com building out higher education software. He immigrated to the US from Italy in 1994, and obtained his citizenship in 2016, during one of the most contentious presidential campaigns. Gianluca actively volunteered in Staten Island and the Rockaways during Hurricane Sandy to help hundreds of local residents clean, restore and rebuild their homes. He and his partner are proof that we have too much at stake to not fight"
+        "Gianluca is a C++/Javascript programmer who has worked at many startups, and corporates in both the Bay Area and New York. He currently works at Barnes & Noble.com building out higher education software. He immigrated to the US from Italy in 1994, and obtained his citizenship in 2016, during one of the most contentious presidential campaigns. Gianluca actively volunteered in Staten Island and the Rockaways during Hurricane Sandy to help hundreds of local residents clean, restore and rebuild their homes. He and his partner are proof that we have too much at stake to not fight."
     );
 };
 
@@ -4556,7 +4556,7 @@ var aboutPeople = [{
     photoUrl: "./images/chad.jpg",
     bioComponent: _react2.default.createElement(ChadBio, null)
 }, {
-    name: "Julia Ipsa",
+    name: "Julia Kang",
     photoUrl: "./images/sil.png",
     bioComponent: _react2.default.createElement(JuliaBio, null)
 }, {
