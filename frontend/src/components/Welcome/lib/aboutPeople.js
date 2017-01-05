@@ -56,7 +56,7 @@ const GianlucaBio = () => (
     He currently works at Barnes &amp; Noble.com building out higher education software.
     He immigrated to the US from Italy in 1994, and obtained his citizenship in 2016, during one of the most contentious presidential campaigns.
     Gianluca actively volunteered in Staten Island and the Rockaways during Hurricane Sandy to help hundreds of local residents clean, restore and rebuild their homes.
-    He and his partner are proof that we have too much at stake to not fight
+    He and his partner are proof that we have too much at stake to not fight.
 </div>);
 
 const aboutPeople = [{
@@ -76,7 +76,7 @@ const aboutPeople = [{
     photoUrl: "./images/chad.jpg",
     bioComponent: <ChadBio />
 }, {
-    name: "Julia Ipsa",
+    name: "Julia Kang",
     photoUrl: "./images/sil.png",
     bioComponent: <JuliaBio />
 }, {
