@@ -16,7 +16,7 @@ var paths = {
     }, {
         from: "./build/*.json", to: "./public/resources/"
     }, {
-        from: "./src/favicon.ico", to: "./public/*" 
+        from: "./src/favicon.ico", to: "./public/*"
     }],
     scripts: ["src/**/*.js"],
     images: "client/img/**/*",
@@ -80,3 +80,8 @@ gulp.task("buildStringResources", function() {
         .pipe(mergeJson({ fileName: "en-us.json" }))
         .pipe(gulp.dest("./public/resources"));
 });
+
+var prodJS = require("./gulp/prod/prodJS.js")(gulp);
+gulp.task("browserify-uglify-production", [
+    "prodJS",
+]);
