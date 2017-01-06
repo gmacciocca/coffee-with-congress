@@ -36,7 +36,7 @@ const JuliaBio = () => (
 
 const YashodaBio = () => (
 <div>
-    Contributor.
+    Lifelong politico with opinions to spare. In her present life, Yashoda Sampath plans and performs user experience research, making sure that the voice of the user is represented at all stages of the design process. In her many past lives, Yashoda has worked for the British government, an environmental design agency, political campaigns, a really terrible rock band, and an international newspaper. All these jobs have one common thread: Yashoda gets to ask a shitload of questions about why people behave the way they do.
 </div>);
 
 const KavitaBio = () => (
