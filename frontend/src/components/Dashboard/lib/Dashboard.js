@@ -33,7 +33,8 @@ export default class Dashboard extends React.Component {
             templateIdSelected: null,
             paperStyle: {},
             showProgress: false,
-            showAddressEditDialog: false,
+            showUserAddressEditDialog: false,
+            showContactAddressEditDialog: false,
             showTemplateEditDialog: false,
             showPrintWarningDialog: false
         };
@@ -212,13 +213,13 @@ export default class Dashboard extends React.Component {
     }
 
     get currentProps() {
-        const { state, zip } = this.state && this.state.address;
+        const { state, zip_code } = this.state && this.state.address;
         const issue = this.state.issues && this.state.issues.find(issue => issue.id === this.state.issueIdSelected);
-        const contact = this.findSelectedContact();
+        const contact = this.selectedContactAddress;
 
         return {
             state,
-            zip,
+            zip_code,
             level: contact && contact.level,
             contactId: contact && contact.id,
             issueId: issue && issue.id,
@@ -230,28 +231,51 @@ export default class Dashboard extends React.Component {
     get letterProps() {
         return {
             addressFrom: this.state.address,
-            addressTo: this.findSelectedContact(),
+            addressTo: this.selectedContactAddress,
             templateContent: this.getTempleateContent(true),
             height: this.state.paperStyle.height,
             width: this.state.paperStyle.width,
             onEditTemplate: this.onEditTemplate.bind(this),
-            onEditUser: this.onEditUser.bind(this),
+            onEditUserAddress: this.onEditUserAddress.bind(this),
+            onEditContactAddress: this.onEditContactAddress.bind(this),
             ...this.currentProps
         };
     }
 
-    findSelectedContact() {
+    findContactById(id) {
+        let contact;
+        Object.keys(this.state.contacts).find(level => {
+            contact = this.state.contacts[level].find(contact => contact.id === id);
+            return !!contact;
+        });
+        return contact;
+    }
+
+    get selectedContactAddress() {
         const { contacts, contactIdSelected } = this.state;
         if (contacts && !this._utils.isNullOrUndefined(contactIdSelected)){
-            let contact;
-            Object.keys(this.state.contacts).find(level => {
-                contact = this.state.contacts[level].find(contact => contact.id === contactIdSelected);
-                if (contact) {
-                    contact.level = level;
-                }
-                return !!contact;
-            });
-            return contact;
+            return this.customContactAddress || this.findContactById(contactIdSelected);
+        }
+    }
+
+    get customContactAddressId() {
+        const { contactIdSelected } = this.state;
+        return `customContactAddress-${contactIdSelected}`;
+    }
+
+    get customContactAddress() {
+        const customContactAddress = this._userStore.get(this.customContactAddressId);
+        if (customContactAddress) {
+            customContactAddress.isCustomContactAddress = true;
+        }
+        return customContactAddress;
+    }
+
+    set customContactAddress(contactAddress) {
+        if (contactAddress) {
+            this._userStore.set(this.customContactAddressId, { ...contactAddress });
+        } else {
+            this._userStore.remove(this.customContactAddressId);
         }
     }
 
@@ -281,7 +305,7 @@ export default class Dashboard extends React.Component {
     }
 
     getTempleateContent(fulfillAndReplace) {
-        const contact = this.findSelectedContact();
+        const contact = this.selectedContactAddress;
         const { address } = this.state;
         if (address && contact) {
             let templateContent =
@@ -315,17 +339,30 @@ export default class Dashboard extends React.Component {
         this.customTemplate = null;
     }
 
-    onEditUser() {
-        this.setState({ showAddressEditDialog: true });
+    onEditUserAddress() {
+        this.setState({ showUserAddressEditDialog: true });
     }
 
-    onCancelAddressEditDialog() {
-        this.setState({ showAddressEditDialog: false });
+    onCancelEditUserAddress() {
+        this.setState({ showUserAddressEditDialog: false });
     }
 
-    onSaveAddressEditDialog(address) {
+    onSaveEditUserAddress(address) {
         this._userStore.set("address", { ...address });
-        this.setState({ showAddressEditDialog: false, address });
+        this.setState({ showUserAddressEditDialog: false, address });
+    }
+
+    onEditContactAddress() {
+        this.setState({ showContactAddressEditDialog: true });
+    }
+
+    onCancelEditContactAddress() {
+        this.setState({ showContactAddressEditDialog: false });
+    }
+
+    onSaveEditContactAddress(address) {
+        this.customContactAddress = address;
+        this.setState({ showContactAddressEditDialog: false });
     }
 
     onIssueChange(event, index, issueIdSelected) {
@@ -428,8 +465,25 @@ export default class Dashboard extends React.Component {
     sendStatisticAndBrowserPrint() {
         const { issueId, state, level } = this.currentProps;
         this._cwcServer.sendPrintStatistics({ issueId, state, level });
-        this._analytics.sendPrintEvent({ issueId, state, level });
+        this._analytics.sendPrintStatistics({ issueId, state, level });
         window.print();
+    }
+
+    get addressEditDialog() {
+        const contactAddress = this.selectedContactAddress;
+        const props = {
+            shouldShow: this.state.showUserAddressEditDialog || this.state.showContactAddressEditDialog,
+            onCancel: this.state.showUserAddressEditDialog ?
+                this.onCancelEditUserAddress.bind(this) : this.onCancelEditContactAddress.bind(this),
+            onSave: this.state.showUserAddressEditDialog ?
+                this.onSaveEditUserAddress.bind(this) : this.onSaveEditContactAddress.bind(this),
+            address: this.state.showUserAddressEditDialog ? this.state.address : contactAddress,
+            isUserAddress: this.state.showUserAddressEditDialog
+        };
+
+        return (
+            <AddressEditDialog {...props} />
+        );
     }
 
     render() {
@@ -439,12 +493,7 @@ export default class Dashboard extends React.Component {
         return (
             <div className="dashboard">
                 <div className="dashboard__no-print">
-                    <AddressEditDialog
-                        shouldShow={this.state.showAddressEditDialog}
-                        onCancel={this.onCancelAddressEditDialog.bind(this)}
-                        onSave={this.onSaveAddressEditDialog.bind(this)}
-                        address={this.state.address}
-                    />
+                    {this.addressEditDialog}
                     <TemplateEditDialog
                         shouldShow={this.state.showTemplateEditDialog}
                         onCancel={this.onCancelTemplateEditDialog.bind(this)}

@@ -1,9 +1,8 @@
 import React from "react";
 import { Application } from "solo-application";
 import Dialog from "material-ui/Dialog";
-import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 import Checkbox from "material-ui/Checkbox";
-import { sprintf } from "sprintf-js";
 
 export default class PrintWarningDialog extends React.Component {
     constructor(...args) {
@@ -11,13 +10,6 @@ export default class PrintWarningDialog extends React.Component {
         this._events = Application.roles.events;
         this._formatString = Application.roles.formatString;
         this._offs = [];
-        this.state = {
-            openMessageDialog: false,
-            messageDialogText: null,
-            messageDialogTitle: null,
-            onMessageDialogOk: null,
-            onMessageDialogCancel: null
-        };
     }
 
     componentDidMount() {
@@ -29,8 +21,7 @@ export default class PrintWarningDialog extends React.Component {
     }
 
     keypressHandler(event) {
-        if (!this.props.shouldShow ||
-            this.state.openMessageDialog) {
+        if (!this.props.shouldShow) {
             return false;
         }
         if (event.keyCode === 27){
@@ -71,18 +62,20 @@ export default class PrintWarningDialog extends React.Component {
 
     render() {
         const actions = [
-            <FlatButton
+            <RaisedButton
                 label={Application.localize("dashboard/cancel")}
                 primary={false}
                 onTouchTap={this.handleCancel.bind(this)}
                 type="button"
+                className="cwc-button"
             />,
-            <FlatButton
+            <RaisedButton
                 label={Application.localize("dashboard/print")}
                 primary={true}
                 keyboardFocused={true}
                 onTouchTap={this.handleOk.bind(this)}
                 type="submit"
+                className="cwc-button"
             />
         ];
 
@@ -95,7 +88,7 @@ export default class PrintWarningDialog extends React.Component {
                     open={this.props.shouldShow}
                     onRequestClose={this.handleCancel.bind(this)}
                     contentStyle={{ width: "100%", height: "100%" }}
-                    actionsContainerClassName="dashboard__dialog-buttons"
+                    autoScrollBodyContent={true}
                 >
                     <div>
                         <h5>{Application.localize("dashboard/gotStamps")}</h5>

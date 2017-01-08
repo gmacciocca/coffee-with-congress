@@ -2,9 +2,10 @@ import React from "react";
 import { Application } from "solo-application";
 import { ProgressOverlay } from "../../../CommonUi";
 import TextField from "material-ui/TextField";
-import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
+import processContacts from "../processContacts";
 
 const STATE_INITIALS = [
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA",
@@ -13,8 +14,8 @@ const STATE_INITIALS = [
     "VA", "WA", "WV", "WI", "WY", "DC"
 ];
 
-const isZipValid = (zipCode) => {
-    return (typeof zipCode === "string") && !isNaN(zipCode) && (zipCode.length === 5);
+const isValidZipCode = (zipCode) => {
+    return !isNaN(zipCode) && zipCode.length === 5;
 };
 
 export default class AddressForm extends React.Component {
@@ -24,7 +25,6 @@ export default class AddressForm extends React.Component {
         this._userStore = Application.stores.user;
         this._contactsStore = Application.stores.contacts;
         this.state = {
-            disableContinueButton: true,
             disableInputs: false,
             showProgress: false,
             errorText: null,
@@ -35,33 +35,27 @@ export default class AddressForm extends React.Component {
         };
     }
 
-    filterContacts(contacts) {
-        const filtered = {};
-        Object.keys(contacts).map(level => {
-            if (Application.configuration.officialLevels.find(officialLevel => officialLevel === level)) {
-                filtered[level] = contacts[level];
-            }
-        });
-        return filtered;
-    }
-
     onSubmit(ev) {
+        if (this.shouldDisableContinueButton) {
+            this.setState({ errorText: Application.localize("welcome/pleaseEnterRequiredFields") });
+            return;
+        }
         ev.preventDefault();
         this.setState({ showProgress: true });
         this.disableInputs(true);
 
         const address = {
-            address: this.state.streetAddress,
+            address1: this.state.streetAddress,
             city: this.state.city,
             state: this.state.stateCode,
-            zip: this.state.zipCode
+            zip_code: this.state.zipCode
         };
 
         const addressString = `${this.state.streetAddress} ${this.state.city} ${this.state.stateCode} ${this.state.zipCode}`;
 
         this._cwcServer.fetchContacts(addressString)
         .then(contacts => {
-            contacts = this.filterContacts(contacts);
+            contacts = processContacts(contacts);
             this._userStore.set("address", { ...address });
             this._contactsStore.set("contacts", { ...contacts });
             this.props.router.push("/dashboard");
@@ -71,10 +65,16 @@ export default class AddressForm extends React.Component {
         });
     }
 
+    get shouldDisableContinueButton() {
+        return !this.state.streetAddress ||
+            !this.state.city ||
+            !this.state.stateCode ||
+            !isValidZipCode(this.state.zipCode);
+    }
+
     onStreetAddressChange(event, streetAddress) {
         this.setState({
             streetAddress,
-            disableContinueButton: (!streetAddress),
             errorText: null
         });
     }
@@ -82,7 +82,6 @@ export default class AddressForm extends React.Component {
     onCityChange(event, city) {
         this.setState({
             city,
-            disableContinueButton: (!city),
             errorText: null
         });
     }
@@ -91,7 +90,6 @@ export default class AddressForm extends React.Component {
         zipCode = (isNaN(zipCode) || zipCode.length > 5) ? this.state.zipCode : zipCode;
         this.setState({
             zipCode,
-            disableContinueButton: (!this.state.stateCode || !isZipValid(zipCode)),
             errorText: null
         });
     }
@@ -99,7 +97,6 @@ export default class AddressForm extends React.Component {
     onStateChange(event, index, stateCode) {
         this.setState({
             stateCode,
-            disableContinueButton: (!stateCode || !isZipValid(this.state.zipCode)),
             errorText: null
         });
     }
@@ -111,9 +108,7 @@ export default class AddressForm extends React.Component {
     get streetAddress() {
         const props = {
             onChange: this.onStreetAddressChange.bind(this),
-            //floatingLabelFixed: true,
             floatingLabelText: Application.localize("welcome/streetAddressLabel"),
-            //hintText: Application.localize("welcome/streetAddressHint"),
             disabled: this.state.disableInputs,
             value: this.state.streetAddress,
             style: {
@@ -134,9 +129,7 @@ export default class AddressForm extends React.Component {
     get city() {
         const props = {
             onChange: this.onCityChange.bind(this),
-            //floatingLabelFixed: true,
             floatingLabelText: Application.localize("welcome/cityLabel"),
-            //hintText: Application.localize("welcome/cityHint"),
             disabled: this.state.disableInputs,
             value: this.state.city,
             style: {
@@ -163,9 +156,8 @@ export default class AddressForm extends React.Component {
             autoFocus: true,
             autoWidth: true,
             onChange: this.onStateChange.bind(this),
-            //floatingLabelFixed: true,
+            maxHeight: 350,
             floatingLabelText: Application.localize("welcome/stateLabel"),
-            //hintText: Application.localize("welcome/stateHint"),
             value: this.state.stateCode
         };
 
@@ -218,12 +210,14 @@ export default class AddressForm extends React.Component {
     get continueButton(){
         const props = {
             type: "submit",
-            disabled: this.state.disableContinueButton || this.state.disableInputs,
+            disabled: this.shouldDisableContinueButton || this.state.disableInputs,
             label: Application.localize("welcome/continue"),
             primary: true
         };
         return (
-            <FlatButton {...props} />
+            <div className="welcome__button">
+                <RaisedButton {...props} />
+            </div>
         );
     }
 
@@ -255,7 +249,7 @@ export default class AddressForm extends React.Component {
                             {this.inputZip}
                         </div>
                     </div>
-                    <div className="welcome__error-button">
+                    <div className="welcome__center-align">
                         {this.errorString}
                         {this.continueButton}
                     </div>

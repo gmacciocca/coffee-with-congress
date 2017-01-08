@@ -1,7 +1,7 @@
 import React from "react";
 import { Application } from "solo-application";
 import Dialog from "material-ui/Dialog";
-import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import MessageDialog from "./MessageDialog";
 
@@ -80,22 +80,25 @@ export default class TemplateEditDialog extends React.Component {
 
     render() {
         const actions = [
-            <FlatButton
+            <RaisedButton
                 label={Application.localize("dashboard/restoreTemplate")}
                 onTouchTap={this.handleRestoreTemplate.bind(this)}
                 type="button"
+                className="cwc-button"
             />,
-            <FlatButton
+            <RaisedButton
                 label={Application.localize("dashboard/cancel")}
                 onTouchTap={this.handleCancel.bind(this)}
                 type="button"
+                className="cwc-button"
             />,
-            <FlatButton
+            <RaisedButton
                 label={Application.localize("dashboard/save")}
                 primary={true}
                 keyboardFocused={true}
                 onTouchTap={this.handleSave.bind(this)}
                 type="submit"
+                className="cwc-button"
             />,
         ];
 

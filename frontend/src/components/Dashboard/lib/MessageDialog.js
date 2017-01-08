@@ -1,6 +1,5 @@
 import React from "react";
 import Dialog from "material-ui/Dialog";
-import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import { Application } from "solo-application";
 
@@ -45,16 +44,18 @@ export default class MessageDialog extends React.Component {
 
     render() {
         const actions = [
-            <FlatButton
+            <RaisedButton
                 label={Application.localize("dashboard/cancel")}
-                primary={true}
+                primary={false}
                 onTouchTap={this.handleCancel.bind(this)}
+                className="cwc-button"
             />,
-            <FlatButton
+            <RaisedButton
                 label={Application.localize("dashboard/ok")}
                 primary={true}
                 keyboardFocused={true}
                 onTouchTap={this.handleOk.bind(this)}
+                className="cwc-button"
             />,
         ];
 

@@ -1,3 +1,5 @@
+$letter-font: 'Times New Roman', 'Roboto', 'Adelle-Sans', 'Helvetica Neue', Arial, sans-serif;
+
 .letter {
     position: absolute;
     display: flex;
@@ -7,6 +9,7 @@
         @page { margin: 0in }
     }
     &__contents {
+        font-family: $letter-font;
         text-align: left;
         overflow: hidden;
         @media not print {
@@ -25,7 +28,8 @@
                 background: linear-gradient(to right, $cwcColorSecondaryBackground, $cwcColorMainBackground);
             }
         }
-        &__replace-string {
+        &__message-string {
+            font-family: $cwcFont;
             font-style: italic;
             font-weight: bold;
             color: $cwcColorAlertText;

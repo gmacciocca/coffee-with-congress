@@ -4,6 +4,23 @@ import { Application } from "solo-application";
 import letterConstants from "./letterConstants";
 import { sprintf } from "sprintf-js";
 
+const lineOrNothing = (line) => {
+    return line ? (<span>{line}<br /></span>) : null;
+};
+
+const isAddressComplete = (address) => {
+    return !!(address &&
+        address.name &&
+        address.address1 &&
+        address.city &&
+        address.state &&
+        address.zip_code);
+};
+
+const makeSureIsArray = (obj) => {
+    return Array.isArray(obj) ? obj : [];
+};
+
 export default class Letter extends React.Component {
     constructor(...args) {
         super(...args);
@@ -11,19 +28,26 @@ export default class Letter extends React.Component {
         this._utils = Application.roles.utils;
     }
 
-    userNameForLetter(address) {
-        return address.name ?
-            <div>{address.name}</div> :
-            <div className="letter__contents__replace-string">{Application.localize("dashboard/pleaseEnterYourNameHere")}</div>;
-    }
-
     get addressFrom() {
         const { addressFrom } = this.props;
+        const addressIsComplete = isAddressComplete(addressFrom);
+
+        const line0 = addressIsComplete ?
+            null :
+            (<div className="letter__contents__message-string">
+                {Application.localize("dashboard/clickHereToCompleteUserAddress")}
+            </div>);
+
+        const line1 = addressFrom.name;
+        const line2 = `${this._utils.spaceBetween(addressFrom.address1, addressFrom.address2)}`;
+        const line3 = `${this._utils.spaceBetween(addressFrom.city, addressFrom.state, addressFrom.zip_code)}`;
+
         return addressFrom ? (
-            <div className="letter__contents__editable" onClick={this.props.onEditUser}>
-                {this.userNameForLetter(addressFrom)}
-                {addressFrom.address}<br />
-                {`${this._utils.spaceBetween(addressFrom.city, addressFrom.state, addressFrom.zip)}`}<br />
+            <div className="letter__contents__editable" onClick={this.props.onEditUserAddress}>
+                {line0}
+                {lineOrNothing(line1)}
+                {lineOrNothing(line2)}
+                {lineOrNothing(line3)}
             </div>
         ) :
         null;
@@ -41,15 +65,36 @@ export default class Letter extends React.Component {
 
     get addressTo() {
         const { addressTo } = this.props;
+        const addressIsComplete = isAddressComplete(addressTo);
+        const props = {};
+        if (!addressIsComplete || addressTo.isCustomContactAddress) {
+            props.onClick = this.props.onEditContactAddress;
+            props.className = "letter__contents__editable";
+        }
+
+        const line0 = addressIsComplete ?
+            null :
+            (<div className="letter__contents__message-string">
+                {Application.localize("dashboard/clickHereToCompleteOfficialAddress")}
+            </div>);
+
+        const line1 = addressTo.name;
+        const line2 = `${this._utils.spaceBetween(addressTo.address1, addressTo.address2)}`;
+        const line3 = `${this._utils.spaceBetween(addressTo.city, addressTo.state, addressTo.zip_code)}`;
+        const line4 = this._utils.spaceBetween(...makeSureIsArray(addressTo.phones));
+        const line5 = this._utils.spaceBetween(...makeSureIsArray(addressTo.emails));
+
         return addressTo ? (
-            <div>{addressTo.name}<br />
-                {`${this._utils.spaceBetween(addressTo.address1, addressTo.address2)}`}<br />
-                {`${this._utils.spaceBetween(addressTo.city, addressTo.state, addressTo.zip_code)}`}<br />
-                {addressTo.phones ? (<span>{addressTo.phones}<br /></span>) : null}
-                {addressTo.emails ? (<span>{addressTo.emails}<br /></span>) : null}
+            <div {...props} >
+                {line0}
+                {lineOrNothing(line1)}
+                {lineOrNothing(line2)}
+                {lineOrNothing(line3)}
+                {lineOrNothing(line4)}
+                {lineOrNothing(line5)}
             </div>
         ) :
-        <div className="letter__contents__replace-string">{Application.localize("dashboard/pleaseSelectARepresentative")}</div>;
+        <div className="letter__contents__message-string">{Application.localize("dashboard/pleaseSelectARepresentative")}</div>;
     }
 
     get noTemplateMessage() {
@@ -83,7 +128,7 @@ export default class Letter extends React.Component {
             <div
                 onClick={this.props.onEditTemplate}
                 dangerouslySetInnerHTML={{ __html: this._utils.newLineToBr(this.noTemplateMessage) }}
-                className="letter__contents__editable letter__contents__replace-string"
+                className="letter__contents__editable letter__contents__message-string"
             />
         );
     }

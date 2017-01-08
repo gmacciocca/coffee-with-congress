@@ -29,9 +29,9 @@ export default class AddressParser {
                     rawParsed.sec_unit_num),
                 city: rawParsed.city,
                 state: uppercase(rawParsed.state),
-                zip: rawParsed.zip
+                zip_code: rawParsed.zip
             };
-            if (parsedAddress.state && parsedAddress.zip)
+            if (parsedAddress.state && parsedAddress.zip_code)
                 resolve(parsedAddress);
             else
                 reject(new Error(Application.localize("utils/invalidAddressFormat")));

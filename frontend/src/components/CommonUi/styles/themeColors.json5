@@ -11,5 +11,6 @@
         secondaryAlertText:     "#007eb2", // cwc-main-color-blue
         alertUnderline:         "#007eb2", // cwc-main-color-blue
         hintColor:              "#007eb2", // "main-blue
+        linkColor:              "#007eb2", // "main-blue
     }
 }

@@ -18,10 +18,10 @@ export default class ZipcodeValidation {
                     const state = place["state abbreviation"];
                     if (city && state) {
                         const parsedAddress = {
-                            address: "",
+                            address1: "",
                             city: city,
                             state: uppercase(state),
-                            zip: zipCode
+                            zip_code: zipCode
                         };
                         return parsedAddress;
                     }

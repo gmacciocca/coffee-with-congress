@@ -1,10 +1,5 @@
 import React from "react";
-
-const LinkTo = ({ url, urlName }) => {
-    return (
-        <a href={url} target="_blank">{urlName}</a>
-    );
-};
+import LinkTo from "./LinkTo";
 
 const AboutText = () => (
 <div>
