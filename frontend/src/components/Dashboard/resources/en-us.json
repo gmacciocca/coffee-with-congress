@@ -3,6 +3,7 @@
         "city": "City",
         "state": "State",
         "federal": "Federal",
+        "leadership": "Leadership",
         "issueLabel": "Pick an issue",
         "contactsLabel": "Pick an elected official",
         "selectHint": "Select one...",

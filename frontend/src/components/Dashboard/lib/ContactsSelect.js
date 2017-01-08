@@ -72,16 +72,35 @@ export default class ContactsSelect extends BaseSelect {
         return Array.isArray(this.props.contacts[level]) && this.props.contacts[level].length;
     }
 
+    contactsByDisplayLevel(displayLevel) {
+        const contacts = [];
+        Object.keys(this.props.contacts).forEach(level => {
+            this.props.contacts[level].forEach(contact => {
+                if (contact.displayLevel === displayLevel) {
+                    contacts.push(contact);
+                }
+            });
+        });
+        return contacts;
+    }
+
     render() {
         const selectProps = this.selectProps;
+        const cityContacts = this.contactsByDisplayLevel("city");
+        const stateContacts = this.contactsByDisplayLevel("state");
+        const federalContacts = this.contactsByDisplayLevel("federal");
+        const leadershipContacts = this.contactsByDisplayLevel("leadership");
+
         return (
             <SelectField {...selectProps} >
-                {this.hasLevel("city") && this.contactBreaker(Application.localize("dashboard/city"))}
-                {this.hasLevel("city") && this.contacts(this.props.contacts.city)}
-                {this.hasLevel("state") && this.contactBreaker(Application.localize("dashboard/state"))}
-                {this.hasLevel("state") && this.contacts(this.props.contacts.state)}
-                {this.hasLevel("federal") && this.contactBreaker(Application.localize("dashboard/federal"))}
-                {this.hasLevel("federal") && this.contacts(this.props.contacts.federal)}
+                {cityContacts.length && this.contactBreaker(Application.localize("dashboard/city"))}
+                {cityContacts.length && this.contacts(cityContacts)}
+                {stateContacts.length && this.contactBreaker(Application.localize("dashboard/state"))}
+                {stateContacts.length && this.contacts(stateContacts)}
+                {federalContacts.length && this.contactBreaker(Application.localize("dashboard/federal"))}
+                {federalContacts.length && this.contacts(federalContacts)}
+                {leadershipContacts.length && this.contactBreaker(Application.localize("dashboard/leadership"))}
+                {leadershipContacts.length && this.contacts(leadershipContacts)}
             </SelectField>
         );
     }

@@ -69,10 +69,8 @@ export default class Letter extends React.Component {
         const { addressTo } = this.props;
         const addressIsComplete = isAddressComplete(addressTo);
         const props = {};
-        if (!addressIsComplete || addressTo.isCustomContactAddress) {
-            props.onClick = this.props.onEditContactAddress;
-            props.className = "letter__contents__editable";
-        }
+        props.onClick = this.props.onEditContactAddress;
+        props.className = "letter__contents__editable";
 
         const line0 = addressIsComplete ?
             null :

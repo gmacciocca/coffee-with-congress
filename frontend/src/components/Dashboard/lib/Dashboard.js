@@ -46,12 +46,22 @@ export default class Dashboard extends React.Component {
         this.setLiteners();
     }
 
+    findInitialDefaultContact(contacts) {
+        let contact;
+        Object.keys(contacts).find(level => {
+            contact = contacts[level].find(contact => contact.initialDefaultContact);
+            return !!contact;
+        });
+        return contact;
+    }
+
     selectDefaultContact(selections, contacts){
         if (this._utils.isNullOrUndefined(selections.contactIdSelected)) {
-            // Select initial default contact
-            const defaultContact = (contacts.federal && contacts.federal[0]) ||
-                (contacts.state && contacts.state[0]) ||
-                (contacts.city && contacts.city[0]);
+            const defaultContact = this.findInitialDefaultContact(contacts);
+            // // Select initial default contact
+            // const defaultContact = (contacts.federal && contacts.federal[0]) ||
+            //     (contacts.state && contacts.state[0]) ||
+            //     (contacts.city && contacts.city[0]);
             selections.contactIdSelected = defaultContact && defaultContact.id;
         }
     }
@@ -264,11 +274,7 @@ export default class Dashboard extends React.Component {
     }
 
     get customContactAddress() {
-        const customContactAddress = this._userStore.get(this.customContactAddressId);
-        if (customContactAddress) {
-            customContactAddress.isCustomContactAddress = true;
-        }
-        return customContactAddress;
+        return this._userStore.get(this.customContactAddressId);
     }
 
     set customContactAddress(contactAddress) {

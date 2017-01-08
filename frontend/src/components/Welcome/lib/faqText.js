@@ -36,6 +36,10 @@ const FaqText = () => (
 
             Do a quick Google search on the topic to see how far along the bill is in the process. When in doubt, write both.
 
+            <h5>The address you show seems different than the one I've seen in the past - are you sure it's right?</h5>
+
+            An official can have many different addresses, so we use the Google Civics API to pull the first one listed. If you&#39;d prefer to send it to a different address closer to you, feel free to do so.
+
             <h5>I have another question that&rsquo;s not answered here - how do I reach you?</h5>
             E-mail us at <EmailTo email="info@writetocongress.org" />
         </div>
