@@ -39,8 +39,9 @@ export default class Letter extends React.Component {
             </div>);
 
         const line1 = addressFrom.name;
-        const line2 = `${this._utils.spaceBetween(addressFrom.address1, addressFrom.address2)}`;
-        const line3 = `${this._utils.spaceBetween(addressFrom.city, addressFrom.state, addressFrom.zip_code)}`;
+        const line2 = addressFrom.address1;
+        const line3 = addressFrom.address2;
+        const line4 = `${this._utils.spaceBetween(addressFrom.city, addressFrom.state, addressFrom.zip_code)}`;
 
         return addressFrom ? (
             <div className="letter__contents__editable" onClick={this.props.onEditUserAddress}>
@@ -48,6 +49,7 @@ export default class Letter extends React.Component {
                 {lineOrNothing(line1)}
                 {lineOrNothing(line2)}
                 {lineOrNothing(line3)}
+                {lineOrNothing(line4)}
             </div>
         ) :
         null;
@@ -79,10 +81,11 @@ export default class Letter extends React.Component {
             </div>);
 
         const line1 = addressTo.name;
-        const line2 = `${this._utils.spaceBetween(addressTo.address1, addressTo.address2)}`;
-        const line3 = `${this._utils.spaceBetween(addressTo.city, addressTo.state, addressTo.zip_code)}`;
-        const line4 = this._utils.spaceBetween(...makeSureIsArray(addressTo.phones));
-        const line5 = this._utils.spaceBetween(...makeSureIsArray(addressTo.emails));
+        const line2 = addressTo.address1;
+        const line3 = addressTo.address2;
+        const line4 = `${this._utils.spaceBetween(addressTo.city, addressTo.state, addressTo.zip_code)}`;
+        const line5 = this._utils.spaceBetween(...makeSureIsArray(addressTo.phones));
+        const line6 = this._utils.spaceBetween(...makeSureIsArray(addressTo.emails));
 
         return addressTo ? (
             <div {...props} >
@@ -92,6 +95,7 @@ export default class Letter extends React.Component {
                 {lineOrNothing(line3)}
                 {lineOrNothing(line4)}
                 {lineOrNothing(line5)}
+                {lineOrNothing(line6)}
             </div>
         ) :
         <div className="letter__contents__message-string">{Application.localize("dashboard/pleaseSelectARepresentative")}</div>;
