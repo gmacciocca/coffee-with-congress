@@ -2,7 +2,6 @@
 /public/css
 /public/resources
 /public/images
-/lib
 /build
 /.sass-cache
 /npm-debug.log

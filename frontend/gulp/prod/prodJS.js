@@ -3,6 +3,7 @@ var env = require("gulp-env");
 var source = require("vinyl-source-stream");
 var buffer = require("vinyl-buffer");
 var uglify = require("gulp-uglify");
+var babelify = require("babelify");
 
 module.exports = function(gulp) {
 
@@ -14,7 +15,10 @@ module.exports = function(gulp) {
         const envs = env.set({
             NODE_ENV: "production"
         });
-        return browserify("./lib/index.js")
+
+
+        return browserify("./src/index.js")
+            .transform(babelify.configure({ presets: ["es2015", "react"] }))
             .bundle()
             .on("error", onError)
             .pipe(source("bundle.js"))

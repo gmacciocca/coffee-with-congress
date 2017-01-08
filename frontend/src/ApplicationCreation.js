@@ -1,18 +1,20 @@
-var appPackage = require("../package.json");
+import appPackage from "../package.json";
+import env from "../build/env.json";
+import themeColors from "../build/themeColors.json";
+import media from "./components/CommonUi/styles/media.json";
+
 import { Application, Delegates, UncaughtErrors } from "solo-application";
 import { Builder, ComponentFromClass, ComponentFromValue } from "dependency-theory";
 import Events from "life-events";
 import Localize from "lingo-localize";
 import { Storage } from "basement-storage";
-import { ZipcodeValidation, CwcServer } from "./components/Gateways";
-import { AddressParser, FormatString, Analytics, Utils, Gravatar } from "./components/Utils";
+import { ZipcodeValidation, CwcServer, Analytics } from "./components/Gateways";
+import { AddressParser, FormatString, Utils, Gravatar } from "./components/Utils";
 import { NetworkTransport } from "./components/NetworkTransport";
 import { MediaEvents } from "./components/CommonUi";
 import { AppHeader } from "./components/Dashboard";
 
 const LOCALIZE_RESOURCE = "./resources/en-us.json";
-const JSON_THEME_COLORS = "./resources/themeColors.json";
-const JSON_MEDIA = "./resources/media.json";
 
 const configuration = {
     origins: {
@@ -26,13 +28,16 @@ const configuration = {
             }
         }
     },
-    themeColors: {},
+
+    ...themeColors,
+    ...media,
+    ...env,
+
     clientName: appPackage.name,
     clientVersion: appPackage.version,
     clientDescription: appPackage.description,
 
-    //officialLevels: ["city", "state", "federal"]
-    officialLevels: ["state", "federal"]
+    officialLevels: ["city", "state", "federal"]
 };
 
 const getComponents = (locResource) => {
@@ -71,36 +76,21 @@ const getDelegates = () => {
     });
 };
 
-const getAllResources = () => {
+const getLocResources = () => {
     const nt = new NetworkTransport();
-    let localize, themeColors, media;
-    return nt.get(LOCALIZE_RESOURCE)
-    .then(res => {
-        localize = res;
-        return nt.get(JSON_THEME_COLORS);
-    })
-    .then(res => {
-        themeColors = res.themeColors;
-        return nt.get(JSON_MEDIA);
-    })
-    .then(res => {
-        media = res.media;
-        return { localize, themeColors, media };
-    });
+    return nt.get(LOCALIZE_RESOURCE);
 };
 
 const createApp = () => {
-    return getAllResources()
-    .then(resources => {
-        configuration.themeColors = resources.themeColors;
-        configuration.media = resources.media;
+    return getLocResources()
+    .then(localize => {
         const delegates = getDelegates();
-        const components = getComponents(resources.localize);
+        const components = getComponents(localize);
 
         Application.create(delegates, components, configuration);
         return Application.bootstrap()
             .then(()=> {
-                Application.roles.analytics.sendAppLoadedEvent();
+                Application.roles.analytics.sendAppLoadedStatistics();
             });
     })
     .catch(err => {

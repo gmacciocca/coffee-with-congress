@@ -1,29 +1,30 @@
-var source = require("vinyl-source-stream");
-var watchify = require("watchify");
 var browserify = require("browserify");
+var env = require("gulp-env");
+var source = require("vinyl-source-stream");
+var buffer = require("vinyl-buffer");
 var babelify = require("babelify");
-var envify = require("envify/custom");
+
 
 module.exports = function(gulp) {
+
     function onError(e) {
         console.error(e.message);  // eslint-disable-line no-console
     }
 
     gulp.task("devJS", function() {
-        function bundle() {
-            return b.bundle()
-                .on("error", onError)
-                .pipe(source("bundle.js"))
-                .pipe(gulp.dest("./public/js"));
-        }
-        var options = watchify.args;
+        const envs = env.set({
+            NODE_ENV: "development"
+        });
+        var options = {};
         options.debug = true; // adds source maps for us!
-        var b = watchify(browserify(["./lib/index.js"], options))
-            .transform(babelify())
-            .transform(envify({
-                NODE_ENV: "development"
-            }))
-            .on("update", bundle);
-        return bundle();
+        return browserify("./src/index.js", options)
+            .transform(babelify.configure({ presets: ["es2015", "react"] }))
+            .bundle()
+            .on("error", onError)
+            .pipe(source("bundle.js"))
+            .pipe(envs)
+            .pipe(buffer())
+
+            .pipe(gulp.dest("./public/js"));
     });
 };

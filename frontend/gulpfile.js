@@ -4,18 +4,14 @@ var concat = require("gulp-concat");
 var mergeJson = require("gulp-merge-json");
 var jsonSass = require("gulp-json-sass");
 var json5 = require("gulp-json5");
-
 var del = require("del");
 var mkdirp = require("mkdirp");
 var copy = require("copy");
+var fs = require("fs");
 
 var paths = {
-    clean: ["./build", "./lib", "./public/js", "./public/css", "./public/resources", "./public/images" ],
+    clean: ["./build", "./public/js", "./public/css", "./public/resources", "./public/images" ],
     copyResources: [{
-        from: "./src/components/CommonUi/styles/*.json", to: "./public/resources/"
-    }, {
-        from: "./build/*.json", to: "./public/resources/"
-    }, {
         from: "./src/favicon.ico", to: "./public/*"
     }],
     scripts: ["src/**/*.js"],
@@ -23,7 +19,6 @@ var paths = {
     themeColors: "./src/components/CommonUi/styles/themeColors.json5",
     scssList: [
         "./build/themeColors.json",
-        "./src/components/CommonUi/styles/media.json",
         "./src/third-party/materialize-css/sass/materialize.scss",
         "./src/components/CommonUi/styles/themeColors.scss",
         "./src/components/CommonUi/styles/global.scss",
@@ -81,7 +76,20 @@ gulp.task("buildStringResources", function() {
         .pipe(gulp.dest("./public/resources"));
 });
 
+gulp.task("writeProdEnvFile", function() {
+    fs.writeFileSync("./build/env.json", JSON.stringify({
+        env: "production"
+    }));
+});
+
+gulp.task("writeDevEnvFile", function() {
+    fs.writeFileSync("./build/env.json", JSON.stringify({
+        env: "development"
+    }));
+});
+
+var devJS = require("./gulp/dev/devJS.js")(gulp);
+gulp.task("browserify-babelify-sassify-dev", [ "writeDevEnvFile", "copyResources", "sassify", "devJS" ]);
+
 var prodJS = require("./gulp/prod/prodJS.js")(gulp);
-gulp.task("browserify-uglify-production", [
-    "prodJS",
-]);
+gulp.task("browserify-babelify-uglify-sassify-prod", [ "createDirs", "writeProdEnvFile", "copyResources", "sassify", "prodJS" ]);
