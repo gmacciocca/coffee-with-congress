@@ -1,8 +1,8 @@
 import React from "react";
 
-const LinkTo = ({ url, urlName }) => {
+const LinkTo = ({ url, children }) => {
     return (
-        <a className="welcome__link-to" href={url} target="_blank">{urlName}</a>
+        <a className="welcome__link-to" href={url} target="_blank">{children}</a>
     );
 };
 

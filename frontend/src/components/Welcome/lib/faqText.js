@@ -15,7 +15,7 @@ const FaqText = () => (
             Cities are broken down into multiple districts, which have different representatives in the House. To give you the right list of people to contact, we need your address. You also need to list your address on your letter to prove you are really a constituent in that official&rsquo;s jurisdiction. Write to Congress does not record your address, or the letter you customize, in any way, shape or form.
 
             <h5>I am getting &rsquo;no officials found&rsquo; when I type in my address - why?</h5>
-            Please send us your info <LinkTo url="https://docs.google.com/a/writetocongress.org/forms/d/e/1FAIpQLSc7N9tYMmg5rP0MRCvHu-z9w_7jyCqN7gB4tkjB4Xj3NUpoWw/viewform" urlName="here" /> and we&rsquo;ll get back to you as soon as possible.
+            Please send us your info <LinkTo url="https://docs.google.com/a/writetocongress.org/forms/d/e/1FAIpQLSc7N9tYMmg5rP0MRCvHu-z9w_7jyCqN7gB4tkjB4Xj3NUpoWw/viewform" >here</LinkTo> and we&rsquo;ll get back to you as soon as possible.
 
             <h5>The elected official I chose has no address - why?</h5>
 
