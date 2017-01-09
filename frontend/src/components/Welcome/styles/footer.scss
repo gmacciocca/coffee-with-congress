@@ -1,21 +1,38 @@
 .footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     max-width: 500px;
     margin: auto;
 
-    &__link {
-        margin: 5px;
+    &__item {
         text-align: center;
         a {
             color: $cwcColorSecondaryText;
         }
         &__separator {
             width: 2px;
-            margin: 10px;
             height: 2em;
             background-color: $cwcColorSecondaryText;
+        }
+        &__social {
+            display: flex;
+            justify-content: space-between;
+            &__logo {
+                height: 1.8em;
+                margin: 0 3px;
+            }
+        }
+    }
+}
+
+@media #{$cwc-small-and-down} {
+    .footer {
+        font-size: 0.8em;
+        &__item {
+            &__separator {
+                width: 1px;
+            }
         }
     }
 }

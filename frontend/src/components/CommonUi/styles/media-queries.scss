@@ -1,10 +1,8 @@
-
-$cwc-medium-screen-up: 741px !default;
-$cwc-medium-screen: 740px !default;
+$cwc-medium-screen-up: 601px !default;
+$cwc-medium-screen: 600px !default;
 
 $cwc-medium-and-up: "screen and (min-width : #{$cwc-medium-screen-up})";
 $cwc-small-and-down: "only screen and (max-width : #{$cwc-medium-screen})";
-
 
 .cwc-screen-medium-and-up {
 }
@@ -13,7 +11,6 @@ $cwc-small-and-down: "only screen and (max-width : #{$cwc-medium-screen})";
         display: none;
     }
 }
-
 
 .cwc-screen-small-and-down {
 }
