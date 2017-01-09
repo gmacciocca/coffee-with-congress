@@ -29,7 +29,6 @@ const FLogo = () => {
 
 export default class Footer extends React.Component {
     render() {
-        const logos = [ TLogo, ILogo, FLogo ];
         return (
             <footer className="footer__wrapper">
                 <div className="footer" >
