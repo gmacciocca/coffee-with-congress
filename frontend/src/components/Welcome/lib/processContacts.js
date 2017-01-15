@@ -2,6 +2,45 @@ import { Application } from "solo-application";
 
 const cloneObject = (source) => JSON.parse(JSON.stringify(source));
 
+const SALUTATIONS = {
+    "President of the United States" : {
+        address: "President",
+        template: "President"
+    },
+    "Speaker of the House of Representatives" : {
+        address: "The Honorable Speaker",
+        template: "Speaker"
+    },
+    "Vice-President of the United States" : {
+        address: "Vice-President",
+        template: "Vice-President"
+    },
+    "Governor" : {
+        address: "Governor",
+        template: "Governor"
+    },
+    "Lieutenant Governor" : {
+        address: "Lieutenant Governor",
+        template: "Lieutenant Governor"
+    },
+    "United States Senate" : {
+        address: "Senator",
+        template: "Senator"
+    },
+    "United States House of Representatives" : {
+        address: "The Honorable",
+        template: "Representative"
+    },
+    "State Assembly District" : {
+        address: "The Honorable",
+        template: "Representative"
+    },
+    "State Senate District" : {
+        address: "The Honorable",
+        template: "Representative"
+    }
+};
+
 const HARD_CODED_CONTACTS = {
     federal:[{
         "phones":["(202) 225-0600"],
@@ -86,6 +125,20 @@ const markInitialDefaultContact = (contacts) => {
     }
 };
 
+const setSalutations = (contact) => {
+    const role = contact.role.toLowerCase();
+    Object.keys(SALUTATIONS).some(salutationKey => {
+        const lowerSalutationKey = salutationKey.toLowerCase();
+        const keyLenght = salutationKey.length;
+        const existingKeyLenght = (contact.salutations && contact.salutations._keyLenght) || 0;
+        if (role.includes(lowerSalutationKey) &&
+            keyLenght > existingKeyLenght){
+            contact.salutations = SALUTATIONS[salutationKey];
+            contact.salutations._keyLenght = keyLenght;
+        }
+    });
+};
+
 const processContacts = (contacts) => {
     const filtered = {};
     const hardcodedContacts = cloneObject(HARD_CODED_CONTACTS);
@@ -111,6 +164,7 @@ const processContacts = (contacts) => {
                 } else {
                     contact.displayLevel = level;
                 }
+                setSalutations(contact);
             });
 
             filtered[level].sort(function(a, b) {
