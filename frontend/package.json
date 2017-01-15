@@ -7,18 +7,14 @@
     "xprebuild": "npm run clean",
     "clean": "gulp clean",
     "lint": "eslint src",
-
     "start": "npm run prepareForReload && nodemon --watch src -e js,scss,json,json5 -x npm run reload",
     "prepareForReload": "gulp createDirs",
     "reload": "npm run buildFilesDebug && npm run server",
     "server": "node_modules/.bin/http-server -c-1",
     "buildFilesDebug": "gulp browserify-babelify-sassify-dev && npm run copyImages",
-
     "build": "npm run buildFiles",
     "buildFiles": "gulp browserify-babelify-uglify-sassify-prod && npm run copyImages",
-
     "copyImages": "cp ./src/components/*/images/*.* ./public/images/",
-
     "deploy": "gh-pages -d public",
     "test": "mocha test --recursive"
   },
@@ -35,7 +31,7 @@
     "honest-error": "^0.1.0",
     "life-events": "^0.1.1",
     "lingo-localize": "^0.1.0",
-    "material-ui": "^0.16.4",
+    "material-ui": "^0.16.6",
     "moment": "^2.17.1",
     "parse-address": "0.0.6",
     "react": "^15.3.2",
