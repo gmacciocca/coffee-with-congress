@@ -304,7 +304,9 @@ export default class Dashboard extends React.Component {
 
     fulFillTemplate(templateContent, contact, address) {
         //templateContent = templateContent.replace(/\n/g, "<br>");
-        templateContent = templateContent.replace(/\[NAME_OF_REPRESENTATIVE\]/g, contact.name || "");
+        const salutationForTemplate = (contact.salutations && contact.salutations.template) || "";
+        const contactNameForTemplate = this._utils.spaceBetween(salutationForTemplate, contact.name);
+        templateContent = templateContent.replace(/\[NAME_OF_REPRESENTATIVE\]/g, contactNameForTemplate || "");
         templateContent = templateContent.replace(/\[NAME_OF_USER\]/g, address.name || "");
         templateContent = templateContent.replace(/\[STATE\]/g, address.state || "");
         return templateContent;
