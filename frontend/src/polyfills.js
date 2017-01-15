@@ -9,3 +9,4 @@ import "core-js/fn/math/trunc";
 import "core-js/fn/weak-map";
 import "core-js/modules/es6.promise";
 import "core-js/modules/es6.string.starts-with";
+import "core-js/modules/es6.string.includes";
