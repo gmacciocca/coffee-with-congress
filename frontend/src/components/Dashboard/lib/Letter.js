@@ -78,7 +78,10 @@ export default class Letter extends React.Component {
                 {Application.localize("dashboard/clickHereToCompleteOfficialAddress")}
             </div>);
 
-        const line1 = addressTo.name;
+        const salutationForAddress = (addressTo.salutations && addressTo.salutations.address) || "";
+        const contactNameForAddress = this._utils.spaceBetween(salutationForAddress, addressTo.name);
+
+        const line1 = contactNameForAddress;
         const line2 = addressTo.address1;
         const line3 = addressTo.address2;
         const line4 = `${this._utils.spaceBetween(addressTo.city, addressTo.state, addressTo.zip_code)}`;
