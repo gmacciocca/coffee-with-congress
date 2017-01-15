@@ -10,6 +10,7 @@ export default class TemplateEditDialog extends React.Component {
         super(...args);
         this._events = Application.roles.events;
         this._offs = [];
+        this._mediaEvents = Application.roles.mediaEvents;
         this.state = {
             openMessageDialog: false,
             messageDialogText: null,
@@ -78,13 +79,29 @@ export default class TemplateEditDialog extends React.Component {
         this.handleSave();
     }
 
+    get textFieldProps() {
+        const textFieldLineHeight = 24; /* from material-ui TextField/EnhancedTextarea.js */
+        const headerButtonsAndFudge = 350;
+        const screenHeight = this._mediaEvents.currentHeight;
+        const rowCount = Math.min(30, ((screenHeight - headerButtonsAndFudge) / textFieldLineHeight));
+
+        return {
+            style: {
+                width: "100%"
+            },
+            multiLine: true,
+            rows: rowCount,
+            rowsMax: rowCount
+        };
+    }
+
     render() {
         const actions = [
             <RaisedButton
+                className="cwc-button"
                 label={Application.localize("dashboard/restoreTemplate")}
                 onTouchTap={this.handleRestoreTemplate.bind(this)}
                 type="button"
-                className="cwc-button"
             />,
             <RaisedButton
                 label={Application.localize("dashboard/cancel")}
@@ -103,38 +120,31 @@ export default class TemplateEditDialog extends React.Component {
         ];
 
         return (
-            <div>
-                <Dialog
-                    title={Application.localize("dashboard/templateEditDialogTitle")}
-                    actions={actions}
-                    modal={true}
-                    open={this.props.shouldShow}
-                    onRequestClose={this.handleCancel.bind(this)}
-                    contentStyle={{ width: "100%", height: "100%" }}
-                >
-                    <form ref={ref => this._form = ref} onSubmit={this.onSubmit.bind(this)}>
-                        <div>
-                            <TextField
-                                name="templateContent"
-                                style={{ width: "100%" }}
-                                hintText={Application.localize("dashboard/template")}
-                                defaultValue={this.props.templateContent}
-                                multiLine={true}
-                                rows={30}
-                                rowsMax={30}
-                            />
-                        </div>
-                    </form>
-                    <MessageDialog
-                        open={this.state.openMessageDialog}
-                        text={this.state.messageDialogText}
-                        title={this.state.messageDialogTitle}
-                        onOk={this.state.onMessageDialogOk}
-                        onCancel={this.state.onMessageDialogCancel}
-                        onClose={this.onMessageDialogClose.bind(this)}
+            <Dialog
+                title={Application.localize("dashboard/templateEditDialogTitle")}
+                actions={actions}
+                modal={true}
+                open={this.props.shouldShow}
+                onRequestClose={this.handleCancel.bind(this)}
+                contentStyle={{ width: "100%", height: "100%" }}
+            >
+                <form ref={ref => this._form = ref} onSubmit={this.onSubmit.bind(this)}>
+                    <TextField
+                        name="templateContent"
+                        hintText={Application.localize("dashboard/template")}
+                        defaultValue={this.props.templateContent}
+                        {...this.textFieldProps}
                     />
-                </Dialog>
-            </div>
+                </form>
+                <MessageDialog
+                    open={this.state.openMessageDialog}
+                    text={this.state.messageDialogText}
+                    title={this.state.messageDialogTitle}
+                    onOk={this.state.onMessageDialogOk}
+                    onCancel={this.state.onMessageDialogCancel}
+                    onClose={this.onMessageDialogClose.bind(this)}
+                />
+            </Dialog>
         );
     }
 }
