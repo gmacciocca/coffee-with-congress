@@ -498,21 +498,6 @@ export default class Dashboard extends React.Component {
         }
         return (
             <div className="dashboard">
-                <div className="dashboard__no-print">
-                    {this.addressEditDialog}
-                    <TemplateEditDialog
-                        shouldShow={this.state.showTemplateEditDialog}
-                        onCancel={this.onCancelTemplateEditDialog.bind(this)}
-                        onSave={this.onSaveTemplateEditDialog.bind(this)}
-                        onRestore={this.onRestoreTemplateEditDialog.bind(this)}
-                        templateContent={this.getTempleateContent(true)}
-                    />
-                    <PrintWarningDialog
-                        shouldShow={this.state.showPrintWarningDialog}
-                        onCancel={this.onCancelPrintWarningDialog.bind(this)}
-                        onOk={this.onOkPrintWarningDialog.bind(this)}
-                    />
-                </div>
                 <div className="dashboard__spacer-and-appbar-paper-wrapper dashboard__no-print">
                     <div ref={this.appBarPaperWrapperRef.bind(this)} className="dashboard__appbar-paper-wrapper">
                         <AppHeader
@@ -531,6 +516,21 @@ export default class Dashboard extends React.Component {
                         </div>
                     </div>
                     <ProgressOverlay showProgress={this.state.showProgress} />
+                </div>
+                <div className="dashboard__no-print">
+                    {this.addressEditDialog}
+                    <TemplateEditDialog
+                        shouldShow={this.state.showTemplateEditDialog}
+                        onCancel={this.onCancelTemplateEditDialog.bind(this)}
+                        onSave={this.onSaveTemplateEditDialog.bind(this)}
+                        onRestore={this.onRestoreTemplateEditDialog.bind(this)}
+                        templateContent={this.getTempleateContent(true)}
+                    />
+                    <PrintWarningDialog
+                        shouldShow={this.state.showPrintWarningDialog}
+                        onCancel={this.onCancelPrintWarningDialog.bind(this)}
+                        onOk={this.onOkPrintWarningDialog.bind(this)}
+                    />
                 </div>
                 <div className="dashboard__print-only">
                     <Letter {...this.letterProps} forPrint={true} />
