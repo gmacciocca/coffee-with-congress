@@ -16,10 +16,9 @@ To clone this repo on your local computer:
 `cd` into the `frontend` folder then run `npm install`. Have some coffee... :)
 
 ## Deployable static resources
-To build the ***production*** static resources that can be served from a webserver run the build script `npm run build`
-To build the ***qa*** resources, run the build script `npm run build-qa`
+To build the static resources that can be served from the webserver run the build script `npm run build`
 
-These two npm scripts generate all static resources in the `public` sub-directory. Full path to this direcotry in the repo is `/frontend/public/`.
+This will generate all static resources in the `public` sub-directory. Full path to this direcotry in the repo is `/frontend/public/`.
 
 ***NOTE*** that as of this writing the static resources are **not** being minified/uglified
 
