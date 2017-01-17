@@ -6,14 +6,23 @@ var jsonSass = require("gulp-json-sass");
 var json5 = require("gulp-json5");
 var del = require("del");
 var mkdirp = require("mkdirp");
-var copy = require("copy");
-var fs = require("fs");
+var flatten = require("gulp-flatten");
+var merge = require("merge-stream");
 
 var paths = {
     clean: ["./build", "./public/js", "./public/css", "./public/resources", "./public/images" ],
-    copyResources: [{
-        from: "./src/favicon.ico", to: "./public/*"
+    resources: [{
+        from: "./src/components/*/images/*.*", to: "./public/images",
     }],
+    devConfig: {
+        from: "./gulp/dev/config.json", to: "./build"
+    },
+    qaConfig: {
+        from: "./gulp/qa/config.json", to: "./build"
+    },
+    prodConfig: {
+        from: "./gulp/prod/config.json", to: "./build"
+    },
     scripts: ["src/**/*.js"],
     images: "client/img/**/*",
     themeColors: "./src/components/CommonUi/styles/themeColors.json5",
@@ -28,8 +37,36 @@ var paths = {
     ],
 };
 
-function fsCallback() {
+function onError(err) {
+    console.error(err);  // eslint-disable-line no-console1
 }
+
+function copyPair(pair) {
+    return gulp.src(pair.from)
+        .on("error", onError)
+        .pipe(flatten())
+        .on("error", onError)
+        .pipe(gulp.dest(pair.to));
+}
+
+gulp.task("copyResources", ["buildStringResources"], function() {
+    var streams = paths.resources.map(function(pair) {
+        return copyPair(pair);
+    });
+    return merge(streams);
+});
+
+gulp.task("copyDevConfig", function() {
+    return copyPair(paths.devConfig);
+});
+
+gulp.task("copyProdConfig", function() {
+    return copyPair(paths.prodConfig);
+});
+
+gulp.task("copyQaConfig", function() {
+    return copyPair(paths.qaConfig);
+});
 
 gulp.task("clean", function() {
     del.sync(paths.clean);
@@ -55,19 +92,11 @@ gulp.task("sassify", ["themeColors"], function() {
         .pipe(concat("styles.scss"))
         .pipe(sass({
             errLogToConsole: true,
-            includePaths: [
-                "./src/third-party/materialize-css/sass/"
-            ]
+            includePaths: ["./src/third-party/materialize-css/sass/"]
         }))
         .pipe(concat("styles.css"))
         //.pipe(postcss([ autoprefixer({ browsers: ["last 2 versions"] }) ]))
         .pipe(gulp.dest("./public/css/"));
-});
-
-gulp.task("copyResources", ["buildStringResources"], function() {
-    paths.copyResources.forEach(function(pair) {
-        copy(pair.from, pair.to, fsCallback);
-    });
 });
 
 gulp.task("buildStringResources", function() {
@@ -76,20 +105,11 @@ gulp.task("buildStringResources", function() {
         .pipe(gulp.dest("./public/resources"));
 });
 
-gulp.task("writeProdEnvFile", function() {
-    fs.writeFileSync("./build/env.json", JSON.stringify({
-        env: "production"
-    }));
-});
-
-gulp.task("writeDevEnvFile", function() {
-    fs.writeFileSync("./build/env.json", JSON.stringify({
-        env: "development"
-    }));
-});
-
 var devJS = require("./gulp/dev/devJS.js")(gulp);
-gulp.task("browserify-babelify-sassify-dev", [ "writeDevEnvFile", "copyResources", "sassify", "devJS" ]);
+gulp.task("browserify-babelify-sassify-dev", [ "copyDevConfig", "copyResources", "sassify", "devJS" ]);
 
 var prodJS = require("./gulp/prod/prodJS.js")(gulp);
-gulp.task("browserify-babelify-uglify-sassify-prod", [ "createDirs", "writeProdEnvFile", "copyResources", "sassify", "prodJS" ]);
+gulp.task("browserify-babelify-uglify-sassify-prod", [ "createDirs", "copyProdConfig", "copyResources", "sassify", "prodJS" ]);
+
+var prodJS = require("./gulp/prod/prodJS.js")(gulp);
+gulp.task("browserify-babelify-uglify-sassify-qa", [ "createDirs", "copyQaConfig", "copyResources", "sassify", "prodJS" ]);

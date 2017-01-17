@@ -1,0 +1,6 @@
+{
+    "env": "development",
+    "origins": {
+        "cwcServer": "https://causal-port-151005.appspot.com"
+    }
+}

@@ -1,5 +1,5 @@
 import appPackage from "../package.json";
-import env from "../build/env.json";
+import buildSpecificConfig from "../build/config.json";
 import themeColors from "../build/themeColors.json";
 import media from "./components/CommonUi/styles/media.json";
 
@@ -31,7 +31,7 @@ const configuration = {
 
     ...themeColors,
     ...media,
-    ...env,
+    ...buildSpecificConfig,
 
     clientName: appPackage.name,
     clientVersion: appPackage.version,
