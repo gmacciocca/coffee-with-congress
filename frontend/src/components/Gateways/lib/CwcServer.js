@@ -4,6 +4,7 @@ import CwcError from "../../CwcError";
 export default class CwcServer {
     constructor({ networkTransport }) {
         this._networkTransport = networkTransport;
+        this._sendAnalitics = Application.configuration.analytics.wtc;
     }
 
     fetchContacts(address) {
@@ -44,11 +45,12 @@ export default class CwcServer {
     }
 
     sendPrintStatistics({ issueId, state, level }) {
-        if (Application.configuration.env !== "development") {
-            const path = `${Application.configuration.origins.cwcServer}/stats`;
-            const json = { issue: issueId, state, level };
-            return this._networkTransport.send(path, json);
+        if (!this._sendAnalitics) {
+            return;
         }
+        const path = `${Application.configuration.origins.cwcServer}/stats`;
+        const json = { issue: issueId, state, level };
+        return this._networkTransport.send(path, json);
     }
 
     fetchPrintStatistics() {
