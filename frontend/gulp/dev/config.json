@@ -1,6 +1,10 @@
 {
     "env": "development",
+    "analytics": {
+        "google": false,
+        "wtc": true
+    },
     "origins": {
-        "cwcServer": "https://causal-port-151005.appspot.com"
+        "cwcServer": "https://qa-wtc.appspot.com"
     }
 }

@@ -1,5 +1,9 @@
 {
-    "env": "development",
+    "env": "qa",
+    "analytics": {
+        "google": false,
+        "wtc": true
+    },
     "origins": {
         "cwcServer": "https://qa-wtc.appspot.com"
     }

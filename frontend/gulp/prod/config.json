@@ -1,5 +1,9 @@
 {
     "env": "production",
+    "analytics": {
+        "google": true,
+        "wtc": true
+    },
     "origins": {
         "cwcServer": "https://causal-port-151005.appspot.com"
     }
