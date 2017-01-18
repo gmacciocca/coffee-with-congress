@@ -37,9 +37,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-c&qt=71oi^e5s8(ene*$b89^#%*0xeve$x_trs91veok9#0h0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.environ.get("DEBUG_ON", "False") == "True" else False
 
-ALLOWED_HOSTS = [ 'causal-port-151005.appspot.com', 'writetocongress.org', 'www.writetocongress.org', 'localhost']
+ALLOWED_HOSTS = [ 'causal-port-151005.appspot.com', 'writetocongress.org', 'www.writetocongress.org', 'qa-wtc.appspot.com', 'localhost']
 
 
 # Application definition
@@ -95,6 +95,7 @@ WSGI_APPLICATION = 'cwc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+database_name = os.environ.get('DATABASE_NAME', 'cwc')
 # [START db_setup]
 import os
 if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
@@ -102,8 +103,8 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/causal-port-151005:cwc',
-            'NAME': 'cwc',
+            'HOST': "/cloudsql/causal-port-151005:cwc",
+            'NAME': database_name,
             'USER': 'root',
         }
     }
@@ -111,7 +112,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'cwc',
+            'NAME': database_name,
             'USER': 'cwc',
             'PASSWORD': 'ajme*utikac*zvake*produzni*52',
             'HOST': '173.194.250.129',

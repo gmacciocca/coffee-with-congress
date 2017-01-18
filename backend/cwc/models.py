@@ -20,7 +20,7 @@ class Issue(models.Model):
     issue_name = models.CharField(max_length=200)
     until= models.DateTimeField(default=one_year_from_now)
     def __unicode__(self):
-        return self.issue_name
+        return str(self.id) + ' - ' + self.issue_name
 
     def for_export(self):
         return {

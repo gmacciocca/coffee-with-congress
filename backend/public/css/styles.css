@@ -1756,22 +1756,25 @@ body {
   position: relative;
   margin: 0;
   padding-bottom: 4em;
-  min-height: 100%;
-  font-family: "Helvetica Neue", Arial, sans-serif; }
+  min-height: 100%; }
 
 footer {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
-  padding-bottom: 2rem;
-  text-align: center; }
+  padding-bottom: 1rem;
+  text-align: center;
+  margin: 0 1em; }
 
-@media only screen and (max-width: 740px) {
+.cwc-button {
+  margin: 5px 0 0 5px; }
+
+@media only screen and (max-width: 600px) {
   .cwc-screen-medium-and-up {
     display: none; } }
 
-@media screen and (min-width: 741px) {
+@media screen and (min-width: 601px) {
   .cwc-screen-small-and-down {
     display: none; } }
 
@@ -1880,7 +1883,7 @@ footer {
       color: #607075; }
     .dashboard__numbered-step-wrapper___text-only-step {
       color: #007eb2;
-      font-size: 0.9em;
+      font-weight: bold;
       display: flex;
       justify-content: flex-start;
       align-items: center; }
@@ -1908,6 +1911,7 @@ footer {
       .letter {
         margin: 0in; } } }
   .letter__contents {
+    font-family: "Times New Roman", "Roboto", "Adelle-Sans", "Helvetica Neue", Arial, sans-serif;
     text-align: left;
     overflow: hidden; }
     @media not print {
@@ -1923,7 +1927,8 @@ footer {
           display: inline-block;
           left: 0em;
           background-size: 2em; } }
-    .letter__contents__replace-string {
+    .letter__contents__message-string {
+      font-family: "Roboto", "Adelle-Sans", "Helvetica Neue", Arial, sans-serif;
       font-style: italic;
       font-weight: bold;
       color: #ce0000; }
@@ -1940,20 +1945,30 @@ footer {
 
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   max-width: 500px;
   margin: auto; }
-  .footer__link {
-    margin: 5px;
+  .footer__item {
     text-align: center; }
-    .footer__link a {
+    .footer__item a {
       color: #607075; }
-    .footer__link__separator {
+    .footer__item__separator {
       width: 2px;
-      margin: 10px;
       height: 2em;
       background-color: #607075; }
+    .footer__item__social {
+      display: flex;
+      justify-content: space-between; }
+      .footer__item__social__logo {
+        height: 1.8em;
+        margin: 0 3px; }
+
+@media only screen and (max-width: 600px) {
+  .footer {
+    font-size: 0.8em; }
+    .footer__item__separator {
+      width: 1px; } }
 
 .mission__wrapper {
   height: 100%;
@@ -1967,6 +1982,7 @@ footer {
     font-size: 1.1em; }
 
 .print-stats {
+  color: #607075;
   text-align: center;
   max-width: 100%;
   margin: auto; }
@@ -1980,7 +1996,7 @@ footer {
   padding-top: 2%; }
   .welcome__logo {
     max-width: 60%;
-    margin: 19% auto 0;
+    margin: 15% auto 0;
     overflow: auto;
     text-align: center; }
     .welcome__logo__img {
@@ -1989,7 +2005,7 @@ footer {
     margin: 0 20px;
     text-align: center; }
   .welcome__address-form {
-    margin: auto auto 2em; }
+    margin: auto auto 1em; }
   .welcome__address {
     display: flex;
     justify-content: center;
@@ -1997,7 +2013,9 @@ footer {
     .welcome__address__field {
       margin: 0 2px;
       display: flex; }
-  .welcome__error-button {
+  .welcome__button {
+    margin-top: 1em; }
+  .welcome__center-align {
     text-align: center; }
   .welcome__error-string {
     color: #ce0000;
@@ -2007,15 +2025,22 @@ footer {
     margin-bottom: 10px; }
   .welcome__about__person__bio {
     font-size: 0.9em; }
-    .welcome__about__person__bio a {
-      color: #607075;
-      font-weight: bold; }
+  .welcome__email-to {
+    color: #007eb2;
+    font-weight: bold; }
+    .welcome__email-to:hover {
+      text-decoration: underline; }
+  .welcome__link-to {
+    color: #007eb2;
+    font-weight: bold; }
+    .welcome__link-to:hover {
+      text-decoration: underline; }
 
-@media screen and (min-width: 741px) {
+@media screen and (min-width: 601px) {
   .welcome__logo {
     max-width: 450px;
     margin: 9em auto 0; }
   .welcome__description {
     margin: auto;
-    max-width: calc(740px - (20px * 2));
+    max-width: calc(600px - (20px * 2));
     text-align: center; } }

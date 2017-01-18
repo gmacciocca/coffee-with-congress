@@ -62,3 +62,7 @@ libraries:
 - name: MySQLdb
   version: 1.2.5
 # [END django_app]
+
+env_variables:
+  DATABASE_NAME: cwc
+  DEBUG_ON: False
