@@ -111,5 +111,5 @@ gulp.task("browserify-babelify-sassify-dev", [ "copyDevConfig", "copyResources",
 var prodJS = require("./gulp/prod/prodJS.js")(gulp);
 gulp.task("browserify-babelify-uglify-sassify-prod", [ "createDirs", "copyProdConfig", "copyResources", "sassify", "prodJS" ]);
 
-var prodJS = require("./gulp/prod/prodJS.js")(gulp);
-gulp.task("browserify-babelify-uglify-sassify-qa", [ "createDirs", "copyQaConfig", "copyResources", "sassify", "prodJS" ]);
+var qaJS = require("./gulp/qa/qaJS.js")(gulp);
+gulp.task("browserify-babelify-uglify-sassify-qa", [ "createDirs", "copyQaConfig", "copyResources", "sassify", "qaJS" ]);

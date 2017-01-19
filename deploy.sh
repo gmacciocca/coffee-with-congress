@@ -5,7 +5,7 @@ gcloud config set project qa-wtc
 export DATABASE_NAME=qawtc
 cd frontend
 npm install
-npm run build
+npm run build-qa
 cd ..
 cp -Rf ./frontend/public/* ./backend/public/
 cd backend
