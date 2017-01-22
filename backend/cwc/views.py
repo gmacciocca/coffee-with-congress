@@ -26,7 +26,7 @@ def get_template(request, issue_id, state, level):
     try:
         state = models.State.objects.get(code=state)
         issue = models.Issue.objects.get(id=issue_id)
-        template = models.Template.objects.get(issue_id=issue.id, state_id=state.id, level=level)
+        template = models.Template.objects.get(issue_id=issue.id, states__in=[state.id], level=level)
         return JsonResponse(template.for_export(),safe=False)
     except (models.Template.DoesNotExist, models.Issue.DoesNotExist, models.State.DoesNotExist):
         return HttpResponseNotFound('<h1>Template not found</h1>')
