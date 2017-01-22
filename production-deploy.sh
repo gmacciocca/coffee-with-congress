@@ -12,6 +12,9 @@ read -r -p "Deploying to production! Are you sure? [Y/n]" response
    cp -Rf ./frontend/public/* ./backend/public/
    cd backend
    pip install -r ./requirements-vendor.txt -t ./lib/ --upgrade
+   rm app.yaml
+   ln -s ./production-app.yaml app.yaml
    python manage.py migrate
-   gcloud app deploy
+   gcloud app --project=causal-port-151005 deploy
+   rm app.yaml
  fi
