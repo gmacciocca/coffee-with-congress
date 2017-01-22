@@ -152,8 +152,8 @@ const processContacts = (contacts) => {
             filtered[level] = contacts[level];
 
             // Append hardcoded list of contact
-            if (hardcodedContacts[level]){
-                Object.assign(filtered[level], hardcodedContacts[level]);
+            if (Array.isArray(hardcodedContacts[level])){
+                filtered[level].push(...hardcodedContacts[level]);
             }
 
             // assign "level" and "displayLevel" property to each contact (needed later for faster processing)
