@@ -151,7 +151,7 @@ export default class AddressForm extends React.Component {
         const props = {
             style: {
                 tabIndex: "0",
-                width: "75px"
+                width: "85px"
             },
             autoFocus: true,
             autoWidth: true,
