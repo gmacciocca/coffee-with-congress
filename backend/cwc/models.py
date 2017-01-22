@@ -45,7 +45,8 @@ class Template(models.Model):
     until= models.DateTimeField(default=one_year_from_now)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
-    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True, blank=True)
+    states = models.ManyToManyField(State)
+    #state = models.ForeignKey(State, on_delete=models.CASCADE, null=True, blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
 
     def __unicode__(self):
