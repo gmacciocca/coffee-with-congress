@@ -21,7 +21,7 @@ def pull_template_states(apps, schema_editor):
             ti = ts[template.issue_id] = []
             delete_template = False
 
-        ti.append(template.state)
+        ti.append(template.state_id)
         if delete_template:
             template.delete()
 
@@ -29,10 +29,12 @@ def push_template_states(apps, schema_editor):
 
     Template = apps.get_model("cwc", "Template")
     for template in Template.objects.all():
-        states = template_states[template.level][template.issue_id]
-        for state in states
-            template.states.append(state)
-        template.save()
+        states = set(template_states[template.level][template.issue_id])
+        for state_id in states:
+            link = template.states.through()
+            link.state_id = state_id
+            link.template_id = template.id
+            link.save()
 
 class Migration(migrations.Migration):
 

@@ -92,6 +92,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cwc.wsgi.application'
 
 
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
+
+STATIC_ROOT= 'static'
+STATIC_URL = '/static/'
+
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -135,10 +146,5 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
-STATIC_ROOT='static'
-STATIC_URL = '/static/'
 
 CIVIC_API_KEY='AIzaSyCXug7gTlDZS9sDlYG06j83qrHZigF8pI0'

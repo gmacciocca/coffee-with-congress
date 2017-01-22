@@ -52,7 +52,8 @@ class Template(models.Model):
     def __unicode__(self):
         safe_issue = self.issue.issue_name if self.issue else ""
         safe_city = self.city.name if self.city else ""
-        safe_state = self.state.name if self.state else ""
+        safe_state = "" 
+        #self.state.name if self.state else ""
         safe_level = self.level
         return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state
 
