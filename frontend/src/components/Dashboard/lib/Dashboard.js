@@ -12,6 +12,8 @@ import PrintWarningDialog from "./PrintWarningDialog";
 import letterConstants from "./letterConstants";
 import AppHeader from "./AppHeader";
 
+var cloneObject = (source) => JSON.parse(JSON.stringify(source));
+
 export default class Dashboard extends React.Component {
     constructor(...args) {
         super(...args);
@@ -264,7 +266,15 @@ export default class Dashboard extends React.Component {
     get selectedContactAddress() {
         const { contacts, contactIdSelected } = this.state;
         if (contacts && !this._utils.isNullOrUndefined(contactIdSelected)){
-            return this.customContactAddress || this.findContactById(contactIdSelected);
+            const customContactAddress = this.customContactAddress;
+            let contactAddress = this.findContactById(contactIdSelected);
+            if (contactAddress && customContactAddress) {
+                // If we have a custom contact address, then make a clone of the original
+                // contact address, and overwrite the clone with the custom address.
+                contactAddress = cloneObject(contactAddress);
+                Object.assign(contactAddress, customContactAddress);
+            }
+            return contactAddress;
         }
     }
 
