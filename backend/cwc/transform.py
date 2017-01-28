@@ -5,10 +5,11 @@ def get_or_save(contact):
 
     # every contact is saved (for template limiting feature)
     try:
-        result = model.Contact.objects.get(name=contact['name'])
-    except model.Contact.DoesNotExist:
-        result = model.Contact()
+        result = models.Contact.objects.get(name=contact['name'])
+    except models.Contact.DoesNotExist:
+        result = models.Contact()
         result.update_from_normalized(contact)
+        print repr(result.for_export())
         result.save()
 
     # and if information is updated in database (and override is set)

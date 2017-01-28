@@ -8,6 +8,9 @@ LEVEL_CHOICES = (
     ('city', 'City'),
 )
 
+def xstr(s):
+    return '' if s is None else str(s)
+
 def one_day_from_now():
     return timezone.now() + timezone.timedelta(days=1)
 
@@ -68,19 +71,24 @@ class PrintedLetter(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
     state_code = models.CharField(max_length=3)
 
+
+
 class Contact(models.Model):
     name = models.CharField(db_index=True, max_length=200)
     address1 = models.CharField(max_length=250)
-    address2 = models.CharField(max_length=250)
+    address2 = models.CharField(null=True,blank=True, max_length=250)
     city = models.CharField(max_length=250)
     state = models.CharField(max_length=250)
     zip_code =  models.CharField(max_length=10)
-    emails = models.CharField(max_length=500)
-    phone = models.CharField(max_length=250)
-    fax = models.CharField(max_length=250)
+    emails = models.CharField(null=True, blank=True,max_length=500)
+    phone = models.CharField(null=True,blank=True, max_length=250)
+    fax = models.CharField(null=True,blank=True, max_length=250)
     override = models.BooleanField(default=False)
-    role = models.CharField(max_length=250)
-    party = models.CharField(max_length=250)
+    role = models.CharField(null=True,blank=True, max_length=250)
+    party = models.CharField(null=True,blank=True, max_length=250)
+
+    def __unicode__(self):
+        return self.name
 
     def for_export(self):
         return {
@@ -92,7 +100,7 @@ class Contact(models.Model):
             "state": self.state,
             "zip_code": self.zip_code,
             "phones": self.phone.split(','),
-            "faxes": self.faxes.split(','), # no data from civic api
+            "faxes": self.fax.split(','), # no data from civic api
             "emails": self.emails.split(','), # no data from civic api
             "role": self.role,
             "party": self.party,
@@ -100,15 +108,14 @@ class Contact(models.Model):
         }
 
     def update_from_normalized(self,contact):
-        self.name = contact['name']
-        self.address1 = contact['address1']
-        self.address2 = contact['address2']
-        self.city = contact['city']
-        self.state = contact['state']
-        self.zip_code = contact['zip_code']
-        self.phones = ",".join(contact['phones'])
-        self.faxes = ",".join(contact['faxes'])
-        self.emails = ",".join(contact['emails'])
-        self.role = contact['role']
-        self.party = contact['party']
-        self.override = contact['override']
+        self.name = xstr(contact.get('name', ''))
+        self.address1 = xstr(contact.get('address1', ''))
+        self.address2 = xstr(contact.get('address2', ''))
+        self.city = xstr(contact.get('city',''))
+        self.state = xstr(contact.get('state',''))
+        self.zip_code = xstr(contact.get('zip_code',''))
+        self.phone = xstr(",".join(contact.get('phones', [])))
+        self.fax = xstr(",".join(contact.get('faxes', [])))
+        self.emails = xstr(",".join(contact.get('emails',[])))
+        self.role = xstr(contact.get('role',''))
+        self.party = xstr(contact.get('party',''))
