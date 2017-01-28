@@ -6,6 +6,7 @@ from django.utils import timezone
 from apiclient.discovery import build
 from cwc import settings
 from cwc.clients import CivicApi
+from cwc.transform import correct_info
 import json
 
 def index(request):
@@ -20,7 +21,8 @@ def get_contacts(request):
     api.build()
     address = request.GET['address']
     contacts = api.contactsForAddress(address)
-    return JsonResponse(contacts, safe=False)
+    correct_contacts = correct_info(contacts)
+    return JsonResponse(correct_contacts, safe=False)
 
 def get_template(request, issue_id, state, level):
     try:

@@ -82,5 +82,5 @@ class CivicApi:
             "faxes": [], # no data from civic api
             "emails": [], # no data from civic api
             "role": role,
-            "party": contact.get('party',[])
+            "party": contact.get('party','')
         }
