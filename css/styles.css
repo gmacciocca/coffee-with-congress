@@ -1778,6 +1778,18 @@ footer {
   .cwc-screen-small-and-down {
     display: none; } }
 
+.common-ui__email-to {
+  color: #007eb2;
+  font-weight: bold; }
+  .common-ui__email-to:hover {
+    text-decoration: underline; }
+
+.common-ui__link-to {
+  color: #007eb2;
+  font-weight: bold; }
+  .common-ui__link-to:hover {
+    text-decoration: underline; }
+
 .common-ui__overlay-progress {
   position: fixed;
   overflow-y: scroll;
@@ -1818,6 +1830,12 @@ footer {
   .common-ui__screen-overlay__hidden {
     opacity: 0;
     display: none; }
+
+.common-ui__tel-to {
+  color: #007eb2;
+  font-weight: bold; }
+  .common-ui__tel-to:hover {
+    text-decoration: underline; }
 
 .dashboard {
   min-width: 320px;
@@ -1900,6 +1918,8 @@ footer {
     height: 3.7em;
     margin-left: 1em;
     cursor: pointer; }
+  .dashboard__social-logo {
+    height: 1em; }
 
 .letter {
   position: absolute;
@@ -1938,6 +1958,7 @@ footer {
   height: 30px;
   border-radius: 50%;
   border: 3px solid #007eb2;
+  padding-top: 1px;
   text-align: center;
   font-size: 15px;
   font-weight: bold;
