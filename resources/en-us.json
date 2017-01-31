@@ -47,8 +47,9 @@
 		"noTemplageEmailSubject": "Missing template for issue '%s', %s state, %s level",
 		"noTemplageEmailBody": "Please write your template proposal below:",
 		"postPrintDialogTitle": "Thank You!",
-		"callOfficial": "You can also call %s at &cpn;, and use the letter template as your script.",
-		"shareOnSocials": "Share this on &cpn; and &cpn; !!",
+		"callOfficialTitle": "Got time for a phone call?",
+		"callOfficialMessage": "Increase your impact by calling %s at &cpn; .",
+		"shareOnSocials": "Share your letter and inspire others to write!",
 		"socialMessage": "I just used www.writetocongress.org to print a letter for %s!"
 	},
 	"gateways": {
@@ -59,7 +60,7 @@
 	},
 	"welcome": {
 		"title": "Write to Congress",
-		"welcomeMessage": "We exercise our right to congress when we write to Congress.",
+		"welcomeMessage": "Enter your address to find the elected officials who represent your district and state.",
 		"streetAddressLabel": "Street Address",
 		"streetAddressHint": "Enter number and street",
 		"cityLabel": "City",

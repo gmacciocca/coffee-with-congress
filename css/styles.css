@@ -1919,7 +1919,14 @@ footer {
     margin-left: 1em;
     cursor: pointer; }
   .dashboard__social-logo {
-    height: 1em; }
+    height: 2em; }
+  .dashboard__paragraph-title {
+    font-size: 1em;
+    color: #102025; }
+  .dashboard__dialog-smaller-title {
+    padding: 15px 24px 5px !important; }
+  .dashboard__dialog-smaller-body {
+    padding: 0 24px 0px 24px !important; }
 
 .letter {
   position: absolute;
@@ -2017,7 +2024,7 @@ footer {
   padding-top: 2%; }
   .welcome__logo {
     max-width: 60%;
-    margin: 15% auto 0;
+    margin: 10% auto 0;
     overflow: auto;
     text-align: center; }
     .welcome__logo__img {
