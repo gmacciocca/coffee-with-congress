@@ -48,7 +48,8 @@
 		"noTemplageEmailBody": "Please write your template proposal below:",
 		"postPrintDialogTitle": "Thank You!",
 		"callOfficialTitle": "Got time for a phone call?",
-		"callOfficialMessage": "Increase your impact by calling %s at &cpn; .",
+		"callOfficialMessage": "Increase your impact by calling %s at &cpn; . Click to &cpn; call.",
+		"clickHere": "here",
 		"shareOnSocials": "Share your letter and inspire others to write!",
 		"socialMessage": "I just used www.writetocongress.org to print a letter for %s!"
 	},

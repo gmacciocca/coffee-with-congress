@@ -1779,13 +1779,13 @@ footer {
     display: none; } }
 
 .common-ui__email-to {
-  color: #007eb2;
+  color: #215fc4;
   font-weight: bold; }
   .common-ui__email-to:hover {
     text-decoration: underline; }
 
 .common-ui__link-to {
-  color: #007eb2;
+  color: #215fc4;
   font-weight: bold; }
   .common-ui__link-to:hover {
     text-decoration: underline; }
@@ -1832,7 +1832,7 @@ footer {
     display: none; }
 
 .common-ui__tel-to {
-  color: #007eb2;
+  color: #215fc4;
   font-weight: bold; }
   .common-ui__tel-to:hover {
     text-decoration: underline; }
@@ -1907,7 +1907,8 @@ footer {
       align-items: center; }
       .dashboard__numbered-step-wrapper___text-only-step__icon {
         cursor: pointer;
-        margin: 0 5px; }
+        margin: 0 5px;
+        color: #215fc4; }
   .dashboard__paper-wrapper {
     text-align: center; }
   .dashboard__dialog-buttons {
@@ -2054,12 +2055,12 @@ footer {
   .welcome__about__person__bio {
     font-size: 0.9em; }
   .welcome__email-to {
-    color: #007eb2;
+    color: #215fc4;
     font-weight: bold; }
     .welcome__email-to:hover {
       text-decoration: underline; }
   .welcome__link-to {
-    color: #007eb2;
+    color: #215fc4;
     font-weight: bold; }
     .welcome__link-to:hover {
       text-decoration: underline; }
