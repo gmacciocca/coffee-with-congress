@@ -21,8 +21,14 @@ def one_year_from_now():
 class Issue(models.Model):
     issue_name = models.CharField(max_length=200)
     until= models.DateTimeField(default=one_year_from_now)
+    END_OF_THE_LIST=900000
+    ordinal=models.PositiveIntegerField(default=END_OF_THE_LIST,null=False)
+
+    class Meta:
+        ordering = ['ordinal','id']
+
     def __unicode__(self):
-        return str(self.id) + ' - ' + self.issue_name
+        return str(self.id) + ' - ' + self.issue_name + ' (' +  str(self.ordinal)  +  '.)'
 
     def for_export(self):
         return {
@@ -51,19 +57,27 @@ class Template(models.Model):
     #state = models.ForeignKey(State, on_delete=models.CASCADE, null=True, blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
 
+    def duplicates(self):
+        state_ids = [state.id for state in self.states.all()]
+        duplicate_objects = Template.objects.filter(level=self.level, issue_id = self.issue_id, states__in=state_ids).exclude(id=self.id)
+        return [str(duplicate.id) for duplicate in duplicate_objects]
+
     def __unicode__(self):
         safe_issue = self.issue.issue_name if self.issue else ""
         safe_city = self.city.name if self.city else ""
         safe_state = ",".join([state.code for state in self.states.all()])
         #self.state.name if self.state else ""
         safe_level = self.level
-        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state
+        duplicates = self.duplicates()
+        safe_duplicates = "" if duplicates == [] else " / HAS DUPLICATES "
+        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state + safe_duplicates
 
     def for_export(self):
         return {
           'id': self.id,
           'content': self.content
         }
+
 
 class PrintedLetter(models.Model):
     when = models.DateTimeField(default=timezone.now)

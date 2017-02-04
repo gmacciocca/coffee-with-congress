@@ -16,6 +16,11 @@ def get_issues(request):
     issues = [issue.for_export() for issue in models.Issue.objects.filter(until__gte=timezone.now())]
     return JsonResponse(issues, safe=False)
 
+def get_issues_for_state(request,state):
+    issues_for_state = models.Issue.objects.filter(until__gte=timezone.now(),template__states__code=state)
+    issues = [issue.for_export() for issue in issues_for_state]
+    return JsonResponse(issues, safe=False)
+
 def get_contacts(request):
     api = CivicApi()
     api.build()
