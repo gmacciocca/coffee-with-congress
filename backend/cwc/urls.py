@@ -19,6 +19,7 @@ from cwc import views
 
 urlpatterns = [
     url(r'^$', views.index),
+    url(r'^issue_groups/state/(?P<state>[A-Za-z]{0,3})', views.get_issue_groups_for_state),
     url(r'^issues/state/(?P<state>[A-Za-z]{0,3})', views.get_issues_for_state),
     url(r'^issues', views.get_issues),
     url(r'^contacts', views.get_contacts),

@@ -20,10 +20,31 @@ def one_year_from_now():
 END_OF_THE_LIST=900000
 
 # Create your models here.
+
+class IssueGroup(models.Model):
+    name = models.CharField(max_length=150)
+    ordinal=models.PositiveIntegerField(default=END_OF_THE_LIST,null=False)
+
+    class Meta:
+        ordering = ['ordinal','id']
+
+    def __unicode__(self):
+        return str(self.id) + ' - ' + self.name + ' (' +  str(self.ordinal)  +  '.)'
+
+    def for_export(self, state_code):
+        state_issues = self.issue_set.filter(until__gte=timezone.now(),template__states__code=state_code)
+        issues = [issue.for_export() for issue in state_issues]
+        return {
+          'id': self.id,
+          'name': self.name,
+          'issues': issues
+        }
+
 class Issue(models.Model):
     issue_name = models.CharField(max_length=200)
     until= models.DateTimeField(default=one_year_from_now)
     ordinal=models.PositiveIntegerField(default=END_OF_THE_LIST,null=False)
+    issue_group = models.ForeignKey(IssueGroup, on_delete=models.CASCADE, default=lambda: IssueGroup.objects.first().id)
 
     class Meta:
         ordering = ['ordinal','id']

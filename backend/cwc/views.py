@@ -21,6 +21,11 @@ def get_issues_for_state(request,state):
     issues = [issue.for_export() for issue in issues_for_state]
     return JsonResponse(issues, safe=False)
 
+def get_issue_groups_for_state(request, state):
+    issue_groups_for_state = models.IssueGroup.objects.filter(issue__template__states__code=state)
+    issue_groups = [issue_group.for_export(state) for issue_group in issue_groups_for_state]
+    return JsonResponse(issue_groups,safe=False)
+
 def get_contacts(request):
     api = CivicApi()
     api.build()
