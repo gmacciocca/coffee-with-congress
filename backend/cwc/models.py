@@ -17,11 +17,12 @@ def one_day_from_now():
 def one_year_from_now():
     return timezone.now() + timezone.timedelta(days=365)
 
+END_OF_THE_LIST=900000
+
 # Create your models here.
 class Issue(models.Model):
     issue_name = models.CharField(max_length=200)
     until= models.DateTimeField(default=one_year_from_now)
-    END_OF_THE_LIST=900000
     ordinal=models.PositiveIntegerField(default=END_OF_THE_LIST,null=False)
 
     class Meta:
@@ -48,13 +49,27 @@ class City(models.Model):
     def __unicode__(self):
         return self.name
 
+class Source(models.Model):
+    title = models.CharField(null=False, max_length=500)
+    url = models.URLField(null=True)
+    ordinal=models.PositiveIntegerField(default=END_OF_THE_LIST,null=False)
+
+    def __unicode__(self):
+        return str(self.id) + " - " + self.title
+
+    def for_export(self):
+        return { 'title': self.title, 'url': self.url }
+
+    class Meta:
+        ordering = ['ordinal','id']
+
 class Template(models.Model):
     content= models.TextField()
     until= models.DateTimeField(default=one_year_from_now)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     states = models.ManyToManyField(State)
-    #state = models.ForeignKey(State, on_delete=models.CASCADE, null=True, blank=True)
+    sources = models.ManyToManyField(Source)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
 
     def duplicates(self):
@@ -73,9 +88,11 @@ class Template(models.Model):
         return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state + safe_duplicates
 
     def for_export(self):
+        sources = [ source.for_export() for source in self.sources.all() ]
         return {
           'id': self.id,
-          'content': self.content
+          'content': self.content,
+          'sources': sources
         }
 
 
@@ -84,8 +101,6 @@ class PrintedLetter(models.Model):
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
     state_code = models.CharField(max_length=3)
-
-
 
 class Contact(models.Model):
     name = models.CharField(db_index=True, max_length=200)
