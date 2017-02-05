@@ -40,11 +40,15 @@ class IssueGroup(models.Model):
           'issues': issues
         }
 
+def first_group():
+    return IssueGroup.objects.first().id
+
 class Issue(models.Model):
+
     issue_name = models.CharField(max_length=200)
     until= models.DateTimeField(default=one_year_from_now)
     ordinal=models.PositiveIntegerField(default=END_OF_THE_LIST,null=False)
-    issue_group = models.ForeignKey(IssueGroup, on_delete=models.CASCADE, default=lambda: IssueGroup.objects.first().id)
+    issue_group = models.ForeignKey(IssueGroup, on_delete=models.CASCADE, default=first_group)
 
     class Meta:
         ordering = ['ordinal','id']
