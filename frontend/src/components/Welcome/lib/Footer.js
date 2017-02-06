@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { Application } from "solo-application";
-import LinkTo from "./LinkTo";
+import { LinkTo } from "../../CommonUi";
 
 const TLogo = () => {
     return (

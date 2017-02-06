@@ -131,10 +131,10 @@ export default class Letter extends React.Component {
             />
         ) : (
             <div
-                onClick={this.props.onEditTemplate}
-                dangerouslySetInnerHTML={{ __html: this._utils.newLineToBr(this.noTemplateMessage) }}
                 className="letter__contents__editable letter__contents__message-string"
-            />
+                onClick={this.props.onEditTemplate} >
+                {this.noTemplateMessage}
+            </div>
         );
     }
 

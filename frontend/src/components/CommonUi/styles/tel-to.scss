@@ -1,0 +1,9 @@
+.common-ui {
+    &__tel-to {
+        color: $cwcColorLink;
+        font-weight: bold;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

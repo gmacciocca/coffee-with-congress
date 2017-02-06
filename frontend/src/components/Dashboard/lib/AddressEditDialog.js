@@ -56,7 +56,7 @@ export default class AddressEditDialog extends React.Component {
         const actions = [
             <RaisedButton
                 label={Application.localize("dashboard/cancel")}
-                onTouchTap={this.handleSave.bind(this)}
+                onTouchTap={this.handleCancel.bind(this)}
                 type="button"
                 className="cwc-button"
             />,
@@ -72,6 +72,9 @@ export default class AddressEditDialog extends React.Component {
 
         return (
             <Dialog
+                className="dashboard__no-print"
+                titleClassName="dashboard__dialog-smaller-title"
+                bodyClassName="dashboard__dialog-smaller-body"                
                 title={this.title}
                 actions={actions}
                 modal={true}

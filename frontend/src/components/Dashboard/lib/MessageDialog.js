@@ -66,6 +66,7 @@ export default class MessageDialog extends React.Component {
         return (
             <div style={style} >
                 <Dialog
+                    className="dashboard__no-print"
                     title={this.props.title}
                     actions={actions}
                     modal={false}

@@ -18,4 +18,13 @@ export default class Utils {
             return x[0].toUpperCase() + x.substr(1).toLowerCase();
         }).join(" ");
     }
+
+    cloneObject(source) {
+        try {
+            return JSON.parse(JSON.stringify(source));
+        } catch (err) {
+            console.error(err); // eslint-disable-line no-console
+        }
+        return null;
+    }
 }

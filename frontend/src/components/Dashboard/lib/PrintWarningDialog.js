@@ -2,7 +2,6 @@ import React from "react";
 import { Application } from "solo-application";
 import Dialog from "material-ui/Dialog";
 import RaisedButton from "material-ui/RaisedButton";
-import Checkbox from "material-ui/Checkbox";
 
 export default class PrintWarningDialog extends React.Component {
     constructor(...args) {
@@ -37,14 +36,10 @@ export default class PrintWarningDialog extends React.Component {
     }
 
     handleOk() {
-        this.props.onOk(this._isDoNotShowAgaiChecked);
+        this.props.onOk();
     }
 
-    onDoNotShowAgaiCheck(event, isInputChecked) {
-        this._isDoNotShowAgaiChecked = isInputChecked;
-    }
-
-    get stampsHtmlString() {
+    get stampsInstructions() {
         return this._formatString.formatWithUrlLink(
             "dashboard/stampsInstructions",
             "dashboard/stampsLink",
@@ -52,7 +47,7 @@ export default class PrintWarningDialog extends React.Component {
         );
     }
 
-    get envelopesHtmlString() {
+    get envelopeInstructions() {
         return this._formatString.formatWithUrlLink(
             "dashboard/envelopeInstructions",
             "dashboard/envelopeLink",
@@ -82,27 +77,26 @@ export default class PrintWarningDialog extends React.Component {
         return (
             <div>
                 <Dialog
+                    className="dashboard__no-print"
+                    titleClassName="dashboard__dialog-smaller-title"
+                    bodyClassName="dashboard__dialog-smaller-body"
                     title={Application.localize("dashboard/printWarningDialogTitle")}
                     actions={actions}
                     modal={true}
                     open={this.props.shouldShow}
                     onRequestClose={this.handleCancel.bind(this)}
                     contentStyle={{ width: "100%", height: "100%" }}
-                    autoScrollBodyContent={true}
+                    autoScrollBodyContent={false}
                 >
                     <div>
-                        <h5>{Application.localize("dashboard/gotStamps")}</h5>
-                        <div dangerouslySetInnerHTML={{ __html: this.stampsHtmlString }} />
-                        <h5>{Application.localize("dashboard/needEnvelope")}</h5>
-                        <div dangerouslySetInnerHTML={{ __html: this.envelopesHtmlString }} />
-                        <h5>{Application.localize("dashboard/checkPrinter")}</h5>
+                        <div className="dashboard__paragraph-title">{Application.localize("dashboard/gotStamps")}</div>
+                        {this.stampsInstructions}
+                        <div className="dashboard__paragraph-title">{Application.localize("dashboard/needEnvelope")}</div>
+                        {this.envelopeInstructions}
+                        <div className="dashboard__paragraph-title">{Application.localize("dashboard/checkPrinter")}</div>
                         <div>{Application.localize("dashboard/printerInstructions")}</div>
-                        <h5>{Application.localize("dashboard/grabAPen")}</h5>
+                        <div className="dashboard__paragraph-title">{Application.localize("dashboard/grabAPen")}</div>
                     </div>
-                    <Checkbox
-                        onCheck={this.onDoNotShowAgaiCheck.bind(this)}
-                        label={Application.localize("dashboard/doNotShowAgain")}
-                    />
                 </Dialog>
             </div>
         );

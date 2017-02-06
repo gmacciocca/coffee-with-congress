@@ -20,8 +20,8 @@ export default class CwcServer {
             });
     }
 
-    fetchIssues() {
-        const path = `${Application.configuration.origins.cwcServer}/issues`;
+    fetchIssues(state) {
+        const path = `${Application.configuration.origins.cwcServer}/issues/state/${state}`;
         return this._networkTransport.get(path)
             .catch(originalError => {
                 throw new CwcError(

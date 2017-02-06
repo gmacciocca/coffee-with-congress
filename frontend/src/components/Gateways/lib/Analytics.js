@@ -44,4 +44,21 @@ export default class Analytics {
             transport: "beacon"
         });
     }
+
+    sendCallStatistics({ issueId, state, level }) {
+        if (!this._sendAnalitics) {
+            return;
+        }
+        const eventCategory = this._utils.isNullOrUndefined(issueId) ? "no-issue-id" : issueId.toString();
+        const eventAction = "call";
+        const eventLabel = state;
+        const eventValue = LEVEL_ID[level];
+        ga("send", "event", {
+            eventCategory,
+            eventAction,
+            eventLabel,
+            eventValue,
+            transport: "beacon"
+        });
+    }
 }

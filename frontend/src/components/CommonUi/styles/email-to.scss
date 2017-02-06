@@ -1,0 +1,9 @@
+.common-ui {
+    &__email-to {
+        color: $cwcColorLink;
+        font-weight: bold;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

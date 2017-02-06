@@ -37,11 +37,11 @@ export default class ContactsSelect extends BaseSelect {
             width: `${usableParentWidth / 3}px`
         };
         return (
-            <div className="dashboard__numbered-step-wrapper__contact">
-                <div className="dashboard__numbered-step-wrapper__contact-name" style={nameStyle}>
+            <div className="dashboard__numbered-step__contact">
+                <div className="dashboard__numbered-step__contact-name" style={nameStyle}>
                     {`${name}${this.partyInitial(party)}`}
                 </div>
-                <div className="dashboard__numbered-step-wrapper__contact-role" style={roleStyle}>
+                <div className="dashboard__numbered-step__contact-role" style={roleStyle}>
                     {this.roleString(role)}
                 </div>
             </div>
@@ -51,7 +51,7 @@ export default class ContactsSelect extends BaseSelect {
     contactBreaker(typeName) {
         return (
             <div>
-                <div className="dashboard__numbered-step-wrapper__contact-breaker" >{typeName}</div>
+                <div className="dashboard__numbered-step__contact-breaker" >{typeName}</div>
             </div>
         );
     }

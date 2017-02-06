@@ -121,6 +121,9 @@ export default class TemplateEditDialog extends React.Component {
 
         return (
             <Dialog
+                className="dashboard__no-print"
+                titleClassName="dashboard__dialog-smaller-title"
+                bodyClassName="dashboard__dialog-smaller-body"                                
                 title={Application.localize("dashboard/templateEditDialogTitle")}
                 actions={actions}
                 modal={true}

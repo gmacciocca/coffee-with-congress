@@ -1,7 +1,7 @@
 {
     "welcome": {
         "title": "Write to Congress" ,
-        "welcomeMessage": "We exercise our right to congress when we write to Congress.",
+        "welcomeMessage": "Enter your address to find the elected officials who represent your district and state.",
         "streetAddressLabel": "Street Address",
         "streetAddressHint": "Enter number and street",
         "cityLabel": "City",

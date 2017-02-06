@@ -9,10 +9,10 @@ import NumberInCircle from "./NumberInCircle";
 import AddressEditDialog from "./AddressEditDialog";
 import TemplateEditDialog from "./TemplateEditDialog";
 import PrintWarningDialog from "./PrintWarningDialog";
+import PostPrintDialog from "./PostPrintDialog";
 import letterConstants from "./letterConstants";
 import AppHeader from "./AppHeader";
-
-var cloneObject = (source) => JSON.parse(JSON.stringify(source));
+import ReportAProblem from "./ReportAProblem";
 
 export default class Dashboard extends React.Component {
     constructor(...args) {
@@ -38,7 +38,8 @@ export default class Dashboard extends React.Component {
             showUserAddressEditDialog: false,
             showContactAddressEditDialog: false,
             showTemplateEditDialog: false,
-            showPrintWarningDialog: false
+            showPrintWarningDialog: false,
+            showPostPrintDialog: false
         };
         this._offs = [];
     }
@@ -60,10 +61,6 @@ export default class Dashboard extends React.Component {
     selectDefaultContact(selections, contacts){
         if (this._utils.isNullOrUndefined(selections.contactIdSelected)) {
             const defaultContact = this.findInitialDefaultContact(contacts);
-            // // Select initial default contact
-            // const defaultContact = (contacts.federal && contacts.federal[0]) ||
-            //     (contacts.state && contacts.state[0]) ||
-            //     (contacts.city && contacts.city[0]);
             selections.contactIdSelected = defaultContact && defaultContact.id;
         }
     }
@@ -78,7 +75,7 @@ export default class Dashboard extends React.Component {
         if (address && contacts) {
             this.selectDefaultContact(selections, contacts);
             this.setState({ address, contacts, ...selections });
-            this.fetchIssues();
+            this.fetchIssues(address.state);
         } else {
             this.goHome();
         }
@@ -104,9 +101,9 @@ export default class Dashboard extends React.Component {
         return this.state.showProgress;
     }
 
-    fetchIssues() {
+    fetchIssues(state) {
         this.showProgress(true);
-        this._cwcServer.fetchIssues()
+        this._cwcServer.fetchIssues(state)
             .then(issues => {
                 let issueIdSelected = this.state.issueIdSelected;
                 if (this._utils.isNullOrUndefined(issueIdSelected)) {
@@ -155,7 +152,6 @@ export default class Dashboard extends React.Component {
                     templates[level] = templatesForIssueAndState;
                 });
         });
-        //return Promise.all(promises)
         return this.waitForAllPromises(promises)
             .then(() => {
                 this.showProgress(false);
@@ -184,25 +180,31 @@ export default class Dashboard extends React.Component {
     }
 
     paperRef(ref) {
-        if (this._paperRef !== ref) {
-            this._paperRef = ref;
-        }
+        this._paperRef = ref;
     }
 
-    appBarPaperWrapperRef(ref) {
-        if (this._appBarPaperWrapperRef !== ref) {
-            this._appBarPaperWrapperRef = ref;
-        }
+    contentsRef(ref) {
+        this._contentsRef = ref;
+    }
+
+    reportAProblemRef(ref) {
+        this._reportAProblemRef = ref;
     }
 
     updatePaperStyle() {
-        if (!this._paperRef || !this._appBarPaperWrapperRef) {
+        if (!this._paperRef ||
+            !this._contentsRef ||
+            !this._reportAProblemRef){
             return;
         }
 
-        const margin = 20;
-        const availableWidth = this._appBarPaperWrapperRef.offsetWidth /* - this._paperRef.offsetLeft */ - (margin * 2);
-        const availableHeight = this._appBarPaperWrapperRef.offsetHeight - this._paperRef.offsetTop - margin;
+        const paperShadowWidth = 10;
+        const availableWidth = this._contentsRef.offsetWidth /* - this._paperRef.offsetLeft */ - (paperShadowWidth * 2);
+        const availableHeight =
+            this._contentsRef.offsetHeight -
+            this._paperRef.offsetTop -
+            this._reportAProblemRef.offsetHeight -
+            paperShadowWidth;
 
         // Letter size = 215.9 by 279.4
         // 215.9 : 279.4 = availableWidth : availableHeight
@@ -224,9 +226,13 @@ export default class Dashboard extends React.Component {
         this.setState({ paperStyle, availableWidth });
     }
 
+    get currentIssue() {
+        return this.state.issues && this.state.issues.find(issue => issue.id === this.state.issueIdSelected);
+    }
+
     get currentProps() {
         const { state, zip_code } = this.state && this.state.address;
-        const issue = this.state.issues && this.state.issues.find(issue => issue.id === this.state.issueIdSelected);
+        const issue = this.currentIssue;
         const contact = this.selectedContactAddress;
 
         return {
@@ -271,7 +277,7 @@ export default class Dashboard extends React.Component {
             if (contactAddress && customContactAddress) {
                 // If we have a custom contact address, then make a clone of the original
                 // contact address, and overwrite the clone with the custom address.
-                contactAddress = cloneObject(contactAddress);
+                contactAddress = this._utils.cloneObject(contactAddress);
                 Object.assign(contactAddress, customContactAddress);
             }
             return contactAddress;
@@ -313,7 +319,6 @@ export default class Dashboard extends React.Component {
     }
 
     fulFillTemplate(templateContent, contact, address) {
-        //templateContent = templateContent.replace(/\n/g, "<br>");
         const salutationForTemplate = (contact.salutations && contact.salutations.template) || "";
         const contactNameForTemplate = this._utils.spaceBetween(salutationForTemplate, contact.name);
         templateContent = templateContent.replace(/\[NAME_OF_REPRESENTATIVE\]/g, contactNameForTemplate || "");
@@ -404,11 +409,11 @@ export default class Dashboard extends React.Component {
 
     select({ Component, props, number }) {
         return (
-            <div className="dashboard__numbered-step-wrapper">
-                <div className="dashboard__numbered-step-wrapper__number">
+            <div className="dashboard__numbered-step">
+                <div className="dashboard__numbered-step__number">
                     <NumberInCircle size="20" number={number} />
                 </div>
-                <div ref={this.setSelectParentWidth.bind(this)} className="dashboard__numbered-step-wrapper__select">
+                <div ref={this.setSelectParentWidth.bind(this)} className="dashboard__numbered-step__select">
                     <Component parendWidth={this.state.componentParentWidth} {...props} />
                 </div>
             </div>
@@ -443,14 +448,14 @@ export default class Dashboard extends React.Component {
 
     get thirdStep() {
         return (
-            <div className="dashboard__numbered-step-wrapper">
-                <div className="dashboard__numbered-step-wrapper__number">
+            <div className="dashboard__numbered-step">
+                <div className="dashboard__numbered-step__number">
                     <NumberInCircle size="20" number={3} />
                 </div>
-                <div className="dashboard__numbered-step-wrapper__select">
-                    <div className="dashboard__numbered-step-wrapper___text-only-step">
+                <div className="dashboard__numbered-step__select">
+                    <div className="dashboard__numbered-step___text-only-step">
                         {Application.localize("dashboard/personalizeLetter")}
-                        <i className="dashboard__numbered-step-wrapper___text-only-step__icon material-icons"
+                        <i className="dashboard__numbered-step___text-only-step__icon material-icons"
                             onClick={this.printTemplate.bind(this)}
                         >print</i>
                     </div>
@@ -460,24 +465,20 @@ export default class Dashboard extends React.Component {
     }
 
     printTemplate() {
-        const { doNotShowPrintWarning } = this._userStore.get("settings") || {};
-        if (!doNotShowPrintWarning) {
-            this.setState({ showPrintWarningDialog: true });
-        } else {
-            this.sendStatisticAndBrowserPrint();
-        }
+        this.setState({ showPrintWarningDialog: true });
+    }
+
+    onClosePostPrintDialog() {
+        this.setState({ showPostPrintDialog: false });
     }
 
     onCancelPrintWarningDialog() {
         this.setState({ showPrintWarningDialog: false });
     }
 
-    onOkPrintWarningDialog(doNotShowPrintWarning) {
+    onOkPrintWarningDialog() {
         this.setState({ showPrintWarningDialog: false });
-        this._userStore.set("settings", { doNotShowPrintWarning });
-        setTimeout(() => {
-            this.sendStatisticAndBrowserPrint();
-        }, 1000);
+        this.sendStatisticAndBrowserPrint();
     }
 
     sendStatisticAndBrowserPrint() {
@@ -485,6 +486,12 @@ export default class Dashboard extends React.Component {
         this._cwcServer.sendPrintStatistics({ issueId, state, level });
         this._analytics.sendPrintStatistics({ issueId, state, level });
         window.print();
+        this.setState({ showPostPrintDialog: true });
+    }
+
+    sendCallStatistics() {
+        const { issueId, state, level } = this.currentProps;
+        this._analytics.sendCallStatistics({ issueId, state, level });
     }
 
     get addressEditDialog() {
@@ -498,7 +505,6 @@ export default class Dashboard extends React.Component {
             address: this.state.showUserAddressEditDialog ? this.state.address : contactAddress,
             isUserAddress: this.state.showUserAddressEditDialog
         };
-
         return (
             <AddressEditDialog {...props} />
         );
@@ -510,22 +516,28 @@ export default class Dashboard extends React.Component {
         }
         return (
             <div className="dashboard">
-                <div className="dashboard__spacer-and-appbar-paper-wrapper dashboard__no-print">
-                    <div ref={this.appBarPaperWrapperRef.bind(this)} className="dashboard__appbar-paper-wrapper">
-                        <AppHeader
-                            router={this.props.router}
-                            onPrint={this.printTemplate.bind(this)}
-                        />
+                <div className="dashboard__no-print">
+                    <div ref={this.contentsRef.bind(this)} className="dashboard__contents">
+                        <div className="dashboard__header">
+                            <AppHeader
+                                router={this.props.router}
+                                onPrint={this.printTemplate.bind(this)}
+                            />
+                        </div>
                         <div className="dashboard__numbered-steps">
                             {this.issuesSelect}
                             {this.contactsSelect}
                             {this.thirdStep}
                         </div>
-                        <div ref={this.paperRef.bind(this)} className="dashboard__paper-wrapper">
-                            <Paper style={this.state.paperStyle} zDepth={2}>
+                        <div ref={this.paperRef.bind(this)} className="dashboard__paper">
+                            <Paper
+                                style={this.state.paperStyle}
+                                zDepth={2}
+                                rounded={false} >
                                 <Letter {...this.letterProps} />
                             </Paper>
                         </div>
+                        <ReportAProblem refFunc={this.reportAProblemRef.bind(this)} />
                     </div>
                     <ProgressOverlay showProgress={this.state.showProgress} />
                 </div>
@@ -542,6 +554,13 @@ export default class Dashboard extends React.Component {
                         shouldShow={this.state.showPrintWarningDialog}
                         onCancel={this.onCancelPrintWarningDialog.bind(this)}
                         onOk={this.onOkPrintWarningDialog.bind(this)}
+                    />
+                    <PostPrintDialog
+                        issue={this.currentIssue}
+                        contactAddress={this.selectedContactAddress}
+                        shouldShow={this.state.showPostPrintDialog}
+                        onClose={this.onClosePostPrintDialog.bind(this)}
+                        sendCallStatistics={this.sendCallStatistics.bind(this)}
                     />
                 </div>
                 <div className="dashboard__print-only">

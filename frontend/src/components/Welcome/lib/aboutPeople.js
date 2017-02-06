@@ -1,5 +1,6 @@
 import React from "react";
-import LinkTo from "./LinkTo";
+import { Application } from "solo-application";
+import { LinkTo } from "../../CommonUi";
 
 const AboutText = () => (
 <div>
