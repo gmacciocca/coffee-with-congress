@@ -1920,8 +1920,10 @@ footer {
   .dashboard__social-logo {
     height: 2em; }
   .dashboard__paragraph-title {
-    font-size: 1em;
+    font-size: 1.1em;
     color: #102025; }
+  .dashboard__paragraph {
+    margin-bottom: 10px; }
   .dashboard__dialog-smaller-title {
     padding: 15px 24px 5px !important; }
   .dashboard__post-print-dialog-title {

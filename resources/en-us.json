@@ -1,4 +1,7 @@
 {
+	"gateways": {
+		"invalidAddress": "No elected officials were found for this state/zip combination"
+	},
 	"dashboard": {
 		"city": "City",
 		"state": "State",
@@ -53,9 +56,6 @@
 		"shareOnSocials": "Share your letter and inspire others to write!",
 		"socialMessage": "Just wrote a letter to %s through www.writetocongress.org. It's fast and makes an impact - start writing!",
 		"reportAProblem": "Report a problem."
-	},
-	"gateways": {
-		"invalidAddress": "No elected officials were found for this state/zip combination"
 	},
 	"utils": {
 		"invalidAddressFormat": "Invalid address format"
