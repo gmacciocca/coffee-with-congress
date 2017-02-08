@@ -106,8 +106,12 @@
     }
 
     &__paragraph-title {
-        font-size: 1em;
+        font-size: 1.1em;
         color: $cwcColorMainText;
+    }
+
+    &__paragraph {
+        margin-bottom: 10px;
     }
 
     &__dialog-smaller-title {

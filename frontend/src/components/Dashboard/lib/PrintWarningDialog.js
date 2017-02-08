@@ -55,6 +55,10 @@ export default class PrintWarningDialog extends React.Component {
         );
     }
 
+    get printerInstructions() {
+        return Application.localize("dashboard/printerInstructions");
+    }
+
     render() {
         const actions = [
             <RaisedButton
@@ -86,15 +90,15 @@ export default class PrintWarningDialog extends React.Component {
                     open={this.props.shouldShow}
                     onRequestClose={this.handleCancel.bind(this)}
                     contentStyle={{ width: "100%", height: "100%" }}
-                    autoScrollBodyContent={false}
+                    autoScrollBodyContent={true}
                 >
                     <div>
                         <div className="dashboard__paragraph-title">{Application.localize("dashboard/gotStamps")}</div>
-                        {this.stampsInstructions}
+                        <div className="dashboard__paragraph">{this.stampsInstructions}</div>
                         <div className="dashboard__paragraph-title">{Application.localize("dashboard/needEnvelope")}</div>
-                        {this.envelopeInstructions}
+                        <div className="dashboard__paragraph">{this.envelopeInstructions}</div>
                         <div className="dashboard__paragraph-title">{Application.localize("dashboard/checkPrinter")}</div>
-                        <div>{Application.localize("dashboard/printerInstructions")}</div>
+                        <div className="dashboard__paragraph">{this.printerInstructions}</div>
                         <div className="dashboard__paragraph-title">{Application.localize("dashboard/grabAPen")}</div>
                     </div>
                 </Dialog>

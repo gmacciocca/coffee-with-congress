@@ -58,8 +58,6 @@ export default class PostPrintDialog extends React.Component {
             "&display=popup" +
             "&link=" + this._formatString.encodeURIComponent("https://writetocongress.org") +
             "&description=" + this.socialMessage;
-            //"&redirect_uri=https://www.facebook.com/WritetoCongress";
-            // "&caption=ThisIsMyCaption" +
         return (
             <LinkTo url={url}>
                 <img className="dashboard__social-logo" src="./images/fb-logo.png" />
