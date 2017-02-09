@@ -1,5 +1,8 @@
 #!/bin/bash
-
+echo "CAREFUL!"
+echo "Running these versions of software:"
+which npm
+which python
 read -r -p "Deploying to production! Are you sure? [Y/n]" response
  response=${response,,} # tolower
  if [[ $response =~ ^(yes|y| ) ]] | [ -z $response ]; then
@@ -9,7 +12,7 @@ read -r -p "Deploying to production! Are you sure? [Y/n]" response
    npm install
    npm run build
    cd ..
-   cp -Rf ./frontend/public/* ./backend/public/
+   cp -R ./frontend/public/* ./backend/public/
    cd backend
    pip install -r ./requirements-vendor.txt -t ./lib/ --upgrade
    rm app.yaml

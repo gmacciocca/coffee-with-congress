@@ -1778,6 +1778,18 @@ footer {
   .cwc-screen-small-and-down {
     display: none; } }
 
+.common-ui__email-to {
+  color: #215fc4;
+  font-weight: bold; }
+  .common-ui__email-to:hover {
+    text-decoration: underline; }
+
+.common-ui__link-to {
+  color: #215fc4;
+  font-weight: bold; }
+  .common-ui__link-to:hover {
+    text-decoration: underline; }
+
 .common-ui__overlay-progress {
   position: fixed;
   overflow-y: scroll;
@@ -1819,6 +1831,12 @@ footer {
     opacity: 0;
     display: none; }
 
+.common-ui__tel-to {
+  color: #215fc4;
+  font-weight: bold; }
+  .common-ui__tel-to:hover {
+    text-decoration: underline; }
+
 .dashboard {
   min-width: 320px;
   min-height: 480px;
@@ -1836,42 +1854,40 @@ footer {
   @media not print {
     .dashboard__print-only {
       display: none; } }
-  .dashboard__spacer-and-appbar-paper-wrapper {
-    width: 100%;
-    height: 100%; }
-  .dashboard__appbar-paper-wrapper {
-    width: 100%;
-    height: 100%;
-    display: inline-block;
-    float: right; }
+  .dashboard__contents {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; }
   .dashboard__numbered-steps {
     margin: 10px 0; }
-  .dashboard__numbered-step-wrapper {
+  .dashboard__numbered-step {
     display: flex;
     max-width: 600px;
     margin: auto;
     justify-content: center;
     align-items: center;
     height: 4em; }
-    .dashboard__numbered-step-wrapper__number {
+    .dashboard__numbered-step__number {
       margin: 10px; }
-    .dashboard__numbered-step-wrapper__select {
+    .dashboard__numbered-step__select {
       width: 80%; }
-    .dashboard__numbered-step-wrapper__contact-breaker {
+    .dashboard__numbered-step__contact-breaker {
       text-transform: uppercase;
       color: #FFFFFF;
       background-color: #607075;
       padding: 0 10px;
       margin-top: 10px; }
-    .dashboard__numbered-step-wrapper__contact {
+    .dashboard__numbered-step__contact {
       display: flex;
       justify-content: space-between;
       align-items: center; }
-    .dashboard__numbered-step-wrapper__contact-name {
+    .dashboard__numbered-step__contact-name {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis; }
-    .dashboard__numbered-step-wrapper__contact-role {
+    .dashboard__numbered-step__contact-role {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1881,16 +1897,17 @@ footer {
       margin-left: 10px;
       text-align: right;
       color: #607075; }
-    .dashboard__numbered-step-wrapper___text-only-step {
+    .dashboard__numbered-step___text-only-step {
       color: #007eb2;
       font-weight: bold;
       display: flex;
       justify-content: flex-start;
       align-items: center; }
-      .dashboard__numbered-step-wrapper___text-only-step__icon {
+      .dashboard__numbered-step___text-only-step__icon {
         cursor: pointer;
-        margin: 0 5px; }
-  .dashboard__paper-wrapper {
+        margin: 0 5px;
+        color: #215fc4; }
+  .dashboard__paper {
     text-align: center; }
   .dashboard__dialog-buttons {
     display: flex;
@@ -1900,6 +1917,25 @@ footer {
     height: 3.7em;
     margin-left: 1em;
     cursor: pointer; }
+  .dashboard__social-logo {
+    height: 2em; }
+  .dashboard__paragraph-title {
+    font-size: 1.1em;
+    color: #102025; }
+  .dashboard__paragraph {
+    margin-bottom: 10px; }
+  .dashboard__dialog-smaller-title {
+    padding: 15px 24px 5px !important; }
+  .dashboard__post-print-dialog-title {
+    text-decoration: underline; }
+  .dashboard__dialog-smaller-body {
+    padding: 0 24px 0px 24px !important; }
+  .dashboard__report-a-problem {
+    font-size: 0.8em;
+    line-height: 1em;
+    margin: 0 1em;
+    display: flex;
+    justify-content: flex-end; }
 
 .letter {
   position: absolute;
@@ -1938,6 +1974,7 @@ footer {
   height: 30px;
   border-radius: 50%;
   border: 3px solid #007eb2;
+  padding-top: 1px;
   text-align: center;
   font-size: 15px;
   font-weight: bold;
@@ -1996,7 +2033,7 @@ footer {
   padding-top: 2%; }
   .welcome__logo {
     max-width: 60%;
-    margin: 15% auto 0;
+    margin: 10% auto 0;
     overflow: auto;
     text-align: center; }
     .welcome__logo__img {
@@ -2026,12 +2063,12 @@ footer {
   .welcome__about__person__bio {
     font-size: 0.9em; }
   .welcome__email-to {
-    color: #007eb2;
+    color: #215fc4;
     font-weight: bold; }
     .welcome__email-to:hover {
       text-decoration: underline; }
   .welcome__link-to {
-    color: #007eb2;
+    color: #215fc4;
     font-weight: bold; }
     .welcome__link-to:hover {
       text-decoration: underline; }
