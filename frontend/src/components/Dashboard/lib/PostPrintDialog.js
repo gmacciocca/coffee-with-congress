@@ -51,7 +51,6 @@ export default class PostPrintDialog extends React.Component {
     }
 
     get facebookShare() {
-        this._formatString.encodeURIComponent("https://writetocongress.org");
         const url =
             "https://www.facebook.com/dialog/feed?" +
             "app_id=260827994350243" +
@@ -111,8 +110,7 @@ export default class PostPrintDialog extends React.Component {
         const localized = this._formatString.format("dashboard/callOfficialMessage", contactName);
         const Comp = ({ text }) => (<TelTo onClick={this.props.sendCallStatistics} phone={contactDialPhone}>{text}</TelTo>);
         const message = this._formatString.formatWithComponent(localized, [
-            <Comp key={contactPhone} text={contactPhone} />,
-            <Comp key={"dashboard/clickHere"} text={Application.localize("dashboard/clickHere")} />
+            <Comp key={contactPhone} text={contactPhone} />
         ]);
 
         return (
