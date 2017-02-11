@@ -88,45 +88,6 @@ class Source(models.Model):
     class Meta:
         ordering = ['ordinal','id']
 
-class Template(models.Model):
-    content= models.TextField()
-    until= models.DateTimeField(default=one_year_from_now)
-    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
-    states = models.ManyToManyField(State)
-    sources = models.ManyToManyField(Source)
-    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
-
-    def duplicates(self):
-        state_ids = [state.id for state in self.states.all()]
-        duplicate_objects = Template.objects.filter(level=self.level, issue_id = self.issue_id, states__in=state_ids).exclude(id=self.id)
-        return [str(duplicate.id) for duplicate in duplicate_objects]
-
-    def __unicode__(self):
-        safe_issue = self.issue.issue_name if self.issue else ""
-        safe_city = self.city.name if self.city else ""
-        safe_state = ",".join([state.code for state in self.states.all()])
-        #self.state.name if self.state else ""
-        safe_level = self.level
-        duplicates = self.duplicates()
-        safe_duplicates = "" if duplicates == [] else " / HAS DUPLICATES "
-        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state + safe_duplicates
-
-    def for_export(self):
-        sources = [ source.for_export() for source in self.sources.all() ]
-        return {
-          'id': self.id,
-          'content': self.content,
-          'sources': sources
-        }
-
-
-class PrintedLetter(models.Model):
-    when = models.DateTimeField(default=timezone.now)
-    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
-    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
-    state_code = models.CharField(max_length=3)
-
 class Contact(models.Model):
     name = models.CharField(db_index=True, max_length=200)
     address1 = models.CharField(max_length=250)
@@ -173,3 +134,43 @@ class Contact(models.Model):
         self.emails = xstr(",".join(contact.get('emails',[])))
         self.role = xstr(contact.get('role',''))
         self.party = xstr(contact.get('party',''))
+
+class Template(models.Model):
+    content= models.TextField()
+    until= models.DateTimeField(default=one_year_from_now)
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
+    states = models.ManyToManyField(State)
+    sources = models.ManyToManyField(Source)
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
+    contact = models.ForeignKey(Contact, blank=True, null=True)
+
+    def duplicates(self):
+        state_ids = [state.id for state in self.states.all()]
+        duplicate_objects = Template.objects.filter(level=self.level, issue_id = self.issue_id, states__in=state_ids).exclude(id=self.id)
+        return [str(duplicate.id) for duplicate in duplicate_objects]
+
+    def __unicode__(self):
+        safe_issue = self.issue.issue_name if self.issue else ""
+        safe_city = self.city.name if self.city else ""
+        safe_state = ",".join([state.code for state in self.states.all()])
+        #self.state.name if self.state else ""
+        safe_level = self.level
+        duplicates = self.duplicates()
+        safe_duplicates = "" if duplicates == [] else " / HAS DUPLICATES "
+        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state + safe_duplicates
+
+    def for_export(self):
+        sources = [ source.for_export() for source in self.sources.all() ]
+        return {
+          'id': self.id,
+          'content': self.content,
+          'sources': sources
+        }
+
+
+class PrintedLetter(models.Model):
+    when = models.DateTimeField(default=timezone.now)
+    level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
+    state_code = models.CharField(max_length=3)
