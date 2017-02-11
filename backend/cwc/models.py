@@ -88,6 +88,9 @@ class Source(models.Model):
     class Meta:
         ordering = ['ordinal','id']
 
+class Role(models.Model):
+    name = models.CharField(db_index=True, max_length=250)
+
 class Contact(models.Model):
     name = models.CharField(db_index=True, max_length=200)
     address1 = models.CharField(max_length=250)
@@ -144,6 +147,7 @@ class Template(models.Model):
     sources = models.ManyToManyField(Source)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
     contact = models.ForeignKey(Contact, blank=True, null=True)
+    role = models.ForeignKey(Role, blank=True, null=True)
 
     def duplicates(self):
         state_ids = [state.id for state in self.states.all()]
