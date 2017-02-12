@@ -178,7 +178,11 @@ class Template(models.Model):
         safe_level = self.level
         duplicates = self.duplicates()
         safe_duplicates = "" if duplicates == [] else " / HAS DUPLICATES "
-        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state + safe_duplicates
+        safe_contact = self.contact.name if self.contact else ''
+        safe_role = self.role.name if self.role else ''
+        safe_contact_or_role = ' / ' + (safe_contact if safe_contact != '' else safe_role)
+
+        return safe_issue + " / " + safe_level + " / " + safe_city + " / " + safe_state + safe_contact_or_role + safe_duplicates
 
     def for_export(self):
         sources = [ source.for_export() for source in self.sources.all() ]
