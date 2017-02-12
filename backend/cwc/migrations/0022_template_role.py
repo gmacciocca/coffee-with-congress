@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             try:
                 existing_role = Role.objects.get(name=contact.role)
             except Role.DoesNotExist:
-                role = Role(name=contact)
+                role = Role(name=contact.role)
                 role.save()
 
 

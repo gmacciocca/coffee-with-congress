@@ -101,6 +101,10 @@ class Role(models.Model):
 
         return role;
 
+    def __unicode__(self):
+        return self.name
+
+
 
 class Contact(models.Model):
     name = models.CharField(db_index=True, max_length=200)
@@ -157,10 +161,10 @@ class Template(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     states = models.ManyToManyField(State)
-    sources = models.ManyToManyField(Source)
+    sources = models.ManyToManyField(Source, null=True, blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
     contact = models.ForeignKey(Contact, blank=True, null=True)
-    role = models.ForeignKey(Role, blank=True, null=True)
+    role = models.ForeignKey(Role, blank=True)
 
     def duplicates(self):
         state_ids = [state.id for state in self.states.all()]
