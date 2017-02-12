@@ -161,10 +161,10 @@ class Template(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     states = models.ManyToManyField(State)
-    sources = models.ManyToManyField(Source, null=True, blank=True)
+    sources = models.ManyToManyField(Source, blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default="city")
     contact = models.ForeignKey(Contact, blank=True, null=True)
-    role = models.ForeignKey(Role, blank=True)
+    role = models.ForeignKey(Role, blank=True, null=True)
 
     def duplicates(self):
         state_ids = [state.id for state in self.states.all()]
@@ -175,7 +175,6 @@ class Template(models.Model):
         safe_issue = self.issue.issue_name if self.issue else ""
         safe_city = self.city.name if self.city else ""
         safe_state = ",".join([state.code for state in self.states.all()])
-        #self.state.name if self.state else ""
         safe_level = self.level
         duplicates = self.duplicates()
         safe_duplicates = "" if duplicates == [] else " / HAS DUPLICATES "
