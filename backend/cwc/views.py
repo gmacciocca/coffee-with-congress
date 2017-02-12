@@ -34,6 +34,7 @@ def get_contacts(request):
     correct_contacts = correct_info(contacts)
     return JsonResponse(correct_contacts, safe=False)
 
+
 def get_template(request, issue_id, state, level):
     try:
         state = models.State.objects.get(code=state)
@@ -41,6 +42,30 @@ def get_template(request, issue_id, state, level):
         template = models.Template.objects.get(issue_id=issue.id, states__in=[state.id], level=level)
         return JsonResponse(template.for_export(),safe=False)
     except (models.Template.DoesNotExist, models.Issue.DoesNotExist, models.State.DoesNotExist):
+        return HttpResponseNotFound('<h1>Template not found</h1>')
+
+
+'''
+   Returns template by trying to find one specific to contact first,
+   then role, and then the one not tied to particular contact or role.
+   404 if any of the crucial information cannot be found.
+'''
+def get_template_for_contact_and_role(request, issue_id, state, level, role_name, contact_name):
+    try:
+        state = models.State.objects.get(code=state)
+        issue = models.Issue.objects.get(id=issue_id)
+        role  = models.Role.objects.get(name=role_name)
+        contact = models.Contact.objects.contact.get(name=contact_name)
+        template_for_contact = models.Template.objects.filter(issue_id=issue.id, states__in=[state.id], level=level, contact_id=contact.id)
+        template_for_role = models.Template.objects.filter(issue_id=issue.id, states__in=[state.id], level=level, role_id=role.id, contact_id = None)
+        template_general = models.Template.objects.filter(issue_id=issue.id, states__in=[state.id], level=level)
+
+
+        all_templates = [template_for_contact.first(), template_for_role.first(), template_general.first()]
+        template = [t for t in all_templates if t is not None][0]
+
+        return JsonResponse(template.for_export(),safe=False)
+    except (models.Template.DoesNotExist, models.Issue.DoesNotExist, models.State.DoesNotExist,models.Contact.DoesNotExist, models.Role.DoesNotExist, IndexError):
         return HttpResponseNotFound('<h1>Template not found</h1>')
 
 def stats(request):

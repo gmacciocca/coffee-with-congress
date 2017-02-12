@@ -91,6 +91,17 @@ class Source(models.Model):
 class Role(models.Model):
     name = models.CharField(db_index=True, max_length=250)
 
+    @classmethod
+    def get_or_save(cls, name):
+        try:
+            role = cls.objects.get(name=name)
+        except cls.DoesNotExist:
+            role = cls(name=name)
+            role.save()
+
+        return role;
+
+
 class Contact(models.Model):
     name = models.CharField(db_index=True, max_length=200)
     address1 = models.CharField(max_length=250)
@@ -137,6 +148,8 @@ class Contact(models.Model):
         self.emails = xstr(",".join(contact.get('emails',[])))
         self.role = xstr(contact.get('role',''))
         self.party = xstr(contact.get('party',''))
+        Role.get_or_save(self.role);
+
 
 class Template(models.Model):
     content= models.TextField()
@@ -151,7 +164,7 @@ class Template(models.Model):
 
     def duplicates(self):
         state_ids = [state.id for state in self.states.all()]
-        duplicate_objects = Template.objects.filter(level=self.level, issue_id = self.issue_id, states__in=state_ids).exclude(id=self.id)
+        duplicate_objects = Template.objects.filter(level=self.level, issue_id = self.issue_id, states__in=state_ids, role_id=self.role_id, contact_id=self.contact_id).exclude(id=self.id)
         return [str(duplicate.id) for duplicate in duplicate_objects]
 
     def __unicode__(self):
