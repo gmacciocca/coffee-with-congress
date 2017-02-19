@@ -90,6 +90,7 @@ class Source(models.Model):
 
 class Role(models.Model):
     name = models.CharField(db_index=True, max_length=250)
+    do_not_display_in_contacts = models.BooleanField(default=False)
 
     @classmethod
     def get_or_save(cls, name):

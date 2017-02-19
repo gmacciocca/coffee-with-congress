@@ -6,7 +6,7 @@ from django.utils import timezone
 from apiclient.discovery import build
 from cwc import settings
 from cwc.clients import CivicApi
-from cwc.transform import correct_info
+from cwc.transform import correct_info, exclude_disabled
 import sys
 import json
 
@@ -35,6 +35,13 @@ def get_contacts(request):
     correct_contacts = correct_info(contacts)
     return JsonResponse(correct_contacts, safe=False)
 
+def get_all_contacts(request):
+    api = CivicApi()
+    api.build()
+    address = request.GET['address']
+    contacts = api.unfilteredContactsForAddress(address)
+    correct_contacts = exclude_disabled(correct_info(contacts))
+    return JsonResponse(correct_contacts, safe=False)
 
 def get_template(request, issue_id, state, level):
     try:
@@ -60,7 +67,7 @@ def get_template_for_contact_and_role(request, issue_id, state, level, role_name
         template_for_contact = models.Template.objects.filter(issue_id=issue.id, states__in=[state.id], level=level, contact_id=contact.id)
         template_for_role = models.Template.objects.filter(issue_id=issue.id, states__in=[state.id], level=level, role_id=role.id, contact_id = None)
         template_general = models.Template.objects.filter(issue_id=issue.id, states__in=[state.id], level=level)
-        
+
         all_templates = [template_for_contact.first(), template_for_role.first(), template_general.first()]
 
         template = [t for t in all_templates if t is not None][0]

@@ -30,3 +30,14 @@ def correct_info(contacts):
         database_contact = get_or_save(contact)
         contact.update(database_contact)
     return results
+
+def filter_disabled(contacts_list):
+    disabled_roles = [ role.name for role in models.Role.objects.filter(do_not_display_in_contacts=True)]
+    return [contact for contact in contacts_list if contact.get('role','') not in disabled_roles]
+
+def exclude_disabled(contacts):
+    return {
+        'federal': filter_disabled(contacts['federal']),
+        'state': filter_disabled(contacts['state']),
+        'city': filter_disabled(contacts['city'])
+    }

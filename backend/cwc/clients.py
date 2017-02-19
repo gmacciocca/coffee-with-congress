@@ -12,12 +12,34 @@ class CivicApi:
         self.representatives = self.service.representatives()
 
     def contactsForAddress(self, address):
+
+
         response = self.representatives.representativeInfoByAddress(levels=None, roles=["headOfState","headOfGovernment","deputyHeadOfGovernment","governmentOfficer","legislatorUpperBody","legislatorLowerBody"], address=address).execute()
 
 
         federal_contact_indices = sum([office['officialIndices'] for office in response['offices'] if ('country' in office['levels'])], [])
         state_contact_indices = sum([office['officialIndices'] for office in response['offices'] if ('administrativeArea1' in office['levels'])], [])
         city_contact_indices = sum([office['officialIndices'] for office in response['offices'] if ('administrativeArea2' in office['levels'])], [])
+
+        result = {}
+        result['federal'] = [ self.normalized_contact(response,index) for index in federal_contact_indices  ]
+        result['state'] = [ self.normalized_contact(response, index) for index in state_contact_indices  ]
+        result['city'] = [ self.normalized_contact(response, index) for index in city_contact_indices  ]
+
+        return result
+
+    def unfilteredContactsForAddress(self, address):
+       # roles=["headOfState","headOfGovernment","deputyHeadOfGovernment","governmentOfficer","legislatorUpperBody","legislatorLowerBody"],
+        response = self.representatives.representativeInfoByAddress(levels=None, address=address).execute()
+
+        federal_contact_indices = sum([office['officialIndices'] for office in response['offices'] if ('country' in office.get('levels',[]))], [])
+        state_contact_indices = sum([office['officialIndices'] for office in response['offices'] if ('administrativeArea1' in office.get('levels',[]))], [])
+
+
+        def is_city_level(existing_indices, office):
+            return set(office['officialIndices']).intersection(set(existing_indices)) == set([])
+
+        city_contact_indices = sum([office['officialIndices'] for office in response['offices'] if (is_city_level(federal_contact_indices + state_contact_indices, office))],[])
 
         result = {}
         result['federal'] = [ self.normalized_contact(response,index) for index in federal_contact_indices  ]
