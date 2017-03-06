@@ -9,7 +9,7 @@ export default class CwcServer {
 
     fetchContacts(address) {
         address = encodeURIComponent(address);
-        const path = `${Application.configuration.origins.cwcServer}/contacts?address=${address}`;
+        const path = `${Application.configuration.origins.cwcServer}/all_contacts?address=${address}`;
         return this._networkTransport.get(path)
             .catch(originalError => {
                 throw new CwcError(
