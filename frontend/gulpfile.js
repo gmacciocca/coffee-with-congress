@@ -25,9 +25,9 @@ var paths = {
     },
     scripts: ["src/**/*.js"],
     images: "client/img/**/*",
-    themeColors: "./src/components/CommonUi/styles/themeColors.json5",
+    jsonToCssProperties: "./src/components/CommonUi/styles/jsonToCssProperties.json5",
     scssList: [
-        "./build/themeColors.json",
+        "./build/jsonToCssProperties.json",
         "./src/third-party/materialize-css/sass/materialize.scss",
         "./src/components/CommonUi/styles/themeColors.scss",
         "./src/components/CommonUi/styles/global.scss",
@@ -78,15 +78,15 @@ gulp.task("createDirs", ["clean"], function() {
     });
 });
 
-gulp.task("themeColors", function() {
-    return gulp.src(paths.themeColors)
+gulp.task("jsonToCssProperties", function() {
+    return gulp.src(paths.jsonToCssProperties)
     .pipe(json5({
         beautify: true // default
     }))
     .pipe(gulp.dest("./build"));
 });
 
-gulp.task("sassify", ["themeColors"], function() {
+gulp.task("sassify", ["jsonToCssProperties"], function() {
     return gulp.src(paths.scssList)
         .pipe(jsonSass({ sass: false }))
         .pipe(concat("styles.scss"))

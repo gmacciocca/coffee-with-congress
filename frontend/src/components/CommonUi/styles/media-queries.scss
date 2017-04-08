@@ -1,8 +1,8 @@
-$cwc-medium-screen-up: 601px !default;
-$cwc-medium-screen: 600px !default;
+$cwc-medium-screen-up: $mediaSizes-mediumScreenUp;
+$cwc-medium-screen: $mediaSizes-mediumScreen;
 
-$cwc-medium-and-up: "screen and (min-width : #{$cwc-medium-screen-up})";
-$cwc-small-and-down: "only screen and (max-width : #{$cwc-medium-screen})";
+$cwc-medium-and-up: $mediaQueries-mediumAndUp;
+$cwc-small-and-down: $mediaQueries-smallAndDown;
 
 .cwc-screen-medium-and-up {
 }

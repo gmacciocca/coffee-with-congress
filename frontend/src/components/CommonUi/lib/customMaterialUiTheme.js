@@ -1,11 +1,11 @@
 import { darkBlack, fullBlack } from "material-ui/styles/colors";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import { fade } from "material-ui/utils/colorManipulator";
-var JSON_THEME_COLORS = require("../../../../build/themeColors.json");
+var JSON_THEME_COLORS = require("../../../../build/jsonToCssProperties.json");
 
 const GREEN = "#00ff00";
 
-const muiTheme = getMuiTheme({
+const customMaterialUiTheme = getMuiTheme({
     appBar: {
         color: JSON_THEME_COLORS.themeColors.headerAndLogo,
         textColor: JSON_THEME_COLORS.themeColors.contrastText,
@@ -27,9 +27,9 @@ const muiTheme = getMuiTheme({
         shadowColor: fullBlack,
     },
     textField: {
-        floatingLabelColor: JSON_THEME_COLORS.themeColors.hintColor, // palette.disabledColor,
+        floatingLabelColor: JSON_THEME_COLORS.themeColors.labelColor, // palette.disabledColor,
         errorColor: JSON_THEME_COLORS.themeColors.alertText, // red500,
     },
 });
 
-export default muiTheme;
+export default customMaterialUiTheme;

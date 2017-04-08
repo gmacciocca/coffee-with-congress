@@ -8,9 +8,18 @@
         secondaryText:          "#607075", // "charcoal-grey":
         contrastText:           "#FFFFFF", // "main-white":
         alertText:              "#ce0000", // "main-red"
-        secondaryAlertText:     "#007eb2", // cwc-main-color-blue
-        alertUnderline:         "#007eb2", // cwc-main-color-blue
-        hintColor:              "#007eb2", // "main-blue
-        linkColor:              "#215fc4", // "main-blue
+        secondaryAlertText:     "#007eb2", // main-blue
+        alertUnderline:         "#007eb2", // main-blue
+        labelColor:             "#007eb2", // "main-blue
+        linkColor:              "#215fc4", // "main-blue,
+        buttonDefaultColor:     "#007eb2", // "main-blue"
+    },
+    mediaSizes: {
+        mediumScreenUp: "601px",
+        mediumScreen: "600px"
+    },
+    mediaQueries: {
+        mediumAndUp: "screen and (min-width : 601px)",
+        smallAndDown: "only screen and (max-width : 600px)"
     }
 }

@@ -1,6 +1,6 @@
 import appPackage from "../package.json";
 import buildSpecificConfig from "../build/config.json";
-import themeColors from "../build/themeColors.json";
+import jsonToCssProperties from "../build/jsonToCssProperties.json";
 import media from "./components/CommonUi/styles/media.json";
 
 import { Application, Delegates, UncaughtErrors } from "solo-application";
@@ -29,7 +29,7 @@ const configuration = {
         }
     },
 
-    ...themeColors,
+    ...jsonToCssProperties,
     ...media,
     ...buildSpecificConfig,
 
