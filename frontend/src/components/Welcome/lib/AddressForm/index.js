@@ -3,7 +3,7 @@ import { Application } from "solo-application";
 import { ProgressOverlay } from "../../../CommonUi";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import SelectField from "material-ui/SelectField";
+import SelectFieldEx from "./SelectFieldEx";
 import MenuItem from "material-ui/MenuItem";
 import processContacts from "../processContacts";
 
@@ -157,13 +157,14 @@ export default class AddressForm extends React.Component {
             autoWidth: true,
             onChange: this.onStateChange.bind(this),
             maxHeight: 350,
-            floatingLabelText: Application.localize("welcome/stateLabel"),
-            value: this.state.stateCode
+            floatingLabelText: Application.localize("welcome/stateCodeLabel"),
+            value: this.state.stateCode,
+            detectAutofill: true
         };
 
         return (
             <div className="welcome__address__field">
-                <SelectField ref={ref => this._state = ref} {...props} >
+                <SelectFieldEx ref={ref => this._state = ref} {...props} >
                     {
                         STATE_INITIALS.map(state => {
                             return (
@@ -175,7 +176,7 @@ export default class AddressForm extends React.Component {
                             );
                         })
                     }
-                </SelectField>
+                </SelectFieldEx>
             </div>
         );
     }

@@ -58,22 +58,6 @@ $welcome-description-side-margin: 20px;
             }
         }
     }
-
-    &__email-to {
-        color: $cwcColorLink;
-        font-weight: bold;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    &__link-to {
-        color: $cwcColorLink;
-        font-weight: bold;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
 }
 
 @media #{$cwc-medium-and-up} {
