@@ -1770,13 +1770,43 @@ footer {
 .cwc-button {
   margin: 5px 0 0 5px; }
 
-@media only screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .cwc-screen-medium-and-up {
     display: none; } }
 
-@media screen and (min-width: 601px) {
+@media (min-width: 601px) {
   .cwc-screen-small-and-down {
     display: none; } }
+
+/* label color */
+.input-field label {
+  color: #007eb2; }
+
+/* label focus color */
+.input-field input[type=text]:focus + label {
+  color: #007eb2; }
+
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #007eb2;
+  box-shadow: 0 1px 0 0 #007eb2; }
+
+/* valid color */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid #007eb2;
+  box-shadow: 0 1px 0 0 #007eb2; }
+
+/* invalid color */
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid #007eb2;
+  box-shadow: 0 1px 0 0 #007eb2; }
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #007eb2; }
+
+.btn-primary-color {
+  background-color: #007eb2 !important; }
 
 .common-ui__email-to {
   color: #215fc4;
@@ -2001,7 +2031,7 @@ footer {
         height: 1.8em;
         margin: 0 3px; }
 
-@media only screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .footer {
     font-size: 0.8em; }
     .footer__item__separator {
@@ -2062,18 +2092,8 @@ footer {
     margin-bottom: 10px; }
   .welcome__about__person__bio {
     font-size: 0.9em; }
-  .welcome__email-to {
-    color: #215fc4;
-    font-weight: bold; }
-    .welcome__email-to:hover {
-      text-decoration: underline; }
-  .welcome__link-to {
-    color: #215fc4;
-    font-weight: bold; }
-    .welcome__link-to:hover {
-      text-decoration: underline; }
 
-@media screen and (min-width: 601px) {
+@media (min-width: 601px) {
   .welcome__logo {
     max-width: 450px;
     margin: 9em auto 0; }
