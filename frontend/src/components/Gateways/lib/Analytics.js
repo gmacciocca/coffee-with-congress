@@ -11,9 +11,9 @@ export default class Analytics {
         this._utils = utils;
         this._sendAnalitics = Application.configuration.analytics.google;
         if (this._sendAnalitics) {
-            ga("create", "UA-89461481-1", "auto");
-            ga("set", "appName", Application.configuration.clientName);
-            ga("set", "appVersion", Application.configuration.clientVersion);
+            ga("create", "UA-89461481-1", "auto"); // eslint-disable-line
+            ga("set", "appName", Application.configuration.clientName); // eslint-disable-line
+            ga("set", "appVersion", Application.configuration.clientVersion); // eslint-disable-line
         }
     }
 
@@ -21,7 +21,7 @@ export default class Analytics {
         if (!this._sendAnalitics) {
             return;
         }
-        ga("send", "event", {
+        ga("send", "event", { // eslint-disable-line
             eventCategory: "application",
             eventAction: "loaded",
             transport: "beacon"
@@ -36,7 +36,7 @@ export default class Analytics {
         const eventAction = "print";
         const eventLabel = state;
         const eventValue = LEVEL_ID[level];
-        ga("send", "event", {
+        ga("send", "event", { // eslint-disable-line
             eventCategory,
             eventAction,
             eventLabel,
@@ -53,7 +53,7 @@ export default class Analytics {
         const eventAction = "call";
         const eventLabel = state;
         const eventValue = LEVEL_ID[level];
-        ga("send", "event", {
+        ga("send", "event", { // eslint-disable-line
             eventCategory,
             eventAction,
             eventLabel,

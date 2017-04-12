@@ -20,8 +20,7 @@ export default class CwcServerMoked {
                 if (!address || address === "1") {
                     reject(new CwcError(
                         "CWC.ERROR_FETCHING_CONTACTS", {
-                            message: Application.localize("gateways/invalidAddress"),
-                            originalError
+                            message: Application.localize("gateways/invalidAddress")
                         }));
                     return;
                 }

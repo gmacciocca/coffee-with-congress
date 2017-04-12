@@ -1,5 +1,4 @@
 import React from "react";
-import { Application } from "solo-application";
 import { LinkTo, EmailTo } from "../../CommonUi";
 
 const FaqText = () => (
