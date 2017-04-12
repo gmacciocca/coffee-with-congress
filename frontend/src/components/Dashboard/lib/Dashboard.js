@@ -13,6 +13,7 @@ import PostPrintDialog from "./PostPrintDialog";
 import letterConstants from "./letterConstants";
 import AppHeader from "./AppHeader";
 import ReportAProblem from "./ReportAProblem";
+import TemplateSources from "./TemplateSources";
 
 export default class Dashboard extends React.Component {
     constructor(...args) {
@@ -32,7 +33,6 @@ export default class Dashboard extends React.Component {
             contacts: null,
             contactIdSelected: null,
             templates: null,
-            templateIdSelected: null,
             paperStyle: {},
             showProgress: false,
             showUserAddressEditDialog: false,
@@ -191,9 +191,14 @@ export default class Dashboard extends React.Component {
         this._reportAProblemRef = ref;
     }
 
+    templateSourcesRef(ref) {
+        this._templateSourcesRef = ref;
+    }
+
     updatePaperStyle() {
         if (!this._paperRef ||
             !this._contentsRef ||
+            !this._templateSourcesRef ||
             !this._reportAProblemRef){
             return;
         }
@@ -204,6 +209,7 @@ export default class Dashboard extends React.Component {
             this._contentsRef.offsetHeight -
             this._paperRef.offsetTop -
             this._reportAProblemRef.offsetHeight -
+            (this._templateSourcesRef ? this._templateSourcesRef.offsetHeight : 0) -
             paperShadowWidth;
 
         // Letter size = 215.9 by 279.4
@@ -343,6 +349,14 @@ export default class Dashboard extends React.Component {
                 return templateContent;
             }
         }
+    }
+
+    get templateSources() {
+        const contact = this.selectedContactAddress;
+        return contact &&
+            this.state.templates &&
+            this.state.templates[contact.level] &&
+            this.state.templates[contact.level].sources;
     }
 
     onEditTemplate() {
@@ -510,10 +524,21 @@ export default class Dashboard extends React.Component {
         );
     }
 
+    get templateSourcesElement() {
+        return (
+            <TemplateSources
+                showToggleFunc={this.updatePaperStyle.bind(this)}
+                width={this.state.paperStyle.width}
+                refFunc={this.templateSourcesRef.bind(this)}
+                sources={this.templateSources} />
+        );
+    }
+
     render() {
         if (!this.state.address || !this.state.contacts) {
             return null;
         }
+
         return (
             <div className="dashboard">
                 <div className="dashboard__no-print">
@@ -537,7 +562,8 @@ export default class Dashboard extends React.Component {
                                 <Letter {...this.letterProps} />
                             </Paper>
                         </div>
-                        <ReportAProblem refFunc={this.reportAProblemRef.bind(this)} />
+                        {this.templateSourcesElement}
+                         <ReportAProblem refFunc={this.reportAProblemRef.bind(this)} />
                     </div>
                     <ProgressOverlay showProgress={this.state.showProgress} />
                 </div>
