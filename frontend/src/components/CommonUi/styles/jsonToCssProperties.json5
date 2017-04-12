@@ -2,7 +2,8 @@
     themeColors: {
         mainBackground:         "#FFFFFF", // "main-white"
         headerAndLogo:          "#007eb2", // "main-blue
-        secondaryBackground:    "#E3F2FD", // "light-grey"
+        secondaryBackground:    "#E3F2FD", // "light-blue"
+        infoBackground:         "#f0f0f0", // "light-grey"
         contrastBackground:     "#607075", // "charcoal-grey"
         mainText:               "#102025", // "main-black": "#102025",
         secondaryText:          "#607075", // "charcoal-grey":
@@ -13,6 +14,7 @@
         labelColor:             "#007eb2", // "main-blue
         linkColor:              "#215fc4", // "main-blue,
         buttonDefaultColor:     "#007eb2", // "main-blue"
+        lightFrame:             "#c3c0c0", // light grey
     },
     mediaSizes: {
         mediumScreenUp: "601px",
