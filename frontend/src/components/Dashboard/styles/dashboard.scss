@@ -134,11 +134,10 @@
         font-size: 0.7em;
         margin: 0 auto;
         max-width: 400px;
-        color: $cwcColorSecondaryText;
+        color: $cwcColorSecondaryAlertText;
         &__list {
             border: 1px solid $cwcLightFrame;
             padding: 5px 10px 0;
-            background-color: $cwcColorInfoBackground;
             &__two-columns {
                 -webkit-column-count: 2;
                 -moz-column-count: 2;

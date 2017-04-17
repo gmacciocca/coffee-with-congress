@@ -29,19 +29,12 @@ export default class ContactsSelect extends BaseSelect {
     }
 
     primaryText({ name, party, role }) {
-        const usableParentWidth = this.props.parendWidth - (24 * 2);
-        const nameStyle = {
-            width: `${usableParentWidth / 3 * 2}px`
-        };
-        const roleStyle = {
-            width: `${usableParentWidth / 3}px`
-        };
         return (
             <div className="dashboard__numbered-step__contact">
-                <div className="dashboard__numbered-step__contact-name" style={nameStyle}>
+                <div className="dashboard__numbered-step__contact-name" >
                     {`${name}${this.partyInitial(party)}`}
                 </div>
-                <div className="dashboard__numbered-step__contact-role" style={roleStyle}>
+                <div className="dashboard__numbered-step__contact-role" >
                     {this.roleString(role)}
                 </div>
             </div>

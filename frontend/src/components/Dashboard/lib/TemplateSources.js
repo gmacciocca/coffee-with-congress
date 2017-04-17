@@ -4,14 +4,18 @@ import { LinkTo } from "../../CommonUi";
 import classnames from "classnames";
 
 export default class TemplateSources extends React.Component {
+    constructor(...args){
+        super(...args);
+        this._shouldShow = false;
+    }
 
     get shouldShow() {
         const { showToggleFunc, sources } = this.props;
-        const shouldShow = sources && Array.isArray(sources) && sources.length;
+        const shouldShow = !!(sources && Array.isArray(sources) && sources.length);
         if (shouldShow !== this._shouldShow) {
             setTimeout(() => {
                 showToggleFunc && showToggleFunc(shouldShow);
-            }, 0);
+            }, 100);
             this._shouldShow = shouldShow;
         }
         return shouldShow;
