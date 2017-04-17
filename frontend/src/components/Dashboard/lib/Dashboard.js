@@ -175,8 +175,19 @@ export default class Dashboard extends React.Component {
         this._events.fire("cwc:keydown", event);
     }
 
-    onScreenResize() {
-        this.updatePaperStyle();
+    onScreenResize({ height, width }) {
+        if (width > 300 && height > 400) {
+            this.updatePaperStyleThrottled();
+        }
+    }
+
+    updatePaperStyleThrottled() {
+        if (this._updatePaperStyleTimeout){
+            clearTimeout(this._updatePaperStyleTimeout);
+        }
+        this._updatePaperStyleTimeout = setTimeout(() => {
+            this.updatePaperStyle();
+        }, 100);
     }
 
     paperRef(ref) {
@@ -415,20 +426,14 @@ export default class Dashboard extends React.Component {
         }
     }
 
-    setSelectParentWidth(ref) {
-        if (ref && this.state.componentParentWidth !== ref.offsetWidth) {
-            this.setState({ componentParentWidth: ref.offsetWidth });
-        }
-    }
-
     select({ Component, props, number }) {
         return (
             <div className="dashboard__numbered-step">
                 <div className="dashboard__numbered-step__number">
                     <NumberInCircle size="20" number={number} />
                 </div>
-                <div ref={this.setSelectParentWidth.bind(this)} className="dashboard__numbered-step__select">
-                    <Component parendWidth={this.state.componentParentWidth} {...props} />
+                <div className="dashboard__numbered-step__select">
+                    <Component {...props} />
                 </div>
             </div>
         );
@@ -538,7 +543,6 @@ export default class Dashboard extends React.Component {
         if (!this.state.address || !this.state.contacts) {
             return null;
         }
-
         return (
             <div className="dashboard">
                 <div className="dashboard__no-print">
