@@ -2,8 +2,11 @@
     &__link-to {
         color: $cwcColorLink;
         font-weight: bold;
+        text-decoration: underline;
         &:hover {
-            text-decoration: underline;
+            text-decoration-color: $cwcColorLinkHover;
+            -moz-text-decoration-color: $cwcColorLinkHover;
+            -webkit-text-decoration-color: $cwcColorLinkHover;
         }
     }
 }
