@@ -13,6 +13,7 @@
         alertUnderline:         "#007eb2", // main-blue
         labelColor:             "#007eb2", // "main-blue
         linkColor:              "#215fc4", // "main-blue,
+        linkHoverColor:         "#0061ff", //
         buttonDefaultColor:     "#007eb2", // "main-blue"
         lightFrame:             "#c3c0c0", // light grey
     },
