@@ -7,7 +7,10 @@
 from pyasn1.type import base, tag, univ, char, useful
 from pyasn1.codec.ber import eoo
 from pyasn1.compat.octets import int2oct, oct2int, ints2octs, null, str2octs
+from pyasn1.compat.integer import to_bytes
 from pyasn1 import debug, error
+
+__all__ = ['encode']
 
 
 class AbstractItemEncoder(object):
@@ -18,7 +21,7 @@ class AbstractItemEncoder(object):
         tagClass, tagFormat, tagId = t.asTuple()  # this is a hotspot
         v = tagClass | tagFormat
         if isConstructed:
-            v = v | tag.tagFormatConstructed
+            v |= tag.tagFormatConstructed
         if tagId < 31:
             return int2oct(v | tagId)
         else:
@@ -60,7 +63,7 @@ class AbstractItemEncoder(object):
         tagSet = value.getTagSet()
         if tagSet:
             if not isConstructed:  # primitive form implies definite mode
-                defMode = 1
+                defMode = True
             return self.encodeTag(
                 tagSet[-1], isConstructed
             ) + self.encodeLength(
@@ -100,56 +103,37 @@ class BooleanEncoder(AbstractItemEncoder):
 class IntegerEncoder(AbstractItemEncoder):
     supportIndefLenMode = 0
     supportCompactZero = False
+    encodedZero = ints2octs((0,))
 
     def encodeValue(self, encodeFun, value, defMode, maxChunkSize):
-        if value == 0:  # shortcut for zero value
+        if value == 0:
+            # de-facto way to encode zero
             if self.supportCompactZero:
-                # this seems to be a correct way for encoding zeros
                 return null, 0
             else:
-                # this seems to be a widespread way for encoding zeros
-                return ints2octs((0,)), 0
-        octets = []
-        value = int(value)  # to save on ops on asn1 type
-        while True:
-            octets.insert(0, value & 0xff)
-            if value == 0 or value == -1:
-                break
-            value >>= 8
-        if value == 0 and octets[0] & 0x80:
-            octets.insert(0, 0)
-        while len(octets) > 1 and \
-                (octets[0] == 0 and octets[1] & 0x80 == 0 or
-                 octets[0] == 0xff and octets[1] & 0x80 != 0):
-            del octets[0]
-        return ints2octs(octets), 0
+                return self.encodedZero, 0
+
+        return to_bytes(int(value), signed=True), 0
 
 
 class BitStringEncoder(AbstractItemEncoder):
     def encodeValue(self, encodeFun, value, defMode, maxChunkSize):
-        if not maxChunkSize or len(value) <= maxChunkSize * 8:
-            out_len = (len(value) + 7) // 8
-            out_list = out_len * [0]
-            j = 7
-            i = -1
-            for val in value:
-                j += 1
-                if j == 8:
-                    i += 1
-                    j = 0
-                out_list[i] |= val << (7 - j)
-            return int2oct(7 - j) + ints2octs(out_list), 0
+        if len(value) % 8:
+            alignedValue = value << (8 - len(value) % 8)
         else:
-            pos = 0
-            substrate = null
-            while True:
-                # count in octets
-                v = value.clone(value[pos * 8:pos * 8 + maxChunkSize * 8])
-                if not v:
-                    break
-                substrate = substrate + encodeFun(v, defMode, maxChunkSize)
-                pos += maxChunkSize
-            return substrate, 1
+            alignedValue = value
+
+        if not maxChunkSize or len(alignedValue) <= maxChunkSize * 8:
+            substrate = alignedValue.asOctets()
+            return int2oct(len(substrate) * 8 - len(value)) + substrate, 0
+
+        stop = 0
+        substrate = null
+        while stop < len(value):
+            start = stop
+            stop = min(start + maxChunkSize * 8, len(value))
+            substrate += encodeFun(alignedValue[start:stop], defMode, maxChunkSize)
+        return substrate, 1
 
 
 class OctetStringEncoder(AbstractItemEncoder):
@@ -177,52 +161,47 @@ class NullEncoder(AbstractItemEncoder):
 
 class ObjectIdentifierEncoder(AbstractItemEncoder):
     supportIndefLenMode = 0
-    precomputedValues = {
-        (1, 3, 6, 1, 2): (43, 6, 1, 2),
-        (1, 3, 6, 1, 4): (43, 6, 1, 4)
-    }
 
     def encodeValue(self, encodeFun, value, defMode, maxChunkSize):
         oid = value.asTuple()
-        if oid[:5] in self.precomputedValues:
-            octets = self.precomputedValues[oid[:5]]
-            oid = oid[5:]
-        else:
-            if len(oid) < 2:
-                raise error.PyAsn1Error('Short OID %s' % (value,))
+        if len(oid) < 2:
+            raise error.PyAsn1Error('Short OID %s' % (value,))
 
-            octets = ()
+        octets = ()
 
-            # Build the first twos
-            if oid[0] == 0 and 0 <= oid[1] <= 39:
-                oid = (oid[1],) + oid[2:]
-            elif oid[0] == 1 and 0 <= oid[1] <= 39:
-                oid = (oid[1] + 40,) + oid[2:]
-            elif oid[0] == 2:
-                oid = (oid[1] + 80,) + oid[2:]
+        # Build the first pair
+        first = oid[0]
+        second = oid[1]
+        if 0 <= second <= 39:
+            if first == 1:
+                oid = (second + 40,) + oid[2:]
+            elif first == 0:
+                oid = (second,) + oid[2:]
+            elif first == 2:
+                oid = (second + 80,) + oid[2:]
             else:
-                raise error.PyAsn1Error(
-                    'Impossible initial arcs %s at %s' % (oid[:2], value)
-                )
+                raise error.PyAsn1Error('Impossible first/second arcs at %s' % (value,))
+        elif first == 2:
+            oid = (second + 80,) + oid[2:]
+        else:
+            raise error.PyAsn1Error('Impossible first/second arcs at %s' % (value,))
 
         # Cycle through subIds
-        for subId in oid:
-            if -1 < subId < 128:
+        for subOid in oid:
+            if 0 <= subOid <= 127:
                 # Optimize for the common case
-                octets = octets + (subId & 0x7f,)
-            elif subId < 0:
-                raise error.PyAsn1Error(
-                    'Negative OID arc %s at %s' % (subId, value)
-                )
-            else:
+                octets += (subOid,)
+            elif subOid > 127:
                 # Pack large Sub-Object IDs
-                res = (subId & 0x7f,)
-                subId >>= 7
-                while subId > 0:
-                    res = (0x80 | (subId & 0x7f),) + res
-                    subId >>= 7
+                res = (subOid & 0x7f,)
+                subOid >>= 7
+                while subOid:
+                    res = (0x80 | (subOid & 0x7f),) + res
+                    subOid >>= 7
                 # Add packed Sub-Object ID to resulted Object ID
                 octets += res
+            else:
+                raise error.PyAsn1Error('Negative OID arc %s at %s' % (subOid, value))
 
         return ints2octs(octets), 0
 
