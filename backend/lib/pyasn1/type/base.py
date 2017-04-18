@@ -8,6 +8,8 @@ import sys
 from pyasn1.type import constraint, tagmap, tag
 from pyasn1 import error
 
+__all__ = ['Asn1Item', 'Asn1ItemBase', 'AbstractSimpleAsn1Item', 'AbstractConstructedAsn1Item']
+
 
 class Asn1Item(object):
     pass
@@ -55,28 +57,24 @@ class Asn1ItemBase(Asn1Item):
         return tagmap.TagMap({self._tagSet: self})
 
     def isSameTypeWith(self, other, matchTags=True, matchConstraints=True):
-        """Evaluates ASN.1 types for equality.
-        
-        Indicates if argument is an object of the same ASN.1 type
-        as the calling type or not. ASN.1 tags (:py:mod:`~pyasn1.type.tag`)
-        and constraints (:py:mod:`~pyasn1.type.constraint`) are considered
-        when carrying out ASN.1 types comparision.
+        """Examine |ASN.1| type for equality with other ASN.1 type.
+
+        ASN.1 tags (:py:mod:`~pyasn1.type.tag`) and constraints
+        (:py:mod:`~pyasn1.type.constraint`) are examined when carrying
+        out ASN.1 types comparison.
+
+        No Python inheritance relationship between PyASN1 objects is considered.
 
         Parameters
         ----------
-            other: a pyasn1 type object
-                Class instance representing ASN.1 type. 
+        other: a pyasn1 type object
+            Class instance representing ASN.1 type.
 
         Returns
         -------
-            : :class:`bool`
-                :class:`True` if types are the same, :class:`False` otherwise.
-
-        Note
-        ----
-            No Python inheritance relationship between pyasn1 objects is
-            considered.
-
+        : :class:`bool`
+            :class:`True` if *other* is |ASN.1| type,
+            :class:`False` otherwise.
         """
         return self is other or \
             (not matchTags or
@@ -85,13 +83,14 @@ class Asn1ItemBase(Asn1Item):
              self._subtypeSpec == other.getSubtypeSpec())
 
     def isSuperTypeOf(self, other, matchTags=True, matchConstraints=True):
-        """Evaluates ASN.1 types for relationship.
+        """Examine |ASN.1| type for subtype relationship with other ASN.1 type.
         
-        Indicates if argument is an ASN.1 type that is derived from
-        the ASN.1 type of the calling type. ASN.1 tags
-        (:py:mod:`~pyasn1.type.tag`) and constraints
-        (:py:mod:`~pyasn1.type.constraint`) are considered when carrying
-        out ASN.1 types comparision.
+        ASN.1 tags (:py:mod:`~pyasn1.type.tag`) and constraints
+        (:py:mod:`~pyasn1.type.constraint`) are examined when carrying
+        out ASN.1 types comparison.
+
+        No Python inheritance relationship between PyASN1 objects is considered.
+
 
         Parameters
         ----------
@@ -101,14 +100,8 @@ class Asn1ItemBase(Asn1Item):
         Returns
         -------
             : :class:`bool`
-                :class:`True` if argument is derived from the calling type,
+                :class:`True` if *other* is a subtype of |ASN.1| type,
                 :class:`False` otherwise.
-
-        Note
-        ----
-            No Python inheritance relationship between pyasn1 objects is
-            considered.
-
         """
         return (not matchTags or
                 self._tagSet.isSuperTagSetOf(other.getTagSet())) and \
@@ -124,7 +117,7 @@ class Asn1ItemBase(Asn1Item):
 
 
 class NoValue(object):
-    """Creates a singleton instance of NoValue class.
+    """Create a singleton instance of NoValue class.
 
     NoValue object can be used as an initializer on PyASN1 type class
     instantiation to represent ASN.1 type rather than ASN.1 data value.
@@ -134,7 +127,7 @@ class NoValue(object):
     """
     skipMethods = ('__getattribute__', '__getattr__', '__setattr__', '__delattr__',
                    '__class__', '__init__', '__del__', '__new__', '__repr__', 
-                   '__qualname__', '__objclass__', 'im_class')
+                   '__qualname__', '__objclass__', 'im_class', '__sizeof__')
 
     _instance = None
 
@@ -228,23 +221,47 @@ class AbstractSimpleAsn1Item(Asn1ItemBase):
         return self.__hashedValue is noValue and hash(noValue) or self.__hashedValue
 
     def hasValue(self):
-        """Indicates that this object represents ASN.1 value rather than ASN.1 type.
+        """Indicate if |ASN.1| object represents ASN.1 value or ASN.1 type.
 
-        The pyasn1 type objects can only participate in types comparision
-        and serve as a blueprints for serialization codecs to resolve
-        ambiguous types. Values can additionally participate to most
+        The PyASN1 type objects can only participate in types comparison
+        and serve as a blueprint for serialization codecs to resolve
+        ambiguous types.
+
+        The PyASN1 value objects can additionally participate to most
         of built-in Python operations.
 
         Returns
         -------
-            : :class:`bool`
-                :class:`True` if object is ASN.1 value,
-                :class:`False` otherwise.
+        : :class:`bool`
+            :class:`True` if object is ASN.1 value,
+            :class:`False` otherwise.
 
         """
         return self._value is not noValue
 
     def clone(self, value=noValue, tagSet=None, subtypeSpec=None):
+        """Create a copy of a |ASN.1| type or object.
+
+          Any parameters to the *clone()* method will replace corresponding
+          properties of the |ASN.1| object.
+
+          Parameters
+          ----------
+          value: :class:`tuple`, :class:`str` or |ASN.1| object
+              Initialization value to pass to new ASN.1 object instead of
+              inheriting one from the caller.
+
+          tagSet: :py:class:`~pyasn1.type.tag.TagSet`
+              Object representing ASN.1 tag(s) to use in new object instead of inheriting from the caller
+
+          subtypeSpec: :py:class:`~pyasn1.type.constraint.ConstraintsIntersection`
+              Object representing ASN.1 subtype constraint(s) to use in new object instead of inheriting from the caller
+
+          Returns
+          -------
+          :
+              new instance of |ASN.1| type/value
+        """
         if self.isNoValue(value):
             if self.isNoValue(tagSet, subtypeSpec):
                 return self
@@ -257,6 +274,36 @@ class AbstractSimpleAsn1Item(Asn1ItemBase):
 
     def subtype(self, value=noValue, implicitTag=None, explicitTag=None,
                 subtypeSpec=None):
+        """Create a copy of a |ASN.1| type or object.
+
+         Any parameters to the *subtype()* method will be added to the corresponding
+         properties of the |ASN.1| object.
+
+         Parameters
+         ----------
+         value: :class:`tuple`, :class:`str` or |ASN.1| object
+             Initialization value to pass to new ASN.1 object instead of
+             inheriting one from the caller.
+
+         implicitTag: :py:class:`~pyasn1.type.tag.Tag`
+             Implicitly apply given ASN.1 tag object to caller's
+             :py:class:`~pyasn1.type.tag.TagSet`, then use the result as
+             new object's ASN.1 tag(s).
+
+         explicitTag: :py:class:`~pyasn1.type.tag.Tag`
+             Explicitly apply given ASN.1 tag object to caller's
+             :py:class:`~pyasn1.type.tag.TagSet`, then use the result as
+             new object's ASN.1 tag(s).
+
+         subtypeSpec: :py:class:`~pyasn1.type.constraint.ConstraintsIntersection`
+             Add ASN.1 constraints object to one of the caller, then
+             use the result as new object's ASN.1 constraints.
+
+         Returns
+         -------
+         :
+             new instance of |ASN.1| type/value
+        """
         if self.isNoValue(value):
             value = self._value
         if implicitTag is not None:
@@ -278,13 +325,12 @@ class AbstractSimpleAsn1Item(Asn1ItemBase):
         return str(value)
 
     def prettyPrint(self, scope=0):
-        """Provides human-friendly printable object representation.
+        """Provide human-friendly printable object representation.
 
         Returns
         -------
-            : :class:`str`
-                human-friendly type and/or value representation.
-
+        : :class:`str`
+            human-friendly type and/or value representation.
         """
         if self.hasValue():
             return self.prettyOut(self._value)
@@ -337,8 +383,10 @@ def setupComponent():
 
 
 class AbstractConstructedAsn1Item(Asn1ItemBase):
-    componentType = None
-    sizeSpec = constraint.ConstraintsIntersection()
+
+    #: If `True`, requires exact component type matching,
+    #: otherwise subtype relation is only enforced
+    strictConstraints = False
 
     def __init__(self, componentType=None, tagSet=None,
                  subtypeSpec=None, sizeSpec=None):
@@ -398,8 +446,29 @@ class AbstractConstructedAsn1Item(Asn1ItemBase):
     def _cloneComponentValues(self, myClone, cloneValueFlag):
         pass
 
-    def clone(self, tagSet=None, subtypeSpec=None, sizeSpec=None,
-              cloneValueFlag=None):
+    def clone(self, tagSet=None, subtypeSpec=None, sizeSpec=None, cloneValueFlag=None):
+        """Create a copy of a |ASN.1| type or object.
+
+        Any parameters to the *clone()* method will replace corresponding
+        properties of the |ASN.1| object.
+
+        Parameters
+        ----------
+        tagSet: :py:class:`~pyasn1.type.tag.TagSet`
+            Object representing non-default ASN.1 tag(s)
+
+        subtypeSpec: :py:class:`~pyasn1.type.constraint.ConstraintsIntersection`
+            Object representing non-default ASN.1 subtype constraint(s)
+
+        sizeSpec: :py:class:`~pyasn1.type.constraint.ConstraintsIntersection`
+            Object representing non-default ASN.1 size constraint(s)
+
+        Returns
+        -------
+        :
+            new instance of |ASN.1| type/value
+
+        """
         if tagSet is None:
             tagSet = self._tagSet
         if subtypeSpec is None:
@@ -413,6 +482,28 @@ class AbstractConstructedAsn1Item(Asn1ItemBase):
 
     def subtype(self, implicitTag=None, explicitTag=None, subtypeSpec=None,
                 sizeSpec=None, cloneValueFlag=None):
+        """Create a copy of a |ASN.1| type or object.
+
+        Any parameters to the *subtype()* method will be added to the corresponding
+        properties of the |ASN.1| object.
+
+        Parameters
+        ----------
+        tagSet: :py:class:`~pyasn1.type.tag.TagSet`
+            Object representing non-default ASN.1 tag(s)
+
+        subtypeSpec: :py:class:`~pyasn1.type.constraint.ConstraintsIntersection`
+            Object representing non-default ASN.1 subtype constraint(s)
+
+        sizeSpec: :py:class:`~pyasn1.type.constraint.ConstraintsIntersection`
+            Object representing non-default ASN.1 size constraint(s)
+
+        Returns
+        -------
+        :
+            new instance of |ASN.1| type/value
+
+        """
         if implicitTag is not None:
             tagSet = self._tagSet.tagImplicitly(implicitTag)
         elif explicitTag is not None:
@@ -445,8 +536,8 @@ class AbstractConstructedAsn1Item(Asn1ItemBase):
         raise error.PyAsn1Error('Method not implemented')
 
     def setComponents(self, *args, **kwargs):
-        for idx in range(len(args)):
-            self[idx] = args[idx]
+        for idx, value in enumerate(args):
+            self[idx] = value
         for k in kwargs:
             self[k] = kwargs[k]
         return self

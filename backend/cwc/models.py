@@ -76,7 +76,7 @@ class City(models.Model):
 
 class Source(models.Model):
     title = models.CharField(null=False, max_length=500)
-    url = models.URLField(null=True)
+    url = models.URLField(null=True,max_length=2000)
     ordinal=models.PositiveIntegerField(default=END_OF_THE_LIST,null=False)
 
     def __unicode__(self):
