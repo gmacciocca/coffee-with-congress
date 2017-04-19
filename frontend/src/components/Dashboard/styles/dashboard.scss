@@ -133,11 +133,11 @@
     &__template-sources{
         font-size: 0.7em;
         margin: 0 auto;
+        padding-top: 10px;
         max-width: 400px;
         color: $cwcColorSecondaryAlertText;
         &__list {
-            border: 1px solid $cwcLightFrame;
-            padding: 5px 10px 0;
+            padding-top: 5px;
             &__two-columns {
                 -webkit-column-count: 2;
                 -moz-column-count: 2;
@@ -148,7 +148,6 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                padding: 0 2px;
             }
         }
     }

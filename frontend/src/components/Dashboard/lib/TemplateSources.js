@@ -11,11 +11,11 @@ export default class TemplateSources extends React.Component {
 
     get shouldShow() {
         const { showToggleFunc, sources } = this.props;
-        const shouldShow = !!(sources && Array.isArray(sources) && sources.length);
+        const shouldShow = (sources && Array.isArray(sources) && sources.length);
         if (shouldShow !== this._shouldShow) {
             setTimeout(() => {
                 showToggleFunc && showToggleFunc(shouldShow);
-            }, 100);
+            }, 250);
             this._shouldShow = shouldShow;
         }
         return shouldShow;
