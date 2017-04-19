@@ -1968,11 +1968,11 @@ footer {
   .dashboard__template-sources {
     font-size: 0.7em;
     margin: 0 auto;
+    padding-top: 10px;
     max-width: 400px;
     color: #007eb2; }
     .dashboard__template-sources__list {
-      border: 1px solid #c3c0c0;
-      padding: 5px 10px 0; }
+      padding-top: 5px; }
       .dashboard__template-sources__list__two-columns {
         -webkit-column-count: 2;
         -moz-column-count: 2;
@@ -1981,8 +1981,7 @@ footer {
         display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
-        padding: 0 2px; }
+        white-space: nowrap; }
   .dashboard__report-a-problem {
     font-size: 0.7em;
     line-height: 1em;
