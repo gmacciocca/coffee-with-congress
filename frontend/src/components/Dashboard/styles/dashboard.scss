@@ -131,13 +131,15 @@
     }
 
     &__template-sources{
-        font-size: 0.7em;
+        font-size: 0.8em;
+        font-weight: bold;
         margin: 0 auto;
         padding-top: 10px;
         max-width: 400px;
         color: $cwcColorSecondaryAlertText;
         &__list {
             padding-top: 5px;
+            font-size: 0.9em;
             &__two-columns {
                 -webkit-column-count: 2;
                 -moz-column-count: 2;
