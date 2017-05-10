@@ -3,9 +3,8 @@ echo "CAREFUL!"
 echo "Running these versions of software:"
 which npm
 which python
-read -r -p "Deploying to production! Are you sure? [Y/n]" response
- response=${response,,} # tolower
- if [[ $response =~ ^(yes|y| ) ]] | [ -z $response ]; then
+read -r -p "Deploying to production! Are you sure? [y/n]" -n 1 REPLY
+ if echo "$REPLY" | grep -iq "^y" ; then
    export DATABASE_NAME=cwc
    gcloud config set project causal-port-151005
    cd frontend
@@ -20,4 +19,6 @@ read -r -p "Deploying to production! Are you sure? [Y/n]" response
    python manage.py migrate
    gcloud app --project=causal-port-151005 deploy
    rm app.yaml
+ else
+   echo "Press Y - for yes, everything else is interpreted as no!"
  fi
