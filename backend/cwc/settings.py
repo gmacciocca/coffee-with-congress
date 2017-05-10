@@ -30,6 +30,11 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# use vendored libraries locally
+import sys
+from os.path import dirname
+sys.path.append(os.path.join(BASE_DIR,'lib'))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 

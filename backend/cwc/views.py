@@ -3,7 +3,7 @@ from django.http import HttpResponseNotFound
 from django.http import HttpResponseBadRequest
 from cwc import models
 from django.utils import timezone
-from apiclient.discovery import build
+from googleapiclient.discovery import build
 from cwc import settings
 from cwc.clients import CivicApi
 from cwc.transform import correct_info, exclude_disabled

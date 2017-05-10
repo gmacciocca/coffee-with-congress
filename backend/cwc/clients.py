@@ -1,5 +1,5 @@
 from cwc import settings
-from apiclient.discovery import build
+from googleapiclient.discovery import build
 
 
 class CivicApi:
