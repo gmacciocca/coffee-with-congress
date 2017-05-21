@@ -20,8 +20,20 @@ export default class CwcServer {
             });
     }
 
-    fetchIssues(state) {
-        const path = `${Application.configuration.origins.cwcServer}/issues/state/${state}`;
+    // fetchIssues(state) {
+    //     const path = `${Application.configuration.origins.cwcServer}/issues/state/${state}`;
+    //     return this._networkTransport.get(path)
+    //         .catch(originalError => {
+    //             throw new CwcError(
+    //                 "CWC.ERROR_FETCHING_ISSUES", {
+    //                     message: originalError.toString(),
+    //                     originalError
+    //                 });
+    //         });
+    // }
+
+    fetchIssueGroups(state) {
+        const path = `${Application.configuration.origins.cwcServer}/issue_groups/state/${state}`;
         return this._networkTransport.get(path)
             .catch(originalError => {
                 throw new CwcError(

@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
 
         this.state = {
             address: null,
-            issues: null,
+            issuesGroups: null,
             issueIdSelected: null,
             contacts: null,
             contactIdSelected: null,
@@ -75,7 +75,7 @@ export default class Dashboard extends React.Component {
         if (address && contacts) {
             this.selectDefaultContact(selections, contacts);
             this.setState({ address, contacts, ...selections });
-            this.fetchIssues(address.state);
+            this.fetchIssueGroups(address.state);
         } else {
             this.goHome();
         }
@@ -101,16 +101,39 @@ export default class Dashboard extends React.Component {
         return this.state.showProgress;
     }
 
-    fetchIssues(state) {
+    // fetchIssues(state) {
+    //     this.showProgress(true);
+    //     this._cwcServer.fetchIssues(state)
+    //         .then(issues => {
+    //             let issueIdSelected = this.state.issueIdSelected;
+    //             if (this._utils.isNullOrUndefined(issueIdSelected)) {
+    //                 // Select initial default issue
+    //                 issueIdSelected = issues && issues[0] && issues[0].id;
+    //             }
+    //             this.setState({ issues, issueIdSelected });
+    //             this.showProgress(false);
+    //             this.fetchTemplatesForIssueIfNeeded(issueIdSelected);
+    //         }, () => {
+    //             this.showProgress(false);
+    //         });
+    // }
+
+    fetchIssueGroups(state) {
         this.showProgress(true);
-        this._cwcServer.fetchIssues(state)
-            .then(issues => {
+        this._cwcServer.fetchIssueGroups(state)
+            .then(issuesGroups => {
                 let issueIdSelected = this.state.issueIdSelected;
                 if (this._utils.isNullOrUndefined(issueIdSelected)) {
                     // Select initial default issue
-                    issueIdSelected = issues && issues[0] && issues[0].id;
+                    const findFirstIssue = (issuesGroups) => {
+                        const group = issuesGroups.find(group => {
+                            return Array.isArray(group.issues) && group.issues.length;
+                        });
+                        return group && group.issues && group.issues[0] && group.issues[0].id;
+                    };
+                    issueIdSelected = findFirstIssue(issuesGroups);
                 }
-                this.setState({ issues, issueIdSelected });
+                this.setState({ issuesGroups, issueIdSelected });
                 this.showProgress(false);
                 this.fetchTemplatesForIssueIfNeeded(issueIdSelected);
             }, () => {
@@ -244,7 +267,10 @@ export default class Dashboard extends React.Component {
     }
 
     get currentIssue() {
-        return this.state.issues && this.state.issues.find(issue => issue.id === this.state.issueIdSelected);
+        const matchingIssue = this.state.issuesGroups && this.state.issuesGroups.map(group => {
+            return group.issues && group.issues.find(issue => issue.id === this.state.issueIdSelected);
+        }).find(issue => issue);
+        return matchingIssue;
     }
 
     get currentProps() {
@@ -444,7 +470,7 @@ export default class Dashboard extends React.Component {
             Component: IssuesSelect,
             props: {
                 selectedId: this.state.issueIdSelected,
-                issues: this.state.issues,
+                issuesGroups: this.state.issuesGroups,
                 maxWidth: this.state.availableWidth,
                 onChange: this.onIssueChange.bind(this)
             },
