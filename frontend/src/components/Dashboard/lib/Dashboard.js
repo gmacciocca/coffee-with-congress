@@ -14,6 +14,7 @@ import letterConstants from "./letterConstants";
 import AppHeader from "./AppHeader";
 import ReportAProblem from "./ReportAProblem";
 import TemplateSources from "./TemplateSources";
+import IssueGroups from "./models/IssueGroups";
 
 export default class Dashboard extends React.Component {
     constructor(...args) {
@@ -28,7 +29,7 @@ export default class Dashboard extends React.Component {
 
         this.state = {
             address: null,
-            issuesGroups: null,
+            issueGroups: new IssueGroups,
             issueIdSelected: null,
             contacts: null,
             contactIdSelected: null,
@@ -101,39 +102,19 @@ export default class Dashboard extends React.Component {
         return this.state.showProgress;
     }
 
-    // fetchIssues(state) {
-    //     this.showProgress(true);
-    //     this._cwcServer.fetchIssues(state)
-    //         .then(issues => {
-    //             let issueIdSelected = this.state.issueIdSelected;
-    //             if (this._utils.isNullOrUndefined(issueIdSelected)) {
-    //                 // Select initial default issue
-    //                 issueIdSelected = issues && issues[0] && issues[0].id;
-    //             }
-    //             this.setState({ issues, issueIdSelected });
-    //             this.showProgress(false);
-    //             this.fetchTemplatesForIssueIfNeeded(issueIdSelected);
-    //         }, () => {
-    //             this.showProgress(false);
-    //         });
-    // }
-
     fetchIssueGroups(state) {
         this.showProgress(true);
         this._cwcServer.fetchIssueGroups(state)
-            .then(issuesGroups => {
-                let issueIdSelected = this.state.issueIdSelected;
-                if (this._utils.isNullOrUndefined(issueIdSelected)) {
-                    // Select initial default issue
-                    const findFirstIssue = (issuesGroups) => {
-                        const group = issuesGroups.find(group => {
-                            return Array.isArray(group.issues) && group.issues.length;
-                        });
-                        return group && group.issues && group.issues[0] && group.issues[0].id;
-                    };
-                    issueIdSelected = findFirstIssue(issuesGroups);
-                }
-                this.setState({ issuesGroups, issueIdSelected });
+            .then(_issueGroups => {
+                const issueGroups = this.state.issueGroups;
+                issueGroups.load(_issueGroups);
+
+                // Select initial default issue
+                const issueIdSelected = this._utils.isNullOrUndefined(this.state.issueIdSelected) ?
+                    issueGroups.firstIssue :
+                    this.state.issueIdSelected;
+
+                this.setState({ issueGroups, issueIdSelected });
                 this.showProgress(false);
                 this.fetchTemplatesForIssueIfNeeded(issueIdSelected);
             }, () => {
@@ -267,10 +248,7 @@ export default class Dashboard extends React.Component {
     }
 
     get currentIssue() {
-        const matchingIssue = this.state.issuesGroups && this.state.issuesGroups.map(group => {
-            return group.issues && group.issues.find(issue => issue.id === this.state.issueIdSelected);
-        }).find(issue => issue);
-        return matchingIssue;
+        return this.state.issueGroups.getIssueById(this.state.issueIdSelected);
     }
 
     get currentProps() {
@@ -470,7 +448,7 @@ export default class Dashboard extends React.Component {
             Component: IssuesSelect,
             props: {
                 selectedId: this.state.issueIdSelected,
-                issuesGroups: this.state.issuesGroups,
+                issueGroups: this.state.issueGroups,
                 maxWidth: this.state.availableWidth,
                 onChange: this.onIssueChange.bind(this)
             },

@@ -10,18 +10,35 @@ export default class IssuesSelect extends BaseSelect {
         return Application.localize("dashboard/issueLabel");
     }
 
+    primaryText({ name }) {
+        return (
+            <div className="dashboard__numbered-step__issue">
+                {`${name}`}
+            </div>
+        );
+    }
+
     render() {
         const selectProps = this.selectProps;
         return (
             <SelectField {...selectProps} >
             {
-                this.props.issues && this.props.issues.map(issue => {
+                this.props.issueGroups.groups.map(group => {
                     return (
-                        <MenuItem
-                            key={issue.id}
-                            value={issue.id}
-                            primaryText={issue.name}
-                        />
+                        <div>
+                            <div className="dashboard__numbered-step__contact-breaker" >{group.name}</div>
+                            {
+                                group.issues.map(issue => {
+                                    return (
+                                        <MenuItem
+                                            key={issue.id}
+                                            value={issue.id}
+                                            primaryText={this.primaryText(issue)}
+                                        />
+                                    );
+                                })
+                            }
+                        </div>
                     );
                 })
             }
@@ -29,3 +46,17 @@ export default class IssuesSelect extends BaseSelect {
         );
     }
 }
+
+
+/*
+this.props.issues && this.props.issues.map(issue => {
+    return (
+        <MenuItem
+            key={issue.id}
+            value={issue.id}
+            primaryText={issue.name}
+        />
+    );
+})
+
+*/

@@ -71,6 +71,11 @@
             text-align: right;
             color: $cwcColorSecondaryText;
         }
+        &__issue {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         &___text-only-step {
             color: $cwcColorSecondaryAlertText;
             font-weight: bold;
