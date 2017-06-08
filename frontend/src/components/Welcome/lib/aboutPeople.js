@@ -8,7 +8,7 @@ const AboutText = () => (
 
 const TanujaBio = () => (
 <div>
-    Tanuja has worked in the software and e-commerce development space for 16+ years with companies like InRhythm,
+    Tanuja has worked in the software and e-commerce development space for 16+ years with companies like
     Google, Barnes & Noble.com and Broadway.com.  In parallel, she tutors math with&nbsp;
     <LinkTo url="http://www.tophonors.org/">Top Honors</LinkTo>
     &nbsp;and sits on the board of the&nbsp;
