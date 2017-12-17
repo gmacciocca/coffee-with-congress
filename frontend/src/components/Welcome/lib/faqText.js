@@ -4,6 +4,9 @@ import { LinkTo, EmailTo } from "../../CommonUi";
 const FaqText = () => (
     <div>
         <div>
+            <h5>One Year Update</h5>
+            One year and 7000 letters later, Write to Congress is proud of all of you who took time to engage your leaders.  We are not proud of all our leaders - particularly the ones who continue to propose pork-barrel legislation and chip away at our constitutional freedoms behind closed doors.  We also know that by the time our letters reach an elected official, an issue may already be wrapped up in an executive order or midnight vote.  Thus, we've decided that we'll keep up just a handful of templates and the address match service on this website.  The rest of the fight will be fought with your votes ... and maybe even your decision to run for office.  
+
             <h5> Wait, is this email or snail mail?</h5>
             Snail mail.  Email gets easily filtered and organized by algorithms without ever being read.  You have to really explain your needs as a constituent, print the letter and mail it.  It&rsquo;s all about the phone calls and letters!
 
